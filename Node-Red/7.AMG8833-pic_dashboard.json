@@ -1,0 +1,242 @@
+[
+    {
+        "id": "a25e4bc8c2a22142",
+        "type": "tab",
+        "label": "Flow 5",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "4291b5a3da9b05bb",
+        "type": "inject",
+        "z": "a25e4bc8c2a22142",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 140,
+        "y": 360,
+        "wires": [
+            [
+                "e1510bb77d29f5e0"
+            ]
+        ]
+    },
+    {
+        "id": "e1510bb77d29f5e0",
+        "type": "exec",
+        "z": "a25e4bc8c2a22142",
+        "command": "python3 /home/pi/Adafruit_CircuitPython_AMG88xx/examples/new_thernal.py",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "AMG8833",
+        "x": 300,
+        "y": 360,
+        "wires": [
+            [
+                "5b7810aebc266345"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "5b7810aebc266345",
+        "type": "function",
+        "z": "a25e4bc8c2a22142",
+        "name": "normalise data",
+        "func": "var data = JSON.parse(msg.payload);\n\nvar max = 0;\nvar min = 100;\n\nfor(i=0; i<8; i++){\n    if(Math.max(...data[i]) > max){\n        max = Math.max(...data[i]);\n    }\n    if(Math.min(...data[i]) < min){\n        min = Math.min(...data[i]);\n    }\n}\n\nmsg.min = min;\nmsg.max = max;\nmsg.data = data;\nreturn msg;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 480,
+        "y": 360,
+        "wires": [
+            [
+                "eda94ff186db0bad"
+            ]
+        ]
+    },
+    {
+        "id": "eda94ff186db0bad",
+        "type": "jimp-image",
+        "z": "a25e4bc8c2a22142",
+        "name": "",
+        "data": "{\"w\":8,\"h\":8,\"background\":\"white\"}",
+        "dataType": "json",
+        "ret": "img",
+        "parameter1": "",
+        "parameter1Type": "msg",
+        "parameter2": "",
+        "parameter2Type": "msg",
+        "parameter3": "",
+        "parameter3Type": "msg",
+        "parameter4": "",
+        "parameter4Type": "msg",
+        "parameter5": "",
+        "parameter5Type": "msg",
+        "parameter6": "",
+        "parameter6Type": "msg",
+        "parameter7": "",
+        "parameter7Type": "msg",
+        "parameter8": "",
+        "parameter8Type": "msg",
+        "sendProperty": "image",
+        "sendPropertyType": "msg",
+        "parameterCount": 0,
+        "jimpFunction": "none",
+        "selectedJimpFunction": {
+            "name": "none",
+            "fn": "none",
+            "description": "Just loads the image.",
+            "parameters": []
+        },
+        "x": 630,
+        "y": 360,
+        "wires": [
+            [
+                "d7cc0ad6e55c4f32"
+            ]
+        ]
+    },
+    {
+        "id": "d7cc0ad6e55c4f32",
+        "type": "function",
+        "z": "a25e4bc8c2a22142",
+        "name": "colorise",
+        "func": "\nconst minimum = msg.min; //-10w0.0;\nconst maximum = msg.max; //400.0;\nconst data = msg.data;\nconst img = msg.image;\nvar buf = Buffer.from([255,255,255,255]); //temp buffer object for rgbaToInt\n\nfor(let y = 0; y < data.length; y++){\n    let row = data[y];\n    for(let x = 0; x < row.length; x++){\n        let temp = row[x];\n        let c = celcius2colour(temp);\n        img.setPixelColor(c, x, y);\n    }\n}\n\nreturn msg;\n\n\n\nfunction celcius2colour(value) {\n    var ratio = 2 * (value-minimum) / (maximum - minimum);\n    b = parseInt(Math.max(0, 255*(1 - ratio)));\n    r = parseInt(Math.max(0, 255*(ratio - 1)));\n    g = 255 - b - r;\n    return rgbaToInt(r,g,b,255);\n}\n\n\nfunction rgbaToInt(red,green,blue,alpha){\n    \n    var r = red & 0xFF;\n    var g = green & 0xFF;\n    var b = blue & 0xFF;\n    var a = alpha & 0xFF;\n    \n    buf[0] = r;\n    buf[1] = g;\n    buf[2] = b;\n    return buf.readUInt32BE(0);\n    //return (r << 16) + (g << 8) + (b);\n    //return (r << 24 >>> 0) | (g << 16) | (b << 8) | (a);\n}\n\n\n\n\n\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 760,
+        "y": 360,
+        "wires": [
+            [
+                "0367512589528bf1"
+            ]
+        ]
+    },
+    {
+        "id": "b34fdaaebf8d1b42",
+        "type": "ui_template",
+        "z": "a25e4bc8c2a22142",
+        "group": "0d349ebb5661cc24",
+        "name": "ui template",
+        "order": 1,
+        "width": "20",
+        "height": "20",
+        "format": "<div ng-bind-html=\"msg.payload\"></div>",
+        "storeOutMessages": false,
+        "fwdInMessages": true,
+        "resendOnRefresh": false,
+        "templateScope": "local",
+        "className": "",
+        "x": 1230,
+        "y": 360,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8101975baddf67a4",
+        "type": "template",
+        "z": "a25e4bc8c2a22142",
+        "name": "Image",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "<img width=\"300px\" height=\"300px\" src=\"{{{payload}}}\">",
+        "output": "str",
+        "x": 1090,
+        "y": 360,
+        "wires": [
+            [
+                "b34fdaaebf8d1b42"
+            ]
+        ]
+    },
+    {
+        "id": "0367512589528bf1",
+        "type": "jimp-image",
+        "z": "a25e4bc8c2a22142",
+        "name": "Convet to base64",
+        "data": "image",
+        "dataType": "msg",
+        "ret": "b64",
+        "parameter1": "{\"name\":\"resize\",\"parameters\":[null,null,null]}",
+        "parameter1Type": "json",
+        "parameter2": "",
+        "parameter2Type": "msg",
+        "parameter3": "",
+        "parameter3Type": "msg",
+        "parameter4": "",
+        "parameter4Type": "msg",
+        "parameter5": "",
+        "parameter5Type": "msg",
+        "parameter6": "",
+        "parameter6Type": "msg",
+        "parameter7": "",
+        "parameter7Type": "msg",
+        "parameter8": "",
+        "parameter8Type": "msg",
+        "sendProperty": "payload",
+        "sendPropertyType": "msg",
+        "parameterCount": 0,
+        "jimpFunction": "clone",
+        "selectedJimpFunction": {
+            "name": "clone",
+            "fn": "clone",
+            "description": "returns a clone of the image",
+            "parameters": []
+        },
+        "x": 930,
+        "y": 360,
+        "wires": [
+            [
+                "8101975baddf67a4"
+            ]
+        ]
+    },
+    {
+        "id": "0d349ebb5661cc24",
+        "type": "ui_group",
+        "name": "Thermal",
+        "tab": "8c47801cc481b366",
+        "order": 1,
+        "disp": true,
+        "width": "20",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "8c47801cc481b366",
+        "type": "ui_tab",
+        "name": "Home",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]

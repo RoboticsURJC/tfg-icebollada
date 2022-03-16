@@ -1,0 +1,247 @@
+[
+    {
+        "id": "d18039bb6d4424f0",
+        "type": "tab",
+        "label": "Flow 2",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "cf86c78de12e8128",
+        "type": "ui_gauge",
+        "z": "d18039bb6d4424f0",
+        "name": "TEMP",
+        "group": "36672616760ec1dc",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Temperature",
+        "label": "ºC",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "50",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "className": "",
+        "x": 950,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "b131a034cbc9af7e",
+        "type": "ui_gauge",
+        "z": "d18039bb6d4424f0",
+        "name": "HUM",
+        "group": "36672616760ec1dc",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Humidity",
+        "label": "%",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "className": "",
+        "x": 930,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "47701ff194ba4263",
+        "type": "inject",
+        "z": "d18039bb6d4424f0",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "1",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 410,
+        "y": 320,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d69670e5245ffd37",
+        "type": "exec",
+        "z": "d18039bb6d4424f0",
+        "command": "python3 Desktop/temp_hum.py",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "AM2315",
+        "x": 560,
+        "y": 320,
+        "wires": [
+            [
+                "a411c3b945f854c8",
+                "d242c976bcd407ed",
+                "9b029f20cacbf59a"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "a411c3b945f854c8",
+        "type": "function",
+        "z": "d18039bb6d4424f0",
+        "name": "Temperature",
+        "func": "str = msg.payload\nmsg.payload = str.substring(14,18)\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 750,
+        "y": 240,
+        "wires": [
+            [
+                "cf86c78de12e8128"
+            ]
+        ]
+    },
+    {
+        "id": "d242c976bcd407ed",
+        "type": "function",
+        "z": "d18039bb6d4424f0",
+        "name": "Humidity",
+        "func": "str = msg.payload\nmsg.payload = str.substring(30,35)\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 740,
+        "y": 320,
+        "wires": [
+            [
+                "b131a034cbc9af7e"
+            ]
+        ]
+    },
+    {
+        "id": "98ed0518e25e1589",
+        "type": "file",
+        "z": "d18039bb6d4424f0",
+        "name": "",
+        "filename": "/home/pi/Desktop/sample.csv",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 1040,
+        "y": 520,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "986e8fce3253ad2e",
+        "type": "debug",
+        "z": "d18039bb6d4424f0",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1010,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "9a4d9ea663db61d4",
+        "type": "csv",
+        "z": "d18039bb6d4424f0",
+        "name": "",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "once",
+        "multi": "one",
+        "ret": "\\n",
+        "temp": "temperature, humidity",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": "",
+        "x": 790,
+        "y": 480,
+        "wires": [
+            [
+                "986e8fce3253ad2e",
+                "98ed0518e25e1589"
+            ]
+        ]
+    },
+    {
+        "id": "9b029f20cacbf59a",
+        "type": "function",
+        "z": "d18039bb6d4424f0",
+        "name": "Write csv format",
+        "func": "str = msg.payload\nnew_payload = {}\nnew_payload.temperature = str.substring(14,18)\nnew_payload.humidity = str.substring(30,35)\nmsg.payload = new_payload\n\nreturn msg",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 660,
+        "y": 480,
+        "wires": [
+            [
+                "9a4d9ea663db61d4"
+            ]
+        ]
+    },
+    {
+        "id": "36672616760ec1dc",
+        "type": "ui_group",
+        "name": "Default",
+        "tab": "16ec7043.17f57",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "16ec7043.17f57",
+        "type": "ui_tab",
+        "name": "Text",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]

@@ -1,0 +1,126 @@
+[
+    {
+        "id": "dcf19b56a35f0ca5",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "138945fc7545d51a",
+        "type": "inject",
+        "z": "dcf19b56a35f0ca5",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "1",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 230,
+        "y": 280,
+        "wires": [
+            [
+                "a6f71d3b7774b96f"
+            ]
+        ]
+    },
+    {
+        "id": "a6f71d3b7774b96f",
+        "type": "exec",
+        "z": "dcf19b56a35f0ca5",
+        "command": "python3 /home/pi/Desktop/waterproof_temp.py",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "DS18B20",
+        "x": 400,
+        "y": 280,
+        "wires": [
+            [
+                "142b41d73e9f4fa4"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "142b41d73e9f4fa4",
+        "type": "function",
+        "z": "dcf19b56a35f0ca5",
+        "name": "Temperature",
+        "func": "str = msg.payload\nmsg.payload = str.substring(2,6)\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 590,
+        "y": 280,
+        "wires": [
+            [
+                "57ff1befc2be2b0b"
+            ]
+        ]
+    },
+    {
+        "id": "57ff1befc2be2b0b",
+        "type": "ui_gauge",
+        "z": "dcf19b56a35f0ca5",
+        "name": "",
+        "group": "62f86e1ff1f355a7",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "gauge",
+        "label": "ºC",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "50",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "className": "",
+        "x": 770,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "62f86e1ff1f355a7",
+        "type": "ui_group",
+        "name": "Temperature",
+        "tab": "8c47801cc481b366",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "8c47801cc481b366",
+        "type": "ui_tab",
+        "name": "Home",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]
