@@ -1,2 +1,2 @@
 # tfg-icebollada
-Repositorio de TFG de Isabel Cebollada
+TFG repository by Isabel Cebollada Gracia

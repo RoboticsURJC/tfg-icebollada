@@ -1,0 +1,173 @@
+[
+    {
+        "id": "dcf19b56a35f0ca5",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "d4e04650df9d5998",
+        "type": "inject",
+        "z": "dcf19b56a35f0ca5",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "1",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 330,
+        "y": 300,
+        "wires": [
+            [
+                "35eabd32c8829b0f"
+            ]
+        ]
+    },
+    {
+        "id": "35eabd32c8829b0f",
+        "type": "exec",
+        "z": "dcf19b56a35f0ca5",
+        "command": "python3 Desktop/temp_hum.py",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "AM2315",
+        "x": 580,
+        "y": 280,
+        "wires": [
+            [
+                "0b0d0e5bf7332efe",
+                "bd6e5aca319fc44d"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "0b0d0e5bf7332efe",
+        "type": "function",
+        "z": "dcf19b56a35f0ca5",
+        "name": "Temperature",
+        "func": "str = msg.payload\nmsg.payload = str.substring(14,18)\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 750,
+        "y": 220,
+        "wires": [
+            [
+                "4c3f72c455415f51"
+            ]
+        ]
+    },
+    {
+        "id": "4c3f72c455415f51",
+        "type": "ui_gauge",
+        "z": "dcf19b56a35f0ca5",
+        "name": "TEMP",
+        "group": "36672616760ec1dc",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Temperature",
+        "label": "ºC",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "50",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "className": "",
+        "x": 950,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "bd6e5aca319fc44d",
+        "type": "function",
+        "z": "dcf19b56a35f0ca5",
+        "name": "Humidity",
+        "func": "str = msg.payload\nmsg.payload = str.substring(30,35)\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 740,
+        "y": 300,
+        "wires": [
+            [
+                "28141f49d6e1381a"
+            ]
+        ]
+    },
+    {
+        "id": "28141f49d6e1381a",
+        "type": "ui_gauge",
+        "z": "dcf19b56a35f0ca5",
+        "name": "HUM",
+        "group": "36672616760ec1dc",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Humidity",
+        "label": "%",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "className": "",
+        "x": 930,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "36672616760ec1dc",
+        "type": "ui_group",
+        "name": "Default",
+        "tab": "16ec7043.17f57",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "16ec7043.17f57",
+        "type": "ui_tab",
+        "name": "Text",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]

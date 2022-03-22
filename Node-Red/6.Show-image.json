@@ -1,0 +1,122 @@
+[
+    {
+        "id": "56ca6d711631b19c",
+        "type": "tab",
+        "label": "Flow 2",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "6757dc9f.792504",
+        "type": "inject",
+        "z": "56ca6d711631b19c",
+        "name": "",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 410,
+        "y": 500,
+        "wires": [
+            [
+                "23f5cb94.03cb04"
+            ]
+        ]
+    },
+    {
+        "id": "fa1abaf4.885038",
+        "type": "template",
+        "z": "56ca6d711631b19c",
+        "name": "Image in",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "<img src=\"data:image/png;base64,{{payload}}\"style=\"width=\"569\" height=\"197\"\"/>",
+        "output": "str",
+        "x": 620,
+        "y": 580,
+        "wires": [
+            [
+                "b42fd1dc.ba144"
+            ]
+        ]
+    },
+    {
+        "id": "b42fd1dc.ba144",
+        "type": "ui_template",
+        "z": "56ca6d711631b19c",
+        "group": "b586a8f7.e060e8",
+        "name": "RIO Logo",
+        "order": 8,
+        "width": "15",
+        "height": "15",
+        "format": "<div ng-bind-html=\"msg.payload\"></div>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": false,
+        "templateScope": "local",
+        "className": "",
+        "x": 820,
+        "y": 580,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "23f5cb94.03cb04",
+        "type": "file in",
+        "z": "56ca6d711631b19c",
+        "name": "",
+        "filename": "/home/pi/Desktop/A.jpg",
+        "format": "",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 630,
+        "y": 500,
+        "wires": [
+            [
+                "b83253e6.36f6a"
+            ]
+        ]
+    },
+    {
+        "id": "b83253e6.36f6a",
+        "type": "base64",
+        "z": "56ca6d711631b19c",
+        "name": "",
+        "action": "",
+        "property": "payload",
+        "x": 1020,
+        "y": 500,
+        "wires": [
+            [
+                "fa1abaf4.885038"
+            ]
+        ]
+    },
+    {
+        "id": "b586a8f7.e060e8",
+        "type": "ui_group",
+        "name": "groov RIO",
+        "tab": "c40344b0.c82658",
+        "order": 1,
+        "disp": true,
+        "width": "26",
+        "collapse": false
+    },
+    {
+        "id": "c40344b0.c82658",
+        "type": "ui_tab",
+        "name": "Home",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]
