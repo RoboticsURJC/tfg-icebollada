@@ -1,0 +1,141 @@
+[
+    {
+        "id": "dcf19b56a35f0ca5",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "d4e04650df9d5998",
+        "type": "inject",
+        "z": "dcf19b56a35f0ca5",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "1",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 330,
+        "y": 300,
+        "wires": [
+            [
+                "35eabd32c8829b0f"
+            ]
+        ]
+    },
+    {
+        "id": "35eabd32c8829b0f",
+        "type": "exec",
+        "z": "dcf19b56a35f0ca5",
+        "command": "python3 Desktop/waterdetector.py",
+        "addpay": "",
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "Water level",
+        "x": 530,
+        "y": 300,
+        "wires": [
+            [
+                "0b0d0e5bf7332efe"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "0b0d0e5bf7332efe",
+        "type": "function",
+        "z": "dcf19b56a35f0ca5",
+        "name": "Percentage",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 730,
+        "y": 280,
+        "wires": [
+            [
+                "111b333ed6c85023"
+            ]
+        ]
+    },
+    {
+        "id": "111b333ed6c85023",
+        "type": "ui_level",
+        "z": "dcf19b56a35f0ca5",
+        "group": "1a5e644e89b5b0c3",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "",
+        "colorHi": "#00e60f",
+        "colorWarn": "#eeff00",
+        "colorNormal": "#ff4242",
+        "colorOff": "#8b7e7e",
+        "min": 0,
+        "max": "3",
+        "segWarn": "1",
+        "segHigh": "2",
+        "unit": "",
+        "layout": "sh",
+        "channelA": "",
+        "channelB": "",
+        "decimals": 0,
+        "animations": "soft",
+        "shape": "3",
+        "colorschema": "valuedriven",
+        "textoptions": "default",
+        "colorText": "#eeeeee",
+        "fontLabel": "",
+        "fontValue": "",
+        "fontSmall": "",
+        "colorFromTheme": true,
+        "textAnimations": true,
+        "hideValue": true,
+        "tickmode": "off",
+        "peakmode": false,
+        "property": "payload",
+        "peaktime": 3000,
+        "x": 930,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "1a5e644e89b5b0c3",
+        "type": "ui_group",
+        "name": "Water level",
+        "tab": "8c47801cc481b366",
+        "order": 3,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "8c47801cc481b366",
+        "type": "ui_tab",
+        "name": "Home",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]
