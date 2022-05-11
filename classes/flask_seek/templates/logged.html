@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block page_content %}
+<html>
+<body>
+    <h1 style="color: white;"> Thermal camera using OpenCV: Activated </h1>
+    <img id="bg" src="{{ url_for('video_feed')}}"
+        width="400"
+        height="300">
+<!-- <form class="main" action="/off">
+            <input type="submit" name="off_button" value="Off" /></center>
+        </form> -->
+</body>
+</html>
+{% endblock %}
