@@ -4,7 +4,7 @@
 
 \begin{flushright}
 \begin{minipage}[]{10cm}
-\emph{Quizás algún fragmento de libro inspirador...}\\
+%\emph{Quizás algún fragmento de libro inspirador...}\\
 \end{minipage}\\
 
 Autor, \textit{Título}\\
@@ -12,44 +12,77 @@ Autor, \textit{Título}\\
 
 \vspace{1cm}
 
-El desarrollo tecnológico ha provocado el avance en la robótica, un campo muy amplio en la actualidad que está facilitando la vida a los humanos en distintos ámbitos, entre ellos, unos de los más importantes: la visión artificial,  cuyo objetivo es que los ordenadores sean capaces de percibir y entender el entorno, pudiendo así actuar por ellos mismos en función de la situación que se encuentren. \\
-Para que la visión funcione correctamente, es necesario tener algoritmos de Deep Learning, que es la tecnología que permite a un ordenador aprender como un ser humano a base de entrenamiento. Esto tiene un gran impacto sobre el ser humano, ya que trabajos en los que se requiere la vigilancia o atención completa de una persona, podrían ser sustituidos por sistemas con visión artificial y Deep Learning.
+El desarrollo tecnológico ha provocado el avance en la robótica, un campo de investigación muy amplio en la actualidad que está facilitando la vida a los humanos.\\
+Cualquier robot está formado por tres componentes principales; un sistema de control, sensores y actuadores. Dentro de los numerosos sensores que pueden tener los robots, uno de los que está adquiriendo mayor relevancia en los últimos años es el sensor de visión.\\
+Los sensores de visión requieren un proceso previo a su funcionamiento para obtener los resultados deseados. Este proceso está basado en algoritmos de entrenamiento.\\
+Los algoritmos más utilizados hoy en día se obtienen bajo la técnica del Machine Learning (ML) ---o aprendizaje automático---, cuyo objetivo es que las máquinas sean capaces de aprender sin tener que ser programadas explícitamente. Está formado por diferentes subcampos, entre ellos el Deep Learning ---o aprendizaje profundo---, que utiliza algoritmos de ML basándose en estructuras similares al modelo del cerebro humano. El Deep Learning es mucho más complejo que el ML, y es uno de los más utilizados para el desarrollo de la visión artificial(VA).\\
+
+En este capítulo se explican en profundidad los términos presentados en el párrafo anterior. Asimismo se presentan sistemas actuales que existen en el mercado con una idea similar a la de este trabajo.\\
+
+%Este capítulo se centra en la explicación de los conceptos que engloban el contexto del proyecto. La robótica, la Inteligencia Artificial (IA), la visión artificial (VA) y los tipos de aprendizaje  que hay sobre ella, son los temas que presenta el capítulo. Asimismo se presentan sistemas actuales que existen en el mercado con una idea similar a la de este trabajo.\\
 
 \section{La robótica}
-\label{sec:miseccion} % etiqueta para luego referenciar esta sección
+\label{sec:robotica}
+La robótica, aunque no siempre bajo ese nombre, se lleva utilizando desde hace mucho tiempo con el propósito de desarrollar herramientas automatizadas.\\
+Hasta mediados del siglo pasado, esta disciplina se centraba en el desarrollo de máquinas que realizaban un trabajo que resultaba tedioso, debido a su repetitividad, para el ser humano. Esta concepción se refleja con Henry Ford y la producción en serie en su fábrica de coches inaugurada en 1901.\\
 
-La robótica, aunque no bajo ese nombre, se lleva utilizando desde hace mucho tiempo, siempre pensándola con el concepto de "herramientas automatizadas", desde Aristóteles hasta mediados del siglo pasado. Hasta entonces esta disciplina siempre se había entendido como máquinas que realizan un trabajo repetitivo por el ser humano, facilitándole a éste la vida. Esta concepción se refleja con Henry Ford y la producción en serie.\\
-Sin embargo, la palabra \textit{robota} que significa "trabajo forzado", origen de la palabra robot, aparece por primera vez en 1921 en una obra de teatro de un autor checo llamado Karel Capek. Empezando a concebir esta palabra a principios de siglo pasado, empezó a nacer el desarrollo de la idea de robótica que tenemos hoy en día, en el que la concepción de robótica ya no es "herramienta automatizadas", sino una industria interdisciplinaria que surge de la intersección de la ciencia, la ingeniería y la tecnología, uniendo el conocimiento científico, computacional e informático, con diversas ramas de la ingeniería, ya que no solo implica el estudio de robots, sino de su diseño, programación y aplicación. Es un conjunto de múltiples disciplinas como la informática, la AI, la informática, la visión, la programación o el álgebra entre otras muchas.\\
-Con el paso de estos últimos años la robótica ha adquirido un gran peso y un desarrollo convierte a las películas futuristas que surgían hace unos años en el presente y que, aunque queda todavía mucho camino por continuar en esta amplia disciplina, es, actualmente una realidad entre los humanos.\\
+Sin embargo, la palabra \textit{robota}, origen de la palabra robot que significa trabajo forzado aparece por primera vez en 1921 en una obra de teatro de un autor checo llamado Karel Capek.\\
+Empezando a concebir esta palabra a principios de siglo pasado, comenzó a nacer el desarrollo de la idea de robótica que existe hoy en día y que no se centra exclusivamente en el desarrollo de herramientas automatizadas, sino que se concibe como una industria interdisciplinaria que surge de la intersección de la ciencia, la ingeniería y la tecnología.\\
+Esta nueva concepción une el conocimiento científico, computacional e informático con diversas ramas de la ingeniería, ya que no solo implica el estudio de robots, sino también de su diseño, programación y aplicación. Así, la robótica incluye disciplinas como la IA, la informática, la VA, la programación o el álgebra entre otras muchas.\\
 
-Esta disciplina tiene como fin ayudar al ser humano en todos los ámbitos, tanto en la vida cotidiana como en la vida profesional, evitando los trabajos peligrosos y aburridos, e incluso haciendo trabajos que el ser humano no sería capaz de hacer por si mismo en distintos sectores, como pueden ser la medicina, facilitando el trabajo a los científicos con  el robot Da Vinci  \ref{fig:robots}, uno de sus robots más famosos en el que recibiendo las órdenes que el cirujano comanda a través de la consola, es capaz de hacer cirugías de alta precisión, eliminando los tembleques que un humano pueda tener y aportando una mayor visión al cirujano; la robótica espacial, que permite que no sea necesaria la movilidad del humano además de portar sistemas sensoriales para las condiciones del entorno en otro planeta como el Curiosity  \ref{fig:robots}, cuya misión era evaluar la habitabilidad en Marte; frente a la radiación, pues es un trabajo que pondría en peligro a cualquier humano exponiéndole frente a la radioactividad del entorno, con el ejemplo de los robots que se usaron en Fukushima \ref{fig:robots} después que un tsunami y un terremoto provocasen el desastre, pudiendo acceder a la zona y poder limpiarla o en la industria del automóvil con los coches autónomos, donde es el propio coche capaz de realizar todas las funciones de conducción desde un punto A a un punto B sin necesidad de la intervención humana.
+En los últimos veinte años, la robótica ha adquirido un gran peso y un desarrollo tal que las películas futuristas que surgían hace unos años se han hecho realidad en el presente, aunque todavía quede mucho camino por continuar en esta amplia disciplina.\\
+
+Tras la primera aparición de la palabra \textit{robota}, la definición de robot ha ido formándose hasta la que hay en la actualidad:  cualquier máquina que opera de forma automática y autónoma, y que sustituye a los seres humanos en determinadas tareas, especialmente las peligrosas, aburridas o pesadas. Está compuesto por el sistema de control, los sensores y los actuadores.\\
+La analogía de un robot respecto a un ser humano es la siguiente: los sensores son sus sentidos, que transmiten la información percibida, bien sea del propio robot o del entorno al sistema de control, que se asemeja al cerebro humano. El sistema de control toma decisiones adaptándose a la información recibida, que modifica bien el entorno o bien la manera de actuar internamente del propio robot. \\
+En el caso de la modificación del entorno con sus actuadores, la similitud en el humano son las extremidades, mientras que si la modificación es interna, equivaldría a las reacciones del cuerpo humano frente a una herida o una infección, por ejemplo.\\
+
+%%%%%%%%
+% en distintos ámbitos; entre ellos, unos de los más importantes: la visión artificial,  cuyo objetivo es que los ordenadores sean capaces de percibir y entender el entorno, pudiendo así actuar por ellos mismos en función de la situación que se encuentren. \\
+%Para que la visión funcione correctamente, es necesario tener algoritmos de Deep Learning, que es la tecnología que permite a un ordenador aprender como un ser humano a base de entrenamiento. Esto tiene un gran impacto sobre el ser humano, ya que trabajos en los que se requiere la vigilancia o atención completa de una persona, podrían ser sustituidos por sistemas con visión artificial y Deep Learning.
+%%%%%
+
+El objetivo de la robótica es ayudar al ser humano en todos los ámbitos, tanto en la vida cotidiana como en la vida profesional, evitando los trabajos perjudiciales, e incluso haciendo trabajos que el ser humano no sería capaz de hacer por sí mismo en distintos sectores, como ---por ejemplo--- la medicina. En este ámbito cabe resaltar el robot Da Vinci (Figura \ref{fig:robots}-a), uno de sus robots más famosos que permite a un cirujano comandar órdenes a través de una consola, permitiéndole realizar cirugías de alta precisión eliminando los temblores nerviosos que un humano pueda tener y permitiendo al cirujano una mayor visión.\\
+Otro de los campos más importantes es la robótica espacial, cuyo objetivo primordial es explorar sitios inaccesibles u hostiles para el ser humano. Un ejemplo de estos robots es el Curiosity (Figura \ref{fig:robots}-b), cuya misión era evaluar la habitabilidad en Marte recogiendo información del entorno.\\
+Otro ejemplo de entornos hostiles se encuentra en el accidente nuclear que ocurrió en Fukushima en 2011 causado por un tsunami y un terremoto. Gracias a los robots (Figura \ref{fig:robots}-c), se pudo acceder a la zona para poder limpiarla.\\
+La industria del automóvil, con los coches autónomos es otro de los grandes frentes de la robótica. El objetivo es que un coche sea capaz de realizar todas las tareas de conducción de forma autónoma.
 \begin{figure}[h!]
   \begin{center}
-    \subfigure[Robot Da Vinci]{\includegraphics[width=45mm]{figs/da-vinci}}\hspace{8mm}
-    \subfigure[Robot Curiosity]{\includegraphics[width=48mm]{figs/curiosity}}\hspace{8mm}
-    \subfigure[Uno de los robots de Fukushima]{\includegraphics[width=40mm]{figs/fukushima}}
+    \subfigure[Robot Da Vinci]{\includegraphics[width=52mm]{figs/da-vinci}}\hspace{2mm}
+    \subfigure[Robot Curiosity]{\includegraphics[width=54mm]{figs/curiosity}}\hspace{2mm}
+    \subfigure[Fukushima]{\includegraphics[width=41mm]{figs/fukushima}}
   \end{center}
-\caption{Robots previamente mencionados.} \label{fig:robots}
-\end{figure}
+\caption[]{Ejemplos de la robótica en diferentes campos. \footnotemark} \label{fig:robots}
+\end{figure}\footnotetext{Imágenes obtenidas de https://images.google.com}
 
-\subsection{Inteligencia Artificial}
-La robótica es un conjunto de diferentes disciplinas que permiten abordar todos los campos que esta comprende. Uno de los campos en que a día de hoy la robótica está desarrollando y es muy importante es la AI, que consiste en replicar el funcionamiento mental a través del desarrollo de algoritmos para realizar determinadas tareas, e ir aprendiendo a medida que las realizan en base a la experiencia. Hay varios estudios en la actualidad con redes neuronales o algoritmos genéticos.\\
+\section{Inteligencia Artificial}
+La robótica engloba un conjunto de diferentes disciplinas que permiten abordar todos los campos que esta comprende. Uno de los campos más importantes es la IA, que consiste en replicar los mecanismos del cerebro humano mediante algoritmos que emplean unidades equivalentes a las neuronas. Estos algoritmos van aprendiendo a medida que realizan sus tareas en base a la experiencia que van adquiriendo durante su ejecución.\\
+Numerosos son los estudios existentes en la actualidad sobre la IA. Uno de ellos es la mejora del rendimiento y la eficiencia  del reconocimiento de fracturas radiográficas a través de la IA~\cite{radiografias}. Este algoritmo es capaz de detectar las fracturas en las radiografías con un menor rango de fallo y en menor tiempo que si el humano realiza el trabajo. En el caso de la figura \ref{fig:rads}-a, nueve especialistas no detectaron la fractura, 
+\begin{figure}[h!]
+  \begin{center}
+    \subfigure[]{\includegraphics[width=80mm]{figs/rad1}}\hspace{2mm}
+    \subfigure[]{\includegraphics[width=39.5mm]{figs/rad2}}
+  \end{center}
+\caption{Detección de fracturas en radiografías mediante IA} \label{fig:rads}
+\end{figure}\\
+
 Hay dos tipos de inteligencia artificial:
 \begin{itemize}
- \item{AI fuerte,} que está compuesta por la AI general, que es una teoría en la que una máquina tuviera una inteligencia humana, siendo capaz de resolver cualquier problema por sí misma; y la superinteligencia artificial, que superaría a la capacidad del cerebro humano. La AI fuete es todavía teórica y no hay ejemplos reales de su uso.
-  \item{AI débil,} está entrenada para realizar tareas específicas, que operan dentro de un rango que previamente ha sido definido. Los sistemas dotados con esta inteligencia parecen inteligentes, pero están limitados y que no pueden realizar nada fuera de ese contexto, como es \textit{Siri de Apple}.
+ \item{IA fuerte,} compuesta por la AI general y la superinteligencia artificial. La AI general está inspirada en la teoría de que una máquina tenga inteligencia humana, siendo capaz de resolver cualquier problema por sí misma. Por otro lado, la superinteligencia artificial supera la capacidad del cerebro humano. La IA fuerte es todavía teórica y no hay ejemplos reales de su uso.
+  \item{IA débil,} entrenada para realizar tareas específicas que operan dentro de un rango previamente definido. Los sistemas dotados con esta inteligencia parecen inteligentes, pero están limitados al contexto en el que trabajan. Un ejemplo es el asistente de voz Siri de Apple.
 \end{itemize}\
-La AI abarca diferentes campos como la comprensión, el reconocimiento y aprendizaje, \textit{a groso modo}, que a su vez, para su correcto funcionamiento, tienen extensos campos de estudio, entre los que destaca la visión artificial.\\
+La IA abarca diferentes áreas, como la comprensión, el reconocimiento o el aprendizaje. Asimismo, una de las líneas de investigación dentro de la IA es la VA, que se detalla a continuación.\\
 
 \subsection{Visión Artificial}
 \label{sec:subseccion}
-La visión artificial es uno de los campos más importantes de la AI que permite que los sistemas obtengan la información importante de imágenes digitales, vídeos u otras entradas visuales, y tomen acciones o hagan recomendaciones basadas en dicha información. Así pues, si la AI permite que los ordenadores piensen, la visión permite su observación, análisis y comprensión. Sin visión, una máquina no es capaz de reconocer ningún objeto, animal o persona en su entorno. \\
-La visión artificial se trata de asemejar lo máximo posible a la visión humana, con la diferencia de que esta segunda cuenta con las experiencias aprendidas para diferenciar los elementos que le rodean, su movimiento, su distancia o su tamaño. Así pues la visión artificial trata de asemejar el funcionamiento del ojo humano y su posterior procesamiento con el cerebro con cámaras, datos y sensores para poder obtener la máxima información del entorno así como algoritmos para poder procesar la imagen adecuadamente, en el menor tiempo posible ya que es necesaria una reacción rápida.\\
+La visión artificial es uno de los campos más importantes de la IA cuyo objetivo es que un sistema inteligente obtenga la información más relevante de las imágenes que percibe, y en base a el lo aprenda con las acciones más oportunas.\\
+Mientras que la IA permite que un sistema piense, la VA permite que este observe, analice y comprenda. Sin visión, una máquina no es capaz de percibir el entorno que le rodea; esto es, ningún objeto, animal o persona. \\
+Así como la IA trata de emular un cerebro humano, la VA hace lo mismo con respecto a la visión humana, con la diferencia de que esta segunda cuenta con las experiencias aprendidas para, entre otras cosas, diferenciar los elementos que le rodean, su movimiento, distancia o tamaño. Así pues, la visión artificial trata de asemejar el funcionamiento del ojo humano y su posterior procesamiento con el cerebro mediante  una cámara y el posterior procesamiento de los datos que esta vierte.\\
+
 Tiene diferentes usos, entre ellos los más fundamentales son:
 \begin{itemize}
- \item \textit{Clasificación de imágenes \ref{fig:vision},}  que consiste en asignar imágenes en una serie de categorías predefinidas a través de un algoritmo. Es necesario contar con una gran cantidad de datos para poder tener suficiente entrenamiento para fallar lo mínimo posible.
- \item \textit{Detección de objetos \ref{fig:vision},} que consiste en analizar partes de la imagen para localizar objetos mediante cuadros limitadores. Esto se consigue mediante el entrenamiento de una gran cantidad de imágenes en las que se etiquetan diferentes tipos de objetos y etiquetándolos por su nombre, obteniendo así los datos que se usarán para la detección en una imagen.
-  \item \textit{Segmentación de instancias \ref{fig:vision},} que consiste en el enmascaramiento exacto de los píxeles que representan a los objetos en una imagen. Es un paso más en la detección de objetos, siendo capaz de separar el objeto concreto del resto de la imagen. 
+ \item \textit{Clasificación de imágenes (Figura \ref{fig:vision}-a).} Consiste en asignar imágenes a una serie de categorías predefinidas a través de un algoritmo. Es necesario contar con una gran cantidad de datos para poder tener suficiente entrenamiento para fallar lo mínimo posible.
+ \item \textit{Detección de objetos (Figura \ref{fig:vision}-b).} Consiste en analizar partes de la imagen para localizar objetos señalándolos mediante cuadros limitadores. Esto se consigue mediante el entrenamiento de una gran cantidad de imágenes en las que se etiquetan diferentes tipos de objetos, obteniendo así los datos que se usarán para la detección en una imagen.
+  \item \textit{Segmentación de imágenes(Figura \ref{fig:vision}-c).} Consiste en el enmascaramiento exacto de los píxeles que representan a los objetos en una imagen. Es un paso más en la detección de objetos, siendo capaz de separar el objeto concreto del resto de la imagen. 
 \end{itemize}\
 \begin{figure}[h!]
   \begin{center}
@@ -58,63 +91,84 @@ Tiene diferentes usos, entre ellos los más fundamentales son:
     \subfigure[Segmentación de instancias]{\includegraphics[width=47mm]{figs/segmentacion}}
   \end{center}
 \caption[]{Algunos usos en la visión artificial.\footnotemark} \label{fig:vision}
-\end{figure}\footnotetext{Imágenes obtenidas de shorturl.at/tyACR}\\
-Un sistema dotado de visión funciona siguiendo tres niveles de operación:\\
-En primer lugar, la obtención de imágenes o vídeos mediante una cámara. Estas imágenes son transferidas al sistema para poder procesarlas posteriormente. En segundo lugar, el procesamiento de las imágenes para poder representar correctamente los datos de interés. Este proceso consiste en un trabajo automático del sistema en el que se elimina el ruido, reescalar, ajustar el contraste y otros ajustes para adaptar las imágenes.\\ Finalmente, la comprensión de imágenes, que es el paso clave para que el sistema pueda llamarse inteligente, donde a través de un modelo de aprendizaje, es capaz de realizar el objetivo de interés, como puede ser detectar un determinado objeto utilizando datos aprendidos en el pasado.\\
-Un ejemplo que está muy presente y en desarrollo actualmente es el caso de los coches autónomos \ref{fig:tesla}, que necesitan de una visión artificial impecable y sin fallos debido a que sus consecuencias pondrían en riesgo a los humanos. Estos coches utilizan distintos colores para detectar distintos elementos que puede encontrarse, como pueden ser líneas divisorias de la calzada, líneas delimitadoras de la calzada, semáforos, señales, objetos estáticos u objetos que se acercan. Así la computadora del coche procesa la información pudiendo detectar todo lo que afecta o potencialmente pueda afectar en la conducción y actúa en consecuencia.
+\end{figure}\footnotetext{Imágenes obtenidas de https://images.google.com}\\
+
+Un sistema dotado de visión funciona siguiendo tres niveles de operación. En primer lugar, la obtención de imágenes o vídeos mediante una cámara. Estas imágenes son transferidas al sistema. En segundo lugar, el procesamiento de estas imágenes para poder representar correctamente los datos de interés. Este proceso consiste en un trabajo automático del sistema en el que se elimina el ruido, se reescalan las imágenes o se ajusta el contraste entre otros para adaptar las imágenes.\\ Finalmente, se realiza la comprensión de imágenes, que es el paso clave para que el sistema pueda llamarse inteligente, donde a través de un modelo de aprendizaje, es capaz de realizar el objetivo de interés, como puede ser detectar un determinado objeto utilizando datos aprendidos en el pasado.\\
+Un ejemplo muy extendido de uso de la VA son los coches autónomos (Figura \ref{fig:tesla}). Necesitan un funcionamiento de la VA impecable y sin fallos debido a sus graves consecuencias.\\
+Con el uso de cámaras y sensores, el ordenador del coche es capaz de detectar los objetos de las imágenes que recibe, como señales o semáforos ---entre otros--- y actuar en consecuencia del estado de estos. El coche es capaz de tener una vista de 360º y de reconocer todos los elementos de su entorno, para ser capaz de actuar como un humano actuaría.
 \begin{figure} [h!]
   \begin{center}
     \includegraphics[width=8cm]{figs/coche_autonomo}
   \end{center}
   \caption[]{Vision de las cámaras y sensores de un Tesla autónomo. \footnotemark}
   \label{fig:tesla}
-\end{figure}\footnotetext{Imágenes obtenidas de shorturl.at/huBFL}\\
-Como se puede apreciar, es imprescindible disponer de una amplia cantidad de datos y de información basada en el aprendizaje pasado para que el algoritmo sea preciso y tenga el menor número de errores, para poder definirlo como robusto y fiable. Para lograr esto se pueden usar dos tecnologías; deep learning y una red neuronal convolucional o CNN.\\
+\end{figure}\footnotetext{Imágenes obtenidas de https://images.google.com}\\
 
-\subsection{Machine Learning}
-Es necesario dotar a los sistemas con una inteligencia artificial para poder conseguir que sean capaces de aprender automáticamente sin necesidad de ayuda externa. Dentro de la AI se encuentra una categoría denominada \textit{Machine Learning} o aprendizaje automático cuyo fin es que los algoritmos descubran patrones en conjuntos de datos que les hacen aprender y mejorar respecto a la experiencia anterior pudiendo así tener un aprendizaje autónomo para poder realizar una tarea sin ayuda externa.\\
+Para que la VA funcione correctamente, es necesario disponer de algoritmos precisos que sean fiables. Entre los distintos métodos que existen para entrenar estos algoritmos, uno de los más utilizados es el Machine Learning o aprendizaje automático.÷÷
+%Es imprescindible disponer de una amplia cantidad de datos y de información basada en el aprendizaje pasado para que el algoritmo sea preciso y tenga el menor número de errores, para poder definirlo como robusto y fiable. Para lograr esto se pueden usar dos tecnologías; deep learning y una red neuronal convolucional o CNN.\\
 
-En el sistema de aprendizaje de un algoritmo de \textit{Machine Learning} hay tres partes principales: En primer lugar un proceso de decisión, en el que una vez recibidos los datos de entrada, que pueden no estar etiquetados o bien estarlo para así indicarle al modelo lo que debe identificar, el algoritmo genera una estimación en los datos partiendo de un patrón.\\
-La segunda parte es una función de error que sirve para evaluar la precisión del modelo sobre la decisión tomada, y la tercera y última parte es un proceso de optimización de modelos donde las ponderaciones se ajustan en el caso de que el modelo se pueda ajustar mejor a el conjunto de datos de entrenamiento, repitiendo este proceso hasta cumplir un umbral de precisión.
+\section{Machine Learning}
+Para que la IA pueda simular al cerebro humano, debe ser capaz también de aprender. Este aprendizaje se lleva a cabo a través de algoritmos. Dentro de la IA se encuentra una categoría denominada Machine Learning o aprendizaje automático, cuyo fin es que los algoritmos descubran patrones en conjuntos de datos que les hacen aprender y mejorar respecto a la experiencia anterior pudiendo así tener un aprendizaje autónomo para poder realizar una tarea sin ayuda externa.\\
+
+En el sistema de aprendizaje de un algoritmo de ML hay tres partes principales. En primer lugar, un proceso de decisión, en el que una vez recibidos los datos de entrada el algoritmo genera una estimación en los datos partiendo de un patrón. Los datos de entrada pueden estar o no etiquetados. Si lo están, indican al modelo lo que debe identificar. La segunda parte es una función de error que sirve para evaluar la precisión del modelo sobre la decisión tomada. La tercera y última parte es un proceso de optimización de modelos donde las ponderaciones se ajustan en el caso de que el modelo se pueda adaptar mejor a el conjunto de datos de entrenamiento, repitiendo este proceso hasta cumplir un umbral de precisión.\\
 
 Hay diferentes tipos de \textit{Machine Learning}:
 \begin{itemize}
- \item \textit{Aprendizaje supervisado,} en el que los conjuntos de datos para entrenar los datos que servirán como experiencia y base al algoritmo a la hora de hacer una clasificación con un nuevo dato están etiquetados, usando así un conjunto de datos entrenados iniciales a la hora de recibir un nuevo dato.
- \item \textit{Aprendizaje no supervisado,} en el que en este caso los datos están sin etiquetar, es decir, no cuenta con un conjuntos entrenado previamente.
+ \item \textit{Aprendizaje supervisado,} donde los conjuntos de datos están etiquetados. Estos conjuntos de datos sirven para entrenar los datos que servirán como experiencia y base al algoritmo a la hora de hacer una clasificación con un nuevo dato. Por tanto, usa un conjunto de datos entrenados iniciales a la hora de recibir un nuevo dato.
+ \item \textit{Aprendizaje no supervisado,} donde los conjuntos de datos están sin etiquetar, es decir, no cuenta con un conjunto entrenado previamente.
  \item \textit{Aprendizaje semisupervisado,} que es el término medio entre los dos anteriores. En este caso, en el entrenamiento se usa un conjunto de datos más pequeño que en el aprendizaje supervisado y usa un grupo más grande de datos sin etiquetar.
 \end{itemize}\
 
-\subsection{Deep Learning}
-Dentro del \textit{Machine Learning} se encuentra el \textit{Deep Learning} o aprendizaje profundo, que se diferencia del primero en el tipo de datos con el que trabaja así como en la manera en que aprende cada algoritmo, pues el \textit{Deep Learning} elimina algunos de los datos de preprocesado, eliminando gran parte de la intervención humana y aprendiendo autónomamente con cada nueva información que recibe y permitiendo conjuntos de datos más grandes.\\
-El \textit{Deep Learning} es una forma especializada de \textit{Machine Learning}, capaz  de detectar las características de un conjunto de datos para clasificarlos en distintas clases y no necesitando a un humano para definir previamente estas características como sucedía con ML. A través de distintos procesos, el algoritmo se ajusta a la mayor exactitud, mejorando así la precisión para el próximo dato. Es la técnica que más se asemeja al aprendizaje humano, y lo hace usando redes neuronales, que tratan de asemejar el funcionamiento del cerebro con la combinación de distintos datos de entrada, pesos de ponderación y \textit{bias}. El \textit{Deep Learning} también puede ser de tipo supervisado o no supervisado, dependiendo de si los datos están o no etiquetados, como sucede en el \textit{Machine Learning}.\\
-Las redes neuronales \ref{fig:red} consisten en distintas capas de nodos interconectados, donde cada nodo se basa en su capa anterior para refinar y optimizar la precisión. Está compuesto por la capas visibles, que son la primera, donde el modelo recibe los nuevos datos de entrada, y la última, donde se obtiene el resultado de predicción o clasificación, y las capaz ocultas o \textit{hidden layers} que son las que realizan todo el proceso de optimización hasta llegar al resultado final.\\
+\section{Deep Learning}
+De la misma forma que el ML está dentro del amplio campo de la IA, el ML también tiene diferentes campos. Entre ellos está el Deep Learning o aprendizaje profundo, que es mucho más complejo del ML. El Deep Learning sigue tratando de simular el cerebro humano ---siendo siempre el objetivo--- con la diferencia de que lo hace simulando unidades equivalentes a las neuronas.\\
+Mientras el ML necesitaba un humano para definir previamente las características de un conjunto de datos para su clasificación, el Deep Learning no necesita intervención humana.\\
+Este aprendizaje profundo se asemeja mucho más al aprendizaje humano por tener un funcionamiento similar al de las neuronas. Este funcionamiento se denomina red neuronal.\\
+
+Las redes neuronales (Figura \ref{fig:red}) consisten en distintas capas de nodos interconectados, donde cada nodo se basa en su capa anterior para refinar y optimizar la precisión. Está compuesto por la capa visible, que es la primera capa, donde el modelo recibe los nuevos datos de entrada. Las otras son las capas ocultas o hidden layers, que son las que realizan todo el proceso de optimización hasta llegar al resultado final.\\
 \begin{figure} [h!]
   \begin{center}
-    \includegraphics[width=8cm]{figs/deep_learning}
+    \includegraphics[width=12cm]{figs/deep_learning}
   \end{center}
   \caption[]{Simple ejemplo de una red neuronal en el algoritmo de Deep Learning. \footnotemark}
   \label{fig:red}
-\end{figure}\footnotetext{Imágenes obtenidas de shorturl.at/kmpT5}\\
+\end{figure}\footnotetext{Imagen obtenida de https://images.google.com}\\
 
-Este aprendizaje es una técnica muy importante a día de hoy que es necesaria para obtener resultados óptimos como en el campo de la visión artificial.\\
-Algunas de las aplicaciones más conocidas o que acompañan a los humanos en su día a día son los coches autónomos, como se ha comentado anteriormente, que necesitan reconocer de manera inmediata qué decisiones tomar frente a la situación que se les presente, los asistentes virtuales, que son capaces de establecer una conversación, y que toman cada contacto con el usuario como un nuevo dato que utilizan para aprender continuamente, reconocimiento visual \ref{fig:visual} de caras, personas o elementos en imágenes o vídeos pudiendo detectar el objeto de interés, generación automática de texto o la traducción de este partiendo de imágenes, recomendaciones de películas o serie en base a los gustos de cada persona en plataformas como \textit{Netflix}, \textit{Spotify} o \textit{Amazon}, hasta en el campo de la biomedicina, siendo capaz de predecir los cambios en los procesos celulares debido a la variación genética o de detectar si las radiografías indican enfermedades, o con el Big Data, que son todos los datos básicos que se recogen constantemente de los humanos a través de internet donde el \textit{Deep Learning} es capaz de extraer análisis y aprender de todas estas cantidades de datos.
+Existen multitud de estudios sobre el Deep Learning. Uno de ellos ha sido la restauración de textos antiguos con el uso de una red neuronal profunda llamada Ithaca. Con ella se ha conseguido reparar textos dañados con una precisión del 62\% por sí sola. Está pensada para utilizarla con los historiadores, que han mejorado su precisión del 25\% al 72\% con esta nueva herramienta.
 \begin{figure} [h!]
   \begin{center}
-    \includegraphics[width=8cm]{figs/visual_recognition}
+    \includegraphics[width=11cm]{figs/textos}
   \end{center}
-  \caption[]{Reconocimiento visual en visión con técnica de Deep Learning. \footnotemark}
+  \caption{Decreto sobre la Acrópolis de Atenas reconstruido con Ithaca.}
   \label{fig:visual}
-\end{figure}\footnotetext{Imágenes obtenidas de shorturl.at/kKRS6}\\
+\end{figure}\\
+\\
 
-\subsection{Sistema multisensorial}
-Debido a la importancia de las anteriores secciones y al auge que están teniendo en la actualidad, desde la robótica al \textit{Deep Learning}, la decisión de este trabajo ha sido realizar un sistema multisensorial monitorizado.\\
-La base idea de este trabajo ha sido pensada para un laboratorio de animales, pues la robótica está presente en este ámbito así como en otros muchos aunque sin embargo, en este sector no trabajan ingenieros, por lo que puede haber trabajo que se realice en el laboratorio que podría mejorarse hasta incluso automatizarse. Para obtener más información, se ha contactado con el laboratorio de animales de la Universidad de Alcalá de Henares \footnote{\url{https://www.uah.es/es/}}  para conocer la situación en la que trabajan. Se ha notado que hay bastantes cosas que se podrían mejorar y se ha enfocado el objetivo en el estudio de los ratones del laboratorio, que requieren una observación constante así como del entorno en el que se encuentran debido a que que deben ser unas condiciones determinadas.\\
-Después de conocer esta información la idea del trabajo ha tomado más forma e idea, decidiendo así componer un sistema multisensorial, que consiste en dotar a un computador de diferentes sensores que le permitan obtener datos del entorno que le rodea para poder actuar en función a ellos para ofrecer a la cubeta en la que se encuentran los ratones las mejores condiciones y así poder obtener parámetros importantes del entorno de los ratones como pueden ser la temperatura, humedad o calidad del aire. Así mismo, debido al desconocimiento de los trabajadores del laboratorio del mundo de la robótica y la ingeniería en general, se ofrece una interfaz gráfica donde los valores numéricos obtenidos por los sensores, así como cualquier interacción necesaria se traducen en \textit{widgets} comprensibles para cualquier usuario de una manera intuitiva y sencilla.\\
-Por último, con una cámara, que es uno de los sensores incluidos en este sistema, se obtienen vídeos de los ratones, que, aplicando a la visión un algoritmo de \textit{Deep Learning} para realizar reconocimiento de objetos, en este caso, ratones, sea el sistema capaz de evaluar el tiempo que pasan los ratones en las diferentes zonas de la cubeta así como en cada una de las dos cubetas interconectadas por un tubo, evitando así el trabajo que tiene una persona a día de hoy de grabar vídeos de veinticuatro horas y visualizarlos para poder analizar las características del entorno y el comportamiento de los ratones sin automatización alguna.\\
-Una característica extra a este sistema es que se ha realizado con una plataforma de bajo coste, lo que significa que tanto el sistema computacional como los sensores utilizados son económicamente accesibles para cualquier usuario, por lo que está al alcance de cualquier usuario que lo quiera incorporar.\\
+También existen aplicaciones de Deep Learning que se utilizan en la vida cotidiana, como los asistentes virtuales. Más conocidos bajo el nombre de Siri o Alexa ---entre otros---, los asistentes virtuales funcionan con algoritmos de Deep Learning ayudando a los usuarios a realizar tareas, aprendiendo continuamente de la información que reciben.\\
+Otro ejemplo es el reconocimiento de imágenes. Entre otros ejemplos, para desbloquear algunos teléfonos móviles es posible hacerlo a través del reconocimiento facial. Este sistema funciona gracias al aprendizaje del patrón de la cara para posteriormente poder detectarla.
+\begin{figure} [h!]
+  \begin{center}
+    \includegraphics[width=8cm]{figs/caras}
+  \end{center}
+  \caption[]{Reconocimiento facial con técnica de Deep Learning. \footnotemark}
+  \label{fig:visual}
+\end{figure}\footnotetext{Imagen obtenida de https://images.google.com}\\
+\\
+\\
+\\
+\\
+\section{Sistemas multisensoriales}
+Como se ha explicado en las secciones anteriores, el desarrollo del Deep Learning es muy importante. Lo es especialmente en el campo de la visión artificial, pues permite crear aplicaciones sofisticadas que simulan la visión humana. Si además de estos sensores de visión, a los robots les incorporan otros tipos de sensores, el resultado de la actuación del robot mejora, ya que, además de percibir la imagen del entorno está percibiendo más información que puede ser útil a la hora de tomar decisiones. Retomando la analogía con el ser humano, si un humano, además de ver, es capaz de sentir, oler o tocar, recibe más información por lo que puede conocer mejor la situación del entorno en el que se encuentra.\\
 
-\subsection{Comparación con otros sistemas del mercado}
-Algunos de los sistemas que hay actualmente en el mercado son:
+Algunos ejemplos de sistemas multisensoriales que se han desarrollado son:
+
+
+%Debido a la importancia de las anteriores secciones y al auge que están teniendo en la actualidad, desde la robótica al \textit{Deep Learning}, la decisión de este trabajo ha sido realizar un sistema multisensorial monitorizado.\\
+%La base idea de este trabajo ha sido pensada para un laboratorio de animales, pues la robótica está presente en este ámbito así como en otros muchos aunque sin embargo, en este sector no trabajan ingenieros, por lo que puede haber trabajo que se realice en el laboratorio que podría mejorarse hasta incluso automatizarse. Para obtener más información, se ha contactado con el laboratorio de animales de la Universidad de Alcalá de Henares \footnote{\url{https://www.uah.es/es/}}  para conocer la situación en la que trabajan. Se ha notado que hay bastantes cosas que se podrían mejorar y se ha enfocado el objetivo en el estudio de los ratones del laboratorio, que requieren una observación constante así como del entorno en el que se encuentran debido a que que deben ser unas condiciones determinadas.\\
+%Después de conocer esta información la idea del trabajo ha tomado más forma e idea, decidiendo así componer un sistema multisensorial, que consiste en dotar a un computador de diferentes sensores que le permitan obtener datos del entorno que le rodea para poder actuar en función a ellos para ofrecer a la cubeta en la que se encuentran los ratones las mejores condiciones y así poder obtener parámetros importantes del entorno de los ratones como pueden ser la temperatura, humedad o calidad del aire. Así mismo, debido al desconocimiento de los trabajadores del laboratorio del mundo de la robótica y la ingeniería en general, se ofrece una interfaz gráfica donde los valores numéricos obtenidos por los sensores, así como cualquier interacción necesaria se traducen en \textit{widgets} comprensibles para cualquier usuario de una manera intuitiva y sencilla.\\
+%Por último, con una cámara, que es uno de los sensores incluidos en este sistema, se obtienen vídeos de los ratones, que, aplicando a la visión un algoritmo de \textit{Deep Learning} para realizar reconocimiento de objetos, en este caso, ratones, sea el sistema capaz de evaluar el tiempo que pasan los ratones en las diferentes zonas de la cubeta así como en cada una de las dos cubetas interconectadas por un tubo, evitando así el trabajo que tiene una persona a día de hoy de grabar vídeos de veinticuatro horas y visualizarlos para poder analizar las características del entorno y el comportamiento de los ratones sin automatización alguna.\\
+%Una característica extra a este sistema es que se ha realizado con una plataforma de bajo coste, lo que significa que tanto el sistema computacional como los sensores utilizados son económicamente accesibles para cualquier usuario, por lo que está al alcance de cualquier usuario que lo quiera incorporar.\\
+
+%\subsection{Comparación con otros sistemas del mercado}
 \begin{itemize}
  \item \textit{Sistema de monitorización en tiempo real la salud animal \footnote{\url{https://www.ucm.es/data/cont/docs/3-2017-05-22-2017_05_not5.pdf}}.} La Universidad Complutense de Madrid \footnote{\url{https://www.ucm.es}} realizó un sistema para detectar de forma temprana las enfermedades o infecciones que tienen síntomas febriles en animales de granja, más concretamente en cerdos. Este sistema se desarrolló con la instalación de microchips y otro tipo de sensores en los animales para poder controlar las condiciones como su temperatura o el consumo de agua de los bebederos, de forma que un ordenador muestra esta información de manera gráfica.\\
 También se incluye una monitorización grupal mediante grabaciones diarias para que el sistema detecte cualquier tipo de actividad no común. 
@@ -138,11 +192,11 @@ Este sistema se creó con la instalación de sensores en cada una de las vacas c
 \end{itemize}\
 
 El comportamiento que tienen los animales puede ofrecer mucha información acerca de su salud si se mantiene una observación constante, pero también tienen una gran importancia las condiciones del entorno en la que se encuentran, ya que pueden ser decisivas para detectar el motivo de su comportamiento. Por ello, es importante tener un seguimiento constante y automatizado de estas características permitiendo al humano encargarse únicamente en controlar los datos que el sistema registra.
-
 \
 
 \
 
 \
+En esta última sección de los sistemas multisensoriales se enmarca el trabajo realizado, englobado bajo el contexto de los términos nombrados en las diferentes secciones.\\
+En los próximos capítulos se describe el sistema desarrollado. En el Capítulo 2 se comentan los objetivos, requisitos y metodología del trabajo. En el Capítulo 3 se explican las plataformas de desarrollo que se han utilizado para desarrollar el trabajo. En el Capítulo 4 se describe el proceso exhaustivo que ha llevado el trabajo y finalmente, en el Capítulo 5 se escriben las conclusiones.
 
-Y, para terminar este capítulo, resume brevemente qué vas a contar en los siguientes.
