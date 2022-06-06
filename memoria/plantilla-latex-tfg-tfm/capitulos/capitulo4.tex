@@ -109,54 +109,49 @@ En la figura \ref{fig:esquema} se puede ver un esquema de la conexión de los se
   \label{fig:esquema}
 \end{figure}\\
 
+\section{Software}
+Tras disponer de la parte hardware, el equipo está preparado. Para que este equipo funcione, es necesario crear las instrucciones y reglas a través de programas o aplicaciones, esto es, la parte software.
 
+En primer lugar ha sido necesaria la instalación de las librerías necesarias para el funcionamiento de todos los sensores. Después de la instalación, han surgido varios problemas al intentar leer de los distintos sensores. Uno de los problemas encontrado en dos sensores ---los que funcionabas con conexión i2c--- ha sido que la Raspberry no los detectaba.
 
+Se pueden encontrar los errores que han surgido en la instalación y las respectivas soluciones para hacer funcionar todos los sensores en la wiki\footnote{\url{https://github.com/jmvega/tfg-icebollada/wiki/2.February-progress}} que se ha creado para realizar el proyecto.\\
 
+Durante este proceso, ha habido dos sensores que no se han intentado utilizar sin éxito debido a que no tienen compatibilidad con Raspberry: CCS811, que mide la calidad del aire y AM2315, que mide la temperatura y humedad.\\
 
+Se ha considerado que el usuario no tiene conocimiento para comprender los datos en crudo que ofrece un sensor, por tanto, ha sido necesario realizar diferentes cambios para ofrecer una comprensión fácil al usuario.
 
+Se ha utilizado el programa Node-Red para ofrecer una interfaz al usuario, de forma que este sea capaz de ver a través de barras de nivel el estado del sistema. Así ha sido posible crear un interfaz ameno e intuitivo que el usuario puede comprender a través de algo más visual que valores numéricos.\\
 
+Para poder mostrar todos los sensores en tiempo real en Node-Red, ha sido necesario disponer de un fichero de Python que  cada vez que se ejecute lea una sola vez de todos. No debe leer continuamente ya que es la configuración de Node-Red la que se encarga de que se lea constantemente. 
 
+Para crear este fichero de una manera organizada, se ha creado una clase por cada sensor. El esquema de cada sensor se puede ver en la Figura \ref{fig:umlet}. 
+\begin{figure} [h!]
+  \begin{center}
+    \includegraphics[width=16cm]{figs/umlet}
+  \end{center}
+  \caption{Esquema de classes de cada sensor.}
+  \label{fig:umlet}
+\end{figure}\\
 
-
-
-
-Puede resultar interesante, para clarificar la descripción, mostrar fragmentos de código (o \textit{snippets}) ilustrativos. En el Código \ref{cod:codejemplo} vemos un ejemplo escrito en \texttt{C++}.
-
-\begin{code}[h]
-\begin{lstlisting}[language=C++]
-void Memory::hypothesizeParallelograms () {
-  for(it1 = this->controller->segmentMemory.begin(); it1++) {
-    squareFound = false; it2 = it1; it2++;
-    while ((it2 != this->controller->segmentMemory.end()) && (!squareFound)) {
-      if (geometry::haveACommonVertex((*it1),(*it2),&square)) {
-        dist1 = geometry::distanceBetweenPoints3D ((*it1).start, (*it1).end);
-        dist2 = geometry::distanceBetweenPoints3D ((*it2).start, (*it2).end);
-      }
-    // [...]
-\end{lstlisting}
-\caption[Función para buscar elementos 3D en la imagen]{Función para buscar elementos 3D en la imagen}
-\label{cod:codejemplo}
-\end{code}
-
-En el Código \ref{cod:codejemplo2} vemos un ejemplo escrito en \texttt{Python}.
-
+Este fichero de Python utiliza la librería Threads para poder leer de manera concurrente en todos los sensores, ahorrando tiempo y ganando eficacia. El código \ref{cod:threads} muestra como se crea un thread por cada sensor, siendo la lista las llamada a funciones para leer de cada sensor.
 \begin{code}[h]
 \begin{lstlisting}[language=Python]
-def mostrarValores():
-    print (w1.get(), w2.get())
+threads = []
 
-master = Tk()
-w1 = Scale(master, from_=0, to=42)
-w1.pack()
-w2 = Scale(master, from_=0, to=200, orient=HORIZONTAL)
-w2.pack()
-Button(master, text='Show', command=mostrarValores).pack()
-
-mainloop()
+for func in [x.ammo, x.bme, x.pix, x.lev, x.water_t]:
+	threads.append(Thread(target=func))
+	threads[-1].start()
+	
+for thread in threads:
+	thread.join()
 \end{lstlisting}
-\caption[Cómo usar un Slider]{Cómo usar un Slider}
-\label{cod:codejemplo2}
+\caption[Función para crear un Thread por sensor y obtener su lectura]{Función para crear un Thread por sensor y obtener su lectura}
+\label{cod:threads}
 \end{code}
+
+Además, este programa guarda las lecturas en un fichero csv por si fuese necesaria la comparación o estudio de datos a lo largo del tiempo.
+
+
 
 \section{Verbatim}
 
