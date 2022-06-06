@@ -16,15 +16,19 @@ En el capítulo anterior se ha dado el contexto del trabajo, mientras en este se
 \section{Descripción del problema}
 \label{sec:descripcion}
 
-El objetivo general de este proyecto es crear un sistema accesible económicamente para cualquier usuario que a través del uso de diferentes sensores sea capaz de medir las condiciones del entorno en la que se encuentran los animales en un laboratorio --- en concreto, ratones--- y mostrarlo en una interfaz gráfica en tiempo real que sea fácilmente manejable por cualquier usuario. Asimismo, que el sistema también sea capaz de controlar el tiempo en el que los animales pasan haciendo las diferentes tareas.\\
-Actualmente el control de estas características es mediante un humano, no estando automatizado por ningún sistema. Es por ello que el objetivo de este trabajo tiene una necesidad real de la que actualmente carece el laboratorio.\\
+El objetivo general de este proyecto es crear un sistema accesible económicamente para cualquier usuario que a través del uso de diferentes sensores sea capaz de medir las condiciones del entorno en la que se encuentran los animales en un laboratorio --- en concreto, ratones--- y mostrarlo en una interfaz gráfica en tiempo real que sea fácilmente manejable por cualquier usuario. Asimismo, que el sistema también sea capaz de controlar el tiempo en el que los animales pasan haciendo las diferentes tareas.
+
+Actualmente el control de estas características es mediante un humano, no estando automatizado por ningún sistema. Es por ello que el objetivo de este trabajo tiene una necesidad real de la que actualmente carece el laboratorio.
+
 Para cumplir este objetivo general, es necesario marcar una serie de objetivos específicos para el correcto desarrollo del trabajo:
 \begin{itemize}
  \item Recoger la lectura de los sensores en un mismo fichero. Cada sensor necesita las librerías pertinentes para obtener una lectura correcta, por lo que se creará una clase por sensor de manera que sea más fácil unificar todas estas lecturas. Se utilizará la librería \textit{Thread} que permitirá ejecutar concurrentemente la lectura de todos los sensores con el uso de la función \verb|threads.append(Thread(target=funcion))|.
- \item Crear un servidor web para los dos sensores que recogen imágenes. Para la cámara térmica, la única función del servidor será mostrar la imagen que graba la cámara. Sin embargo, para la cámara normal, además de mostrar las imágenes, deberá incorporar un botón que permita iniciar y parar la grabación cuando el usuario quiera, guardando el vídeo automáticamente en el sistema. Además, la visualización desde el servidor aportará la hora y la fecha. Para llevar esto a cabo se utilizará la librería OpenCV. Con el uso de las funciones \verb|cv2.rectangle()| y \verb|cv2.putText()| se creará un rectángulo y se añadirá el texto deseado respectivamente.\\
+ \item Crear un servidor web para los dos sensores que recogen imágenes. Para la cámara térmica, la única función del servidor será mostrar la imagen que graba la cámara. Sin embargo, para la cámara normal, además de mostrar las imágenes, deberá incorporar un botón que permita iniciar y parar la grabación cuando el usuario quiera, guardando el vídeo automáticamente en el sistema. Además, la visualización desde el servidor aportará la hora y la fecha. Para llevar esto a cabo se utilizará la librería OpenCV. Con el uso de las funciones \verb|cv2.rectangle()| y \verb|cv2.putText()| se creará un rectángulo y se añadirá el texto deseado respectivamente.
+ 
  Estos servidores de flask estarán protegidos por un factor de doble autenticación para aportar seguridad.
  \item Detectar los diferentes ratones mediante un algoritmo de reconocimiento de objetos a través de TensorFlowLite para poder determinar el tiempo que pasan los animales haciendo las diferentes actividades.
 \end{itemize}
+
 \section{Requisitos}
 \label{sec:requisitos}
 El trabajo cumplirá la siguiente serie de requisitos:
@@ -33,11 +37,13 @@ El trabajo cumplirá la siguiente serie de requisitos:
  \item El lenguaje de programación será Python, debido a la familiaridad del autor con él además de la amplia variedad de librerías ---útiles para este trabajo--- que permite usar.
  \item La interfaz de usuario será creada con Node-Red, y deberá ser fácil e intuitiva.
 \end{itemize}
+
 \section{Metodología}
 \label{sec:metodologia}
 Para la satisfacción de los objetivos y el cumplimiento de los requisitos mencionados anteriormente, se han usado diferentes herramientas para el correcto control y desarrollo del proyecto.\\
 
 Para el seguimiento del trabajo se han llevado a cabo reuniones semanales con el tutor del trabajo en la plataforma Microsoft Teams\footnote{\url{https://www.microsoft.com/es-ar/microsoft-teams/log-in}}, donde se compartían los problemas surgidos durante la semana junto a posibles soluciones que evaluar, además del control y evaluación de los objetivos marcados la semana anterior. También se establecían los nuevos objetivos para la próxima semana. Asimismo, se ha utilizado el correo electrónico para problemas que surgían a lo largo de la semana.\\
+
 Paralelamente se ha contactado con los investigadores del laboratorio de la Universidad de Alcalá de Henares \footnote{\url{https://www.uah.es/es/}}tanto por videoconferencia como por correo electrónico para conocer la situación y la prioridad de los problemas que les gustaría solucionar.\\
 
 La evolución de todo el trabajo se ha registrado en GitHub\footnote{\url{https://github.com/jmvega/tfg-icebollada}} donde se ha ido escribiendo el progreso que se ha llevado para realizar el trabajo, junto a los problemas que han ido surgiendo acompañados de imágenes o vídeos, así como las soluciones que han servido para solventarlos. También se han aportado fotos y vídeos mostrando el funcionamiento de las distintas partes del sistema, así como el funcionamiento entero de este.
