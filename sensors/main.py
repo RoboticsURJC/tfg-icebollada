@@ -32,7 +32,12 @@ class all_sensors():
         self.wat_temp = 0
 
     def ammo(self):
-        self.ammonia = self.__am.get_value()
+        try:
+            self.perc = self.__am.MQPercentage()
+            self.ammonia = self.perc["NH3"]
+        except:
+            self.ammonia = self.__am.get_value()
+            
 
     def bme(self):
         self.__bm.get_temp()
@@ -76,6 +81,6 @@ for thread in threads:
     
 x.write_values()
 
-print("Ammonia:", x.ammonia, " Temperature:", x.bm_temp, " Pressure:", round(x.bm_press,1), " Humidity:", round(x.bm_hum, 1),
+print("Ammonia:", round(x.ammonia,2), " Temperature:", x.bm_temp, " Pressure:", round(x.bm_press,1), " Humidity:", round(x.bm_hum, 1),
       " Gas:", round(x.bm_gas_res,1), " Water level:", x.level, " Waterproof temp:", x.wat_temp, " Pixels:", x.pixels)
      
