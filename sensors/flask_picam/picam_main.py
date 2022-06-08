@@ -25,6 +25,11 @@ from wtforms.validators import Required, Length, EqualTo
 import onetimepass
 import pyqrcode
 import ast
+
+import ssl
+context = ssl.SSLContext()
+context.load_cert_chain('/home/pi/Desktop/classes/flask_picam/cert.pem', '/home/pi/Desktop/classes/flask_picam/key.pem')
+
 x = camera_flask_app.picam()
 #instatiate flask app  
 #app = Flask(__name__, template_folder='./templates')
@@ -243,7 +248,7 @@ def logged():
 db.create_all()
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port='5000')
+    app.run(host='0.0.0.0', port='5000', ssl_context=context)
      
 # camera.release()
 # cv2.destroyAllWindows()

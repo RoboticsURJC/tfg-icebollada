@@ -22,6 +22,10 @@ import pyqrcode
 import cam
 import ast
 
+import ssl
+context = ssl.SSLContext()
+context.load_cert_chain('cert.pem', 'key.pem')
+
 x = cam.seek_camera()
 # create application instance
 app = Flask(__name__)
@@ -216,4 +220,4 @@ db.create_all()
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port='8080', debug=False)
+    app.run(host='0.0.0.0', port='8080', debug=False, ssl_context=context)
