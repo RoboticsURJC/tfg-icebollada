@@ -11,42 +11,37 @@
 
 \vspace{1cm}
 
-En el capítulo anterior se ha dado el contexto del trabajo, mientras en este se presenta el plan de trabajo, definiendo los objetivos tanto generales como específicos que se han marcado para desarrollarlo y los requisitos que debe respetar el proyecto. Posteriormente se explica la metodología utilizada para cumplir con los objetivos.\\
+En el capítulo anterior se ha dado el contexto del trabajo; en este, se presenta el plan de trabajo, definiendo los objetivos tanto generales como específicos que se han marcado para desarrollarlo y los requisitos que debe respetar el proyecto. Posteriormente se explica la metodología utilizada para cumplir con los objetivos.\\
 
 \section{Descripción del problema}
 \label{sec:descripcion}
 
-El objetivo general de este proyecto es crear un sistema accesible económicamente para cualquier usuario que a través del uso de diferentes sensores sea capaz de medir las condiciones del entorno en la que se encuentran los animales en un laboratorio --- en concreto, ratones--- y mostrarlo en una interfaz gráfica en tiempo real que sea fácilmente manejable por cualquier usuario. Asimismo, que el sistema también sea capaz de controlar el tiempo en el que los animales pasan haciendo las diferentes tareas.
+El objetivo general de este proyecto es crear un sistema multisensorial para la monitorización y seguimiento de animales de laboratorio, que además sea económicamente accesible para cualquier usuario. Este sistema incluirá diferentes sensores para medir las condiciones del entorno en la que se encuentran los animales en un laboratorio ---en concreto, ratones--- y mostrarlo en una interfaz gráfica en tiempo real que sea fácilmente manejable por cualquier usuario. Por otro lado, el sistema también deberá ser capaz de registrar el tiempo en el que los animales realizan sus diferentes tareas.\\
 
-Actualmente el control de estas características es mediante un humano, no estando automatizado por ningún sistema. Es por ello que el objetivo de este trabajo tiene una necesidad real de la que actualmente carece el laboratorio.
+Actualmente, el control de estas características se suele realizar en la mayoría de casos por humanos, sin ningún sistema automático de apoyo; entre otras razones, por el elevado coste de los sistemas existentes en el mercado equivalentes al que se pretende desarrollar en este trabajo.\\
 
-Para cumplir este objetivo general, es necesario marcar una serie de objetivos específicos para el correcto desarrollo del trabajo:
-\begin{itemize}
- \item Recoger la lectura de los sensores en un mismo fichero. Cada sensor necesita las librerías pertinentes para obtener una lectura correcta, por lo que se creará una clase por sensor de manera que sea más fácil unificar todas estas lecturas. Se utilizará la librería \textit{Thread} que permitirá ejecutar concurrentemente la lectura de todos los sensores con el uso de la función \verb|threads.append(Thread(target=funcion))|.
- \item Crear un servidor web para los dos sensores que recogen imágenes. Para la cámara térmica, la única función del servidor será mostrar la imagen que graba la cámara. Sin embargo, para la cámara normal, además de mostrar las imágenes, deberá incorporar un botón que permita iniciar y parar la grabación cuando el usuario quiera, guardando el vídeo automáticamente en el sistema. Además, la visualización desde el servidor aportará la hora y la fecha. Para llevar esto a cabo se utilizará la librería OpenCV. Con el uso de las funciones \verb|cv2.rectangle()| y \verb|cv2.putText()| se creará un rectángulo y se añadirá el texto deseado respectivamente.
- 
- Estos servidores de flask estarán protegidos por un factor de doble autenticación para aportar seguridad.
- \item Detectar los diferentes ratones mediante un algoritmo de reconocimiento de objetos a través de TensorFlowLite para poder determinar el tiempo que pasan los animales haciendo las diferentes actividades.
-\end{itemize}
+Para cumplir el objetivo general marcado; es necesario establecer los siguientes objetivos específicos:
+\begin{enumerate}
+ \item Recoger la lectura de los sensores en un mismo fichero. Cada sensor necesita de las librerías pertinentes para su correcto funcionamiento, por lo que se creará una clase por cada sensor, de manera que sea más fácil unificar las distintas lecturas. Para ejecutar concurrentemente la lectura de todos los sensores, se utilizará la librería \textit{Thread} que permite la ejecución y el control de distintos hilos lanzados en paralelo.
+ \item Crear un servidor web para los dos sensores que recogen imágenes. Para la cámara térmica, la única función del servidor será mostrar la imagen que graba la cámara. Sin embargo, para la cámara normal, además de mostrar las imágenes, se deberá incorporar un botón que permita iniciar y parar la grabación cuando el usuario quiera, guardando el vídeo automáticamente en el sistema. Estos servidores de flask estarán protegidos para aportar seguridad.
+ \item Detectar los diferentes ratones mediante un algoritmo de reconocimiento de objetos a través de TensorFlowLite, para así poder determinar el tiempo que pasan los animales haciendo las diferentes actividades.
+\end{enumerate}
 
 \section{Requisitos}
 \label{sec:requisitos}
 El trabajo cumplirá la siguiente serie de requisitos:
 \begin{itemize}
- \item El sistema sobre el que se realizará el trabajo será la Raspberry Pi 4B, haciendo de este un sistema económico. 
- \item El lenguaje de programación será Python, debido a la familiaridad del autor con él además de la amplia variedad de librerías ---útiles para este trabajo--- que permite usar.
- \item La interfaz de usuario será creada con Node-Red, y deberá ser fácil e intuitiva.
+ \item El sistema deberá poder ejecutar en tiempo real sobre la plataforma Raspberry Pi 4B, resultando así un sistema de bajo coste.
+ \item El lenguaje de programación será Python, pues este lenguaje es sencillo y ofrece una gran variedad de librerías útiles para este trabajo y está soportado completamente por el sistema operativo oficial de la placa Raspberry.
+ \item La interfaz de usuario (IU) será creada con Node-Red, ya que es una herramienta muy visual y está creada para sistemas embebidos como Raspberry. Además permite el acceso a la interfaz desde distintos dispositivos.
 \end{itemize}
 
 \section{Metodología}
 \label{sec:metodologia}
-Para la satisfacción de los objetivos y el cumplimiento de los requisitos mencionados anteriormente, se han usado diferentes herramientas para el correcto control y desarrollo del proyecto.\\
+Para la satisfacción de los objetivos y el cumplimiento de los requisitos mencionados anteriormente, se han usado diferentes herramientas para el correcto control, seguimiento y desarrollo del proyecto.\\
 
-Para el seguimiento del trabajo se han llevado a cabo reuniones semanales con el tutor del trabajo en la plataforma Microsoft Teams\footnote{\url{https://www.microsoft.com/es-ar/microsoft-teams/log-in}}, donde se compartían los problemas surgidos durante la semana junto a posibles soluciones que evaluar, además del control y evaluación de los objetivos marcados la semana anterior. También se establecían los nuevos objetivos para la próxima semana. Asimismo, se ha utilizado el correo electrónico para problemas que surgían a lo largo de la semana.\\
+Para el seguimiento del trabajo se han llevado a cabo reuniones semanales con el tutor del trabajo a través de la plataforma Microsoft Teams, donde se compartían los problemas surgidos durante la semana junto a posibles soluciones que evaluar, además del control y evaluación de los objetivos marcados la semana anterior. También se establecían los nuevos objetivos para la próxima semana. Asimismo, se ha utilizado el correo electrónico para comentar y aclarar problemas que surgían a lo largo de la semana.\\
 
-Paralelamente se ha contactado con los investigadores del laboratorio de la Universidad de Alcalá de Henares \footnote{\url{https://www.uah.es/es/}}tanto por videoconferencia como por correo electrónico para conocer la situación y la prioridad de los problemas que les gustaría solucionar.\\
+Paralelamente, se ha contactado con los investigadores del Laboratorio del Bienestar e Investigación Animal \footnote{\url{https://www.uah.es/es/investigacion/unidades-de-investigacion/grupos-de-investigacion/Bienestar-en-Investigacion-Animal-Welfare-on-Animal-Research./}} de la Universidad de Alcalá de Henares tanto por videoconferencia como por correo electrónico, para conocer la situación y la prioridad de los problemas reales que tienen y que podrían solventar con el sistema planteado.\\
 
-La evolución de todo el trabajo se ha registrado en GitHub\footnote{\url{https://github.com/jmvega/tfg-icebollada}} donde se ha ido escribiendo el progreso que se ha llevado para realizar el trabajo, junto a los problemas que han ido surgiendo acompañados de imágenes o vídeos, así como las soluciones que han servido para solventarlos. También se han aportado fotos y vídeos mostrando el funcionamiento de las distintas partes del sistema, así como el funcionamiento entero de este.
-
-%\section{Plan de trabajo}
-%\label{sec:plantrabajo}
+Todo el código desarrollado, así como los distintos recursos empleados y la presente memoria, se encuentran alojados en el repositorio de GitHub \footnote{\url{https://github.com/jmvega/tfg-icebollada}} dedicado a este trabajo. Por otro lado, en la wiki \footnote{\url{https://github.com/jmvega/tfg-icebollada/wiki}} se ha ido escribiendo el proceso que se ha llevado a cabo para realizar el trabajo, junto a los problemas que han ido surgiendo acompañados de imágenes o vídeos, así como las soluciones que han servido para solventarlos. También se han aportado fotos y vídeos mostrando el funcionamiento de las distintas partes del sistema, así como el funcionamiento entero de este.
