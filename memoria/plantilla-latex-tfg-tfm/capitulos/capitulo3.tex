@@ -116,49 +116,72 @@ El útimo sensor integrado en el trabajo ha sido el MQ-135 (Figura \ref{fig:mq_o
 
 Para conseguir el correcto funcionamiento de los sensores en la placa Raspberry, se ha utilizado la infraestructura software descrita a continuación.\\
 
-
 \section{Infraestructura software}
-%AQUI RASPBAIN
+Para dar soporte a la placa Raspberry se ha usado su sistema operativo oficial Raspberry Pi OS, también llamado Raspbian (Figura \ref{fig:raspbian}). La elección de usar este Sistema Operativo (SO), entre otras, es que está optimizado para funcionar en procesadores ARM, que es el que tiene Raspberry. Además, Raspberry Pi OS es el SO que mejor rendimiento ofrece para la placa.\\
+\begin{figure} [h!]
+  \begin{center}
+    \includegraphics[width=14cm]{figs/raspbian}
+  \end{center}
+  \caption{Imagen de Raspberry Pi OS.}
+  \label{fig:raspbian}
+\end{figure}
+
 \subsection{Lenguaje Python}
 \label{sec:python}
-Python es un lenguaje de alto nivel de programación, interpretado y orientado a objetos cuya filosofía hace hincapié en la legibilidad de su código y por ello su sintaxis es sencilla. Utiliza módulos y librerías para las distintas aplicaciones. Algunas de ellas son: TensorFlow para aplicaciones en ML, Pandas para análisis de datos, Flask para aplicaciones web o SQLAlchemy para comunicación entre bases de datos y programas.
+Python es un lenguaje de alto nivel de programación, interpretado y orientado a objetos cuya filosofía hace hincapié en la legibilidad de su código y, por ello, su sintaxis es sencilla. Ofrece numerosos módulos y librerías para las distintas aplicaciones. Algunas de estas librerías son: TensorFlow para aplicaciones en ML (Código \ref{cod:pythonML}), Pandas para análisis de datos, Flask para aplicaciones web o SQLAlchemy para comunicación entre bases de datos y programas. El uso de estos módulos y librerías facilita la reusabilidad de código y la programación modulada. No requiere del proceso de compilación, lo que lo convierte en un lenguaje muy rápido en el ciclo de edición, prueba y depuración.\\
 
-El uso de módulos y librerías facilita la reusabilidad de código y la programación modulada. No requiere del proceso de compilación, lo que lo convierte en un lenguaje muy rápido en el ciclo de edición, prueba y depuración.\\
+\begin{code}[h]
+\begin{lstlisting}[language=Python]
+train_data = object_detector.DataLoader.from_pascal_voc('split_train_validate/train', 'split_train_validate/train', ['mouse'])
+validation_data = object_detector.DataLoader.from_pascal_voc('split_train_validate/validate', 'split_train_validate/validate', 
+['mouse'])
+model = object_detector.create(train_data, model_spec=spec, epochs=20, batch_size=8, train_whole_model=True, validation_data=validation_data)
+\end{lstlisting}
+\caption[Código para generar un modelo de detección de ratones en Python]{Código para generar un modelo de detección de ratones en Python}
+\label{cod:pythonML}
+\end{code}
 
 Actualmente es el lenguaje de programación más usado en el mundo según la calificación de la empresa TIOBE\footnote{\url{https://www.tiobe.com/tiobe-index/}}, por lo que cuenta con una gran comunidad. Además, también es el más popular en el ámbito del Machine Learning. Algunas de las aplicaciones que usan Python son Google, Netflix, Dropbox o Spotify.\\
 
-La decisión de usar Python para el desarrollo de este TFG ha sido, además de que el autor está familiarizado con el lenguaje, por las numerosas librerías útiles para este proyecto adaptadas a Raspberry que Python posee.
+La decisión de usar Python para el desarrollo de este TFG ha sido que es uno de los lenguajes de programación que mejor funciona y está soportado de forma nativa en el SO utilizado Raspbian, además de las numerosas librerías útiles para este proyecto adaptadas a Raspberry que Python posee.\\
 
 En este trabajo, Python se utiliza para la lectura de los sensores de forma concurrente, para la creación de los dos servidores web que tiene tanto la PiCamera como la cámara térmica con Flask y para el reconocimiento de lo ratones a través de la librería TensorFlow Lite.\\
 
 \subsection{TensorFlow Lite}
 \label{sec:tensor}
-TensorFlow Lite\footnote{\url{https://www.tensorflow.org/lite/}} es una variación de TensorFlow más ligera adaptada a dispositivos como teléfonos móviles, microcontroladores o dispositivos embebidos como Raspberry. Es una plataforma de código abierto multiplataforma que entrena un modelo para su posterior uso. Algunos de estos usos pueden ser la clasificación o el reconocimiento de imágenes, entre otros.\\
+TensorFlow Lite (Figura \ref{fig:tf}-a) es una variación de TensorFlow (Figura \ref{fig:tf}-b) más ligera adaptada a dispositivos como teléfonos móviles, microcontroladores o dispositivos embebidos como Raspberry. Es una plataforma de código abierto multiplataforma que permite entrenar un modelo para su posterior uso. Algunos de estos usos pueden ser la clasificación o el reconocimiento de imágenes, entre otros.\\
+\begin{figure}[h!]
+  \begin{center}
+    \subfigure[Logo de TensorFlow Lite.]{\includegraphics[width=7cm]{figs/tflite}}\hspace{2mm}
+    \subfigure[Logo de TensorFlow]{\includegraphics[width=6cm]{figs/tf}}
+  \end{center}
+\caption{} \label{fig:tf}
+\end{figure}
 
 Las características que hacen que pueda utilizarse en este tipo de dispositivos son las siguientes:
 \begin{itemize}
-\item{Ligereza}, ya que estos dispositivos tienen límite tanto en el almacenamiento como en la capacidad de cómputo
+\item{Ligereza}, ya que estos dispositivos tienen límite tanto en el almacenamiento como en la capacidad de cómputo.
 \item{Baja latencia}, ya que las inferencias se realizan en el dispositivo y no en un servidor externo. 
 \item{Seguridad}, debido a que el modelo viene implementado en el propio dispositivo.
 \item{Consumo de energía óptimo,} dado a que no es necesario que el dispositivo esté conectado a la red, que consume mucha energía.
 \end{itemize}
 
-El uso de TensorFlow Lite ha sido, en primer lugar, para la creación y entrenamiento de un modelo capaz de detectar ratones en una imagen, basándose en un dataset de 60 imágenes. En segundo lugar, para la detección de ratones en cualquier imagen o vídeo, siendo capaz de detectar el número de ratones o el lugar en el que se encuentra cada uno. Para conseguir esta detección a tiempo real del vídeo grabado por la cámara es requerido el uso de otra librería llamada OpenCV.\\
+TensorFlow Lite se ha usado, en primer lugar, para la creación y entrenamiento de un modelo capaz de detectar ratones en una imagen (Figura \ref{fig:raton}), basándose en un dataset de 60 imágenes. En segundo lugar, para la detección de ratones en cualquier imagen o vídeo, siendo capaz de detectar el número de ratones y el lugar en el que se encuentra cada uno de ellos. Para conseguir esta detección en tiempo real del vídeo grabado por la cámara se requiere el uso de otra librería llamada OpenCV, que es descrita a continuación.\\
 \begin{figure} [h!]
   \begin{center}
     \includegraphics[width=8cm]{figs/raton-detectado}
   \end{center}
   \caption{Detección de ratones en una imagen usando TensorFlow Lite.}
-  \label{fig:tesla}
+  \label{fig:raton}
 \end{figure}
 
 \subsection{OpenCV}
 \label{sec:opencv}
-OpenCV \footnote{\url{https://opencv.org}} (Open Source Computer Vision Library) es una librería de software de visión computacional y machine learning de código abierto. Es ampliamente usada en todo el mundo debido al soporte multiplataforma que ofrece para Windows, Linux, MacOS y Android, además de ofrecer interfaz en diferentes lenguajes como Python, Java, C++ y MATLAB.\\
+OpenCV (Open Source Computer Vision Library) es una librería de software de visión computacional y machine learning de código abierto. Es ampliamente usada en todo el mundo debido al soporte multiplataforma que ofrece para Windows, Linux, MacOS y Android, además de ofrecer interfaz en diferentes lenguajes como Python, Java, C++ y MATLAB.\\
 
-Compuesto por más de 2500 algoritmos, OpenCV está especializado en la visión computacional y en algoritmos de aprendizaje, permitiendo reconocer rostros, identificar o clasificar objetos, extraer modelos 3D, mejorar la calidad de las imágenes o detectar bordes entre otros.\\
+Compuesto por más de 2500 algoritmos, OpenCV está especializado en la visión computacional y en algoritmos de aprendizaje, permitiendo reconocer rostros, identificar o clasificar objetos, extraer modelos 3D, mejorar la calidad de las imágenes o detectar bordes (Figura \ref{fig:ej-opencv}), entre otros.\\
 
-El uso de OpenCV en este trabajo ha permitido la manipulación de los vídeos grabados por las cámaras en tiempo real, de manera que se ha podido integrar en él la fecha y hora del momento. También ha permitido guardar los vídeos cuando el usuario lo solicite. Debido a su amplio uso y su fácil adaptación a otras aplicaciones, ha sido posible mostrar los vídeos de ambas cámaras en el servidor web sin problema con el uso de OpenCV junto a Flask.\\
+OpenCV se ha usado en este trabajo para manipular en tiempo real los vídeos grabados por las cámaras, permitiendo ---entre otras cosas--- integrar un \textit{timestamp} en estos. También ha permitido ofrecer la funcionalidad de guardar los vídeos cuando el usuario lo solicite a través del interfaz. Por último, y dada su fácil adaptación a otras aplicaciones, ha sido posible mostrar los vídeos de ambas cámaras (térmica y RGB) en el servidor web de Flask sin problema. Esta librería se detalla a continuación.\\
 \begin{figure}[h!]
   \begin{center}
     \subfigure[Imagen original]{\includegraphics[width=45mm]{figs/monedas}}\hspace{9mm}
@@ -168,47 +191,46 @@ El uso de OpenCV en este trabajo ha permitido la manipulación de los vídeos gr
   \end{center}
 \caption{Ejemplo de detección de bordes con OpenCV.} \label{fig:ej-opencv}
 \end{figure}
-%imagenes obtenidas de https://programarfacil.com/blog/vision-artificial/detector-de-bordes-canny-opencv/
+
 \section{Flask}
 \label{sec:flask}
-Flask es un marco de aplicación web minimalista ---en inglés, microframework--- escrito en Python. Esto significa que ofrece al usuario herramientas y librerías para crear una aplicación web, y al ser minimalista, no requiere de otras dependencias para realizar las cosas básicas. Ofrece una serie de extensiones que permiten dotar de más características a la aplicación, como autenticación o manejo a través de comandos, entre otros.
+Flask es un marco de aplicación web minimalista ---en inglés, \textit{microframework}--- escrito en Python. Esto significa que ofrece al usuario herramientas y librerías para crear una aplicación web, y al ser minimalista, no requiere de otras dependencias para realizar las cosas básicas. Ofrece una serie de extensiones que permiten dotar de más características a la aplicación, como autenticación o manejo a través de comandos, entre otros.\\
 
-Se compone de dos partes; las plantillas ---en inglés, templates---, que están escritas en lenguaje HTML e indican la organización y diseño que tendrá cada página al ser visualizada. La otra parte es código en Python que indica las rutas de cada página y las funciones de cada ruta. Es el fichero que se ejecuta para crear el servidor.\\
+Se compone de dos partes: las plantillas ---en inglés, \textit{templates}---, que están escritas en lenguaje HTML e indican la organización y diseño que tendrá cada página al ser visualizada, y el código en Python, que indica las rutas de cada página y las funciones de cada ruta. Este es el fichero que se ejecuta para crear el servidor.\\
 
-En este proyecto se ha utilizado Flask para la creación de los dos servidores web de las cámaras. Se ha preferido Flask frente a Django, que es el más conocido para el uso con Python, debido a que es más sencillo de utilizar y de aprender. Después de haber realizado el login o el registro en el servidor, se accede a la visualización de cada cámara. Además, en el caso de la PiCamera, con Flask se ha integrado un botón que permite empezar o parar la grabación del vídeo. \\
-\begin{figure}[h!]
+En este proyecto se ha utilizado Flask para la creación de los dos servidores web de las cámaras. Se ha preferido Flask frente a Django, que es el más conocido para el uso con Python, debido a que el primero es más sencillo de utilizar y de aprender. Entre otras, este servidor permite realizar funciones como loguearse y registrase en él o acceder y controlar la visualización de las cámaras. En la Figura \ref{fig:flask-internet} se puede ver un ejemplo de un trabajo realizado con Flask.\\
+\begin{figure} [h!]
   \begin{center}
-    \subfigure[Servidor cámara térmica]{\includegraphics[width=66.5mm]{figs/termica-server}}\hspace{8mm}
-    \subfigure[Servidor PiCamera]{\includegraphics[width=60mm]{figs/picam-server}}
+    \includegraphics[width=15cm]{figs/flask-internet}
   \end{center}
-\caption{Muestra de los dos servidores del trabajo usando Flask.} \label{fig:servers}
+  \caption{Blog creado con Flask.}
+  \label{fig:flask-internet}
 \end{figure}
 
 \subsection{Node-Red}
 \label{sec:nodered}
-Node-Red es una herramienta de programación creada por IBM y escrita en JavaScript que permite conectar dispositivos hardware y servicios en línea. Muestra de manera visual las conexiones de los nodos en un panel, mostrando gráficamente el flujo de la información. Además, es un entorno de ejecución ligero, lo que lo hace ideal para ejecutarse en hardware de bajo coste como la Raspberry.\\
+Node-Red es una herramienta de programación creada por IBM y escrita en lenguaje JavaScript que permite conectar dispositivos hardware y servicios en línea. Muestra de manera visual las conexiones de los nodos en un panel, mostrando gráficamente el flujo de la información. Además, es un entorno de ejecución ligero, lo que lo hace ideal para ejecutarse en hardware de bajo coste como la Raspberry.\\
 
-Está compuesto por dos partes principales. Una de ellas es la edición de flujo desde navegador, donde muestra los nodos disponibles en el margen izquierdo así como la disposición y conexión del flujo creado por el usuario. La otra parte es el cuadro de mando, más comunmente dashboard, que muestra la interfaz de usuario en base al flujo de los nodos de la parte previamente comentada.\\
+Está compuesto por dos partes principales. Una de ellas es la edición de flujo desde navegador, donde muestra los nodos disponibles en el margen izquierdo así como la disposición y conexión del flujo creado por el usuario. La otra parte es el cuadro de mando, más comunmente \textit{dashboard}, que muestra la interfaz de usuario en base al flujo de los nodos de la parte previamente comentada.\\
 
-Node-Red tiene una amplia variedad de nodos. Algunos de ellos permiten distintos tipos de conexiones, la interacción directa con los pines de Raspberry, la conexión con twitter o el correo electrónico. También permite la creación de ficheros de distintos tipos o la ejecución de ficheros ya existentes en la computadora.
+Node-Red tiene una amplia variedad de nodos. Algunos de ellos permiten distintos tipos de conexiones, la interacción directa con los pines de Raspberry, la conexión con twitter o el correo electrónico. También permite la creación de ficheros de distintos tipos o la ejecución de ficheros ya existentes en la computadora.\\
 
-Node-Red está escrito en JavaScript, por lo que cualquier función que se escriba directamente ahí deberá estar escrita en este lenguaje. Pueden crearse nuevos nodos para agregar nuevas capacidades gracias a los más de 225000 módulos que hay en el repositorio de paquetes.
+Node-Red también permite el modo \textit{scripting}; esto es, la ejecución directa de código escrito en lenguaje JavaScript. Pueden crearse nuevos nodos para agregar nuevas capacidades gracias a los más de 225.000 módulos que hay en el repositorio de paquetes.\\
 
-Los flujos de datos se pueden importar o exportar con ficheros JSON, permitiendo compartirlos con cualquier persona. La página de Node-Red tiene una librería de flujos que han creado otros usuarios, permitiendo el acceso a ellos para utilizarlos como base en otros proyectos.\\
+Los flujos de datos se pueden importar o exportar con ficheros en formato estándar JSON, permitiendo compartirlos con cualquier persona. La página de Node-Red tiene una librería de flujos que han creado otros usuarios, permitiendo el acceso a ellos para utilizarlos como base en otros proyectos (Figura \ref{fig:flujos}). En la figura \ref{fig:ui-internet} se puede ver un ejemplo de un trabajo realizado en Node-Red.\\
+\begin{figure}[h!]
+  \begin{center}
+    \subfigure[Flujo de Hola Mundo en Node-Red]{\includegraphics[width=14cm]{figs/holamundo-flujo}}\hspace{2mm}
+    \subfigure[Flujo del proyecto de creación de un sistema de alarma]{\includegraphics[width=14cm]{figs/alarma-flujo}}
+  \end{center}
+\caption{Distintos flujos hechos en Node-Red} \label{fig:flujos}
+\end{figure}
 \begin{figure} [h!]
   \begin{center}
-    \includegraphics[width=15cm]{figs/flujo}
+    \includegraphics[width=15cm]{figs/ui-internet}
   \end{center}
-  \caption{Flujo del proyecto en Node-Red.}
-  \label{fig:flow}
-\end{figure}\\
-
-Para el desarrollo de este TFG, Node-Red ha tenido un papel muy importante. Además de tener una gran comunidad que permite la resolución de la mayoría de dudas, ha permitido la creación de la interfaz de usuario donde se muestran las mediciones de cada sensor, los dos servidores web de las cámaras y los botones e interruptores necesarios que permiten al usuario interactuar con la interfaz de una manera sencilla para obtener toda la información.\\
-\begin{figure} [h!]
-  \begin{center}
-    \includegraphics[width=15cm]{figs/interfaz}
-  \end{center}
-  \caption{Muestra del uso de Node-Red en el trabajo.}
-  \label{fig:node-imagenes}
+  \caption{IU de un sistema de control de un garaje.}
+  \label{fig:ui-internet}
 \end{figure}
 
+Para el desarrollo de este TFG, Node-Red ha tenido un papel muy importante. Además de tener una gran comunidad que permite la resolución de la mayoría de dudas, ha permitido la creación de la interfaz de usuario donde se muestran las mediciones de cada sensor, los dos servidores web de las cámaras y los botones e interruptores necesarios que permiten al usuario interactuar con la interfaz de una manera sencilla para obtener toda la información.\\
