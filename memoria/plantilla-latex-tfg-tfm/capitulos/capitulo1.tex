@@ -14,11 +14,11 @@
 
 El desarrollo tecnológico ha provocado el avance en la robótica, un campo de investigación muy amplio en la actualidad que está facilitando la vida a los humanos. Cualquier robot está formado por tres componentes principales: un sistema de control, sensores y actuadores. Dentro de los numerosos sensores que pueden tener los robots, uno de los que está adquiriendo mayor relevancia en los últimos años es el sensor de visión.\\
 
-Los sensores de visión aportan mucha información y son baratos, pero se requiere de un proceso arduo para extraer la información útil en tiempo real. Por este motivo se busca la eficiencia en resultados y tiempo, lo que significa el proceso de la extracción de la información debe ser rápido. Es por ello que en los últimos años, en el campo de la visión artificial moderna, están adquiriendo gran importancia los algoritmos de Deep Learning (DL) o aprendizaje profundo.\\
+Los sensores de visión aportan mucha información y son baratos, pero se requiere de un proceso arduo para extraer la información útil en tiempo real. Por este motivo se busca la eficiencia en resultados y tiempo, lo que significa que el proceso de extracción de la información debe ser rápido. Es por ello que en los últimos años, en el campo de la visión artificial moderna, están adquiriendo gran importancia los algoritmos de Deep Learning (DL) o aprendizaje profundo, usados para adquirir esta información.\\
 
 Los algoritmos más utilizados hoy en día para obtener la información de los sensores de Visión Artificial (VA) se obtienen bajo la técnica del Machine Learning (ML) o aprendizaje automático. Estos algoritmos son mejores que los que se tenían anteriormente, y se han podido desarrollar gracias al avance de la capacidad de cómputo. El objetivo del ML es que las máquinas sean capaces de aprender sin tener que ser programadas explícitamente.\\
 
-Un subcampo del ML es el DL, que aunque utiliza algoritmos de ML, sus algoritmos se basan en estructuras similares al modelo del cerebro humano, emulando redes neuronales. Según el algoritmo de DL obtiene más información, aumenta su precisión. Debido a su gran capacidad de abstracción, es el más usado en VA.\\
+Un subcampo del ML es el DL, que aunque este segundo utiliza algoritmos del primero, sus algoritmos se basan en estructuras similares al modelo del cerebro humano, emulando redes neuronales. A medida que el algoritmo de DL obtiene más información, aumenta su precisión. Debido a su gran capacidad de abstracción, es el más usado en VA.\\
 
 A continuación se describen estos conceptos y el contexto en el que se enmarca el presente trabajo. Asimismo se presentan sistemas actuales que existen en el mercado con una idea similar a la de este trabajo.\\
 
@@ -42,7 +42,7 @@ La analogía de un robot respecto a un ser humano es la siguiente. Los sensores 
 
 El objetivo de la robótica es ayudar al ser humano en todos los ámbitos, tanto en la vida cotidiana como en la vida profesional, evitando los trabajos perjudiciales, e incluso haciendo trabajos que el ser humano no sería capaz de hacer por sí mismo en distintos sectores.\\
 
-Uno de estos sectores es la medicina. En este ámbito cabe resaltar el robot Da Vinci (Figura \ref{fig:da-vinci}), uno de sus robots más famosos que permite a un cirujano comandar órdenes a través de una consola, permitiéndole realizar cirugías de alta precisión eliminando los temblores nerviosos que un humano pueda tener y permitiendo al cirujano una mayor visión. Otro ejemplo se encuentra en el campo de la medicina se encuentra en la impresión 3D. En \cite{ANDRESCANO2021138}, la impresión 3D de biomodelos de partes del cuerpo como huesos adquiere un papel útil en fracturas complejas, displasias de cadera o en tumores óseos principalmente. Con estos biomodelos, no solo disminuye tanto el tiempo quirúrgico como los costes de intervención, sino que además se reduce la dosis intraoperatoria de radiación. También sirven para la planificación preoperatoria (Figura \ref{fig:3d}-a) o el premodelado de placas (Figura \ref{fig:3d}-b). Con la impresión 3D también se han creado férulas para los pacientes (Figura \ref{fig:3d}-c). Ofrecen una mayor adaptación a la anatomía del paciente que las férulas de yeso o plástico que se acostumbran a llevar.\\
+Uno de estos sectores es la medicina. En este ámbito cabe resaltar el robot Da Vinci (Figura \ref{fig:da-vinci}), uno de sus robots más famosos que permite a un cirujano comandar órdenes a través de una consola, permitiéndole realizar cirugías de alta precisión eliminando los temblores nerviosos que un humano pueda tener y permitiendo al cirujano una mayor visión. Otro ejemplo en el campo de la medicina se encuentra en la impresión 3D. En \cite{ANDRESCANO2021138}, la impresión 3D de biomodelos de partes del cuerpo (por ejemplo huesos) adquiere un papel útil en fracturas complejas, displasias de cadera o en tumores óseos principalmente. Con estos biomodelos, no solo disminuye tanto el tiempo quirúrgico como los costes de intervención, sino que además se reduce la dosis intraoperatoria de radiación. También sirven para la planificación preoperatoria (Figura \ref{fig:3d}-a) o el premodelado de placas (Figura \ref{fig:3d}-b). Con la impresión 3D también se han creado férulas para los pacientes (Figura \ref{fig:3d}-c), ya que ofrecen una mayor adaptación a la anatomía del paciente que las férulas de yeso o plástico que se acostumbran a llevar.\\
 \begin{figure} [h!]
   \begin{center}
     \includegraphics[width=8cm]{figs/da-vinci}
@@ -60,7 +60,7 @@ Uno de estos sectores es la medicina. En este ámbito cabe resaltar el robot Da 
 \caption{Usos de la impresión 3D en medicina.} \label{fig:3d}
 \end{figure}
 
-Otro de los campos más importantes de la robótica es la manipulación en entornos inaccesibles u hostiles por el ser humano. Un ejemplo de ello lo encontramos en la carrera espacial. Uno de estos robots es el Curiosity (Figura \ref{fig:robots}-a), cuya misión era evaluar la habitabilidad en Marte recogiendo información del entorno. Otro ejemplo de entornos hostiles se encuentra en el lugar que quedó tras el accidente nuclear que ocurrió en Fukushima en 2011, causado por un terremoto y el consecuente tsunami. Gracias a los robots (Figura \ref{fig:robots}-b) se pudo acceder a la zona para poder limpiarla.\\
+Otro de los campos más importantes de la robótica es la manipulación en entornos inaccesibles u hostiles para el ser humano. Un ejemplo de ello lo encontramos en la carrera espacial. Uno de estos robots es el Curiosity (Figura \ref{fig:robots}-a), cuya misión era evaluar la habitabilidad en Marte recogiendo información del entorno. Otro ejemplo de entornos hostiles se encuentra en el lugar que quedó tras el accidente nuclear que ocurrió en Fukushima en 2011, causado por un terremoto y el consecuente tsunami. Gracias a los robots (Figura \ref{fig:robots}-b) se pudo acceder a la zona para poder limpiarla.\\
 \begin{figure}[h!]
   \begin{center}
     \subfigure[Robot Curiosity]{\includegraphics[width=82mm]{figs/curiosity}}\hspace{2mm}
@@ -100,7 +100,7 @@ La IA abarca diferentes áreas, como la comprensión, el reconocimiento o el apr
 
 \subsection{Visión Artificial}
 \label{sec:subseccion}
-La visión artificial es uno de los campos más importantes de la IA cuyo objetivo es que un sistema inteligente obtenga la información en tiempo real más relevante de las imágenes que percibe. Así como la IA trata de emular un cerebro humano, la VA hace lo mismo con respecto a la visión humana, con la diferencia de que esta segunda cuenta con las experiencias aprendidas para, entre otras cosas, diferenciar los elementos que le rodean, su movimiento, distancia o tamaño. Así pues, la visión artificial trata de asemejar el funcionamiento del ojo humano y su posterior procesamiento con el cerebro mediante  una cámara y el posterior procesamiento de los datos que esta vierte.\\
+La visión artificial es uno de los campos más importantes de la IA cuyo objetivo es que un sistema inteligente obtenga la información en tiempo real más relevante de las imágenes que percibe. Así como la IA trata de emular un cerebro humano, la VA hace lo mismo con respecto a la visión humana, con la diferencia de que esta segunda cuenta con las experiencias aprendidas para, entre otras cosas, diferenciar los elementos que le rodean, su movimiento, distancia o tamaño. Así pues, la VA trata de asemejar el funcionamiento del ojo humano y su posterior procesamiento con el cerebro mediante  una cámara y el posterior procesamiento de los datos que esta vierte.\\
 
 Tiene diferentes usos, entre ellos los más fundamentales son:
 \begin{itemize}
@@ -117,7 +117,7 @@ Tiene diferentes usos, entre ellos los más fundamentales son:
 \caption{Algunos usos en la visión artificial.} \label{fig:vision}
 \end{figure}
 
-Un sistema dotado de visión funciona siguiendo tres niveles de operación. En primer lugar, la obtención de imágenes o vídeos mediante una cámara, las cuales son transferidas al sistema. En segundo lugar, el procesamiento de estas imágenes para poder representar correctamente los datos de interés. Este proceso consiste en un trabajo automático del sistema en el que se elimina el ruido, se reescalan las imágenes o se ajusta el contraste, entre otros, para adaptar las imágenes. Finalmente, se realiza la comprensión de imágenes, que es el paso clave para que el sistema pueda llamarse inteligente, donde a través de un modelo de aprendizaje, es capaz de llevar a cabo su propósito, como puede ser detectar un determinado objeto utilizando datos aprendidos en el pasado.\\
+Un sistema dotado de VA funciona siguiendo tres niveles de operación. En primer lugar, la obtención de imágenes o vídeos mediante una cámara, las cuales son transferidas al sistema. En segundo lugar, el procesamiento de estas imágenes para poder representar correctamente los datos de interés. Este proceso consiste en un trabajo automático del sistema en el que se elimina el ruido, se reescalan las imágenes o se ajusta el contraste, entre otros, para adaptar las imágenes. Finalmente, se realiza la comprensión de imágenes, que es el paso clave para que el sistema pueda llamarse inteligente, donde a través de un modelo de aprendizaje, es capaz de llevar a cabo su propósito, como puede ser detectar un determinado objeto utilizando datos aprendidos en el pasado.\\
 
 Un ejemplo muy extendido de uso de la VA son los coches autónomos (Figura \ref{fig:coches}-b). En este caso, el funcionamiento de la VA ha de ser impecable debido a las graves consecuencias que supondría el más mínimo fallo. Con el uso de cámaras y sensores, el ordenador del coche es capaz de detectar los objetos de las imágenes que recibe, como señales o semáforos ---entre otros--- y actuar en consecuencia según el estado de estos. Así, el coche es capaz de tener una vista de 360º y de reconocer todos los elementos de su entorno para ser capaz de actuar como lo haría un humano.\\
 
@@ -126,7 +126,7 @@ Para que la VA funcione correctamente es necesario disponer de algoritmos precis
 \section{Machine Learning}
 Para que la IA pueda simular al cerebro humano, debe ser capaz también de aprender. Este aprendizaje se lleva a cabo a través de algoritmos. Dentro de la IA se encuentra una categoría denominada Machine Learning o aprendizaje automático, cuyo fin es que los algoritmos descubran patrones en conjuntos de datos que les hacen aprender y mejorar respecto a la experiencia anterior pudiendo así tener un aprendizaje autónomo para poder realizar una tarea sin ayuda externa.\\
 
-En el sistema de aprendizaje de un algoritmo de ML hay tres partes principales. En primer lugar, un proceso de decisión, en el que una vez recibidos los datos de entrada el algoritmo genera una estimación en los datos partiendo de un patrón. Los datos de entrada pueden estar o no etiquetados; si lo están, indican al modelo lo que debe identificar. La segunda parte es una función de error, que sirve para evaluar la precisión del modelo sobre la decisión tomada. La tercera y última parte es un proceso de optimización de modelos donde las ponderaciones se ajustan en el caso de que el modelo se pueda adaptar mejor a el conjunto de datos de entrenamiento, repitiendo este proceso hasta cumplir un umbral de precisión.\\
+En el sistema de aprendizaje de un algoritmo de ML hay tres partes principales. En primer lugar, un proceso de decisión, en el que una vez recibidos los datos de entrada el algoritmo genera una estimación en los datos partiendo de un patrón. Los datos de entrada pueden estar o no etiquetados; si lo están, indican al modelo lo que debe identificar. La segunda parte es una función de error, que sirve para evaluar la precisión del modelo sobre la decisión tomada. La tercera y última parte es un proceso de optimización de modelos donde las ponderaciones se ajustan en el caso de que el modelo se pueda adaptar mejor al conjunto de datos de entrenamiento, repitiendo este proceso hasta cumplir un umbral de precisión.\\
 
 Hay diferentes tipos de \textit{Machine Learning}:
 \begin{itemize}
@@ -136,7 +136,14 @@ Hay diferentes tipos de \textit{Machine Learning}:
 \end{itemize}
 
 \section{Deep Learning}
-De la misma forma que el ML está dentro del amplio campo de la IA, el ML también tiene diferentes campos. Entre ellos está el DL. Mientras en el ML el autómata está preprogramado por un humano, en el DL el autómata aprende por sí mismo, siendo un ápice más de cómo el DL trata de simular el cerebro humano. Lo hace mediante unidades equivalentes a las neuronas.\\
+De la misma forma que el ML está dentro del amplio campo de la IA, el ML también tiene diferentes campos. Entre ellos está el DL (Figura \ref{fig:ia-ml-dl}). Mientras en el ML el autómata está preprogramado por un humano, en el DL el autómata aprende por sí mismo, siendo un ápice más de cómo el DL trata de simular el cerebro humano. Lo hace mediante unidades equivalentes a las neuronas.\\
+\begin{figure} [h!]
+  \begin{center}
+    \includegraphics[width=8cm]{figs/ia-ml-dl}
+  \end{center}
+  \caption{Esquema de relaciones entre IA, ML y DL.}
+  \label{fig:ia-ml-dl}
+\end{figure}
 
 Mientras el ML necesitaba un humano para definir previamente las características de un conjunto de datos para su clasificación, el Deep Learning no necesita intervención humana. Este aprendizaje profundo se asemeja mucho más al aprendizaje humano por tener un funcionamiento similar al de las neuronas. Este funcionamiento se denomina red neuronal.\\
 
@@ -158,7 +165,7 @@ Existen multitud de estudios sobre el Deep Learning. Uno de ellos ha sido la res
   \label{fig:textos}
 \end{figure}
 
-También existen aplicaciones de Deep Learning que se utilizan en la vida cotidiana, como los asistentes virtuales.  Este es el caos de los dispositivos Siri o Alexa ---entre otros--- que, mediante algoritmos de Deep Learning, ayudan a los usuarios a realizar distintas tareas, aprendiendo continuamente de la información que reciben.\\
+También existen aplicaciones de Deep Learning que se utilizan en la vida cotidiana, como los asistentes virtuales.  Este es el caso de los dispositivos Siri o Alexa ---entre otros--- que, mediante algoritmos de Deep Learning, ayudan a los usuarios a realizar distintas tareas, aprendiendo continuamente de la información que reciben.\\
 
 Otro ejemplo donde se emplean algoritmos de DL es el reconocimiento de imágenes. Aquí se pueden encontrar numerosas aplicaciones prácticas, como por ejemplo el enfoque automático en las caras al realizar fotos (Figura \ref{fig:caras}).\\
 \begin{figure} [h!]
@@ -170,9 +177,9 @@ Otro ejemplo donde se emplean algoritmos de DL es el reconocimiento de imágenes
 \end{figure}
 
 \section{Sistemas multisensoriales}
-Como se ha explicado en las secciones anteriores, el desarrollo del Deep Learning es muy importante. Lo es especialmente en el campo de la visión artificial, pues permite crear aplicaciones sofisticadas que simulan la visión humana. Pero si además del sensor de visión se incorporan otros tipos de sensores a un robot, el resultado de la actuación de este mejora, ya que, además de percibir la imagen del entorno, está percibiendo más información que puede ser útil a la hora de tomar decisiones. Retomando la analogía con el ser humano, si este, además de ver, es capaz de sentir, oler o tocar, recibe más información de su entorno, por lo que puede conocer mejor la situación en la que se encuentra y, con ello, actuar más inteligentemente.\\
+Como se ha explicado en las secciones anteriores, el desarrollo del DL es muy importante. Lo es especialmente en el campo de la VA, pues permite crear aplicaciones sofisticadas que simulan la visión humana. Pero si además del sensor de visión se incorporan otros tipos de sensores a un robot, el resultado de la actuación de este mejora, ya que, además de percibir la imagen del entorno, está percibiendo más información que puede ser útil a la hora de tomar decisiones. Retomando la analogía con el ser humano, si este, además de ver, es capaz de sentir, oler o tocar, recibe más información de su entorno, por lo que puede conocer mejor la situación en la que se encuentra y, con ello, actuar más inteligentemente.\\
 
-Numerosas son las aplicaciones de un sistema multisensorial, por ejemplo para los sistemas propioceptivos. Estos sistemas necesitan conocer con exactitud las variables del entorno. Otra aplicación se encuentra en los robots móviles. Al disponer de múltiples sensores, estos robots reducen el error en sus movimientos. Otro ejemplo del uso de sistemas multisensoriales es el seguimiento continuado de animales. Algunos ejemplos de estos sistemas se describen a continuación.\\
+Numerosas son las aplicaciones de un sistema multisensorial, por ejemplo para los sistemas propioceptivos. Estos sistemas necesitan conocer con exactitud las variables del entorno. Otra aplicación se encuentra en los robots móviles. Al disponer de múltiples sensores, estos robots reducen el error en sus movimientos o en su autolocalización. Otro ejemplo del uso de sistemas multisensoriales es el seguimiento continuado de animales. Algunos ejemplos de estos sistemas se describen a continuación.\\
 
 En \cite{ucm}, de la Universidad Complutense de Madrid se describe un sistema para detectar de forma temprana las enfermedades o infecciones en animales de granja, más concretamente en cerdos. Este sistema parte de la instalación de microchips y otro tipo de sensores en los animales para poder controlar las condiciones, como su temperatura o el consumo de agua de los bebederos, de forma que un ordenador muestra esta información de manera gráfica. También se incluye una monitorización grupal mediante grabaciones diarias para que el sistema detecte cualquier tipo de actividad no común (Figura \ref{fig:ucm}).\\
 \begin{figure} [h!]
