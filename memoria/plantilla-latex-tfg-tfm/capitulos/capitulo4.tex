@@ -45,7 +45,7 @@ Está dotada de una serie de pines y puertos que permiten su conexión con disti
 \item{PiCamera (Figura \ref{fig:picam_of}).} Este sensor es una de las cámaras oficiales de Raspberry, que permite obtener imágenes del entorno y mostrarlas en pantalla.
 \end{itemize}
 
-Raspberry no tiene lecturas analógicas, por lo que ha sido necesario el uso de un conversor analógico a digital para la lectura del sensor MQ-135 \ref{fig:mq_of} y el sensor de nivel de agua \ref{fig:nivel_of}. Además, se han utilizado otros componentes como son resistencias o leds para el correcto funcionamiento de los sensores y proporcionar al usuario mayor comprensión del funcionamiento del sistema.\\
+Raspberry no tiene lecturas analógicas, por lo que ha sido necesario el uso de un conversor analógico a digital (el MCP3008) para la lectura del sensor MQ-135 \ref{fig:mq_of} y el sensor de nivel de agua \ref{fig:nivel_of}. Además, se han utilizado otros componentes como son resistencias o leds para el correcto funcionamiento de los sensores y proporcionar al usuario mayor comprensión del funcionamiento del sistema.\\
 
 En la figura \ref{fig:esquema} se puede ver un esquema de los sensores utilizados integrados en la Raspberry.
 \begin{figure} [h!]
@@ -64,6 +64,7 @@ En primer lugar ha sido necesaria la instalación de las librerías necesarias p
 Durante este proceso ha habido dos sensores que se han intentado utilizar sin éxito debido a que no tienen compatibilidad con Raspberry: CCS811, que mide la calidad del aire y AM2315, que mide la temperatura y humedad. Aun así, esto no ha sido un problema ya que son datos que se han podido obtener con otros sensores disponibles.\\
 
 \subsection{Lectura sensorial con Python}
+\label{sec:ficheropython}
 Se ha considerado que el usuario no tiene conocimiento para comprender los datos en crudo que ofrece un sensor, por tanto, ha sido necesario realizar diferentes cambios para ofrecer una comprensión fácil al usuario. Se ha utilizado el programa Node-Red para ofrecer una interfaz al usuario, de forma que este sea capaz de ver la información del estado del sistema representada a través de widgets. Así ha sido posible crear un interfaz ameno e intuitivo que el usuario puede comprender a través de algo más visual que valores numéricos.\\
 
 Para poder mostrar todos los sensores en tiempo real en Node-Red, ha sido necesario disponer de un fichero de Python que  cada vez que se ejecute lea una sola vez de todos ellos. No debe leer continuamente ya que es la configuración de Node-Red la que se encarga de ello. En este fichero sólo se procesan los sensores que devuelven salidas numéricas, esto es, todos sensores excepto la PiCam \ref{fig:picam_of} y la cámara térmica \ref{fig:termicos}-b. Para crear este fichero de una manera organizada, se ha creado una clase por cada sensor. El diagrama de las clases de cada sensor se puede ver en la Figura \ref{fig:umlet}. \\
@@ -71,7 +72,7 @@ Para poder mostrar todos los sensores en tiempo real en Node-Red, ha sido necesa
   \begin{center}
     \includegraphics[width=16cm]{figs/umlet}
   \end{center}
-  \caption{Esquema de clases de cada sensor.}
+  \caption{Esquema de clases de cada sensor hecho en UMLet.}
   \label{fig:umlet}
 \end{figure}
 
@@ -88,7 +89,7 @@ for func in [x.ammo, x.bme, x.pix, x.lev, x.water_t]:
 for thread in threads:
 	thread.join()
 \end{lstlisting}
-\caption[Función para crear un Thread por sensor y obtener su lectura]{Función para crear un Thread por sensor y obtener su lectura}
+\caption[Función para crear un Thread por sensor y obtener su lectura.]{Función para crear un Thread por sensor y obtener su lectura.}
 \label{cod:threads}
 \end{code}
 
@@ -104,7 +105,7 @@ Ammonia: 477 Temperature: 28.24  Pressure: 1002.1 Humidity: 52.2 Gas: 4005.9 Wat
 \subsection{Creación de la interfaz de usuario}
 Una vez creado este fichero, se ha procedido a crear la interfaz en Node-Red. Este programa funciona a través de diferentes tipos de nodos, que deben ser combinados para obtener el resultado deseado.\\
 
-En primer lugar, a través del nodo de ejecución, representado en rojo con un engranaje, se pueden ejecutar ficheros que están en la máquina local. Este nodo es el que se ha utilizado para integrar en la aplicación el fichero presentado en la sección anterior. Para obtener individualmente el valor de cada sensor, se ha utilizado otro nodo llamado nodo función, que permite incluir código directamente en Node-Red. Este nodo se ha utilizado para extraer de la salida del nodo ejecución el valor de interés. Con estos dos nodos algunos sensores han estado listos para mostrar los valores en la interfaz de usuario (IU), por lo que solo ha sido necesario añadir el widget más adecuado para cada caso a través del nodo pertinente. Este ha sido el caso de los sensores MQ-135 \ref{fig:mq_of}, BME680 \ref{fig:bme_of} (en el caso de temperatura, presión y humedad) y DS18B20 \ref{fig:ds_of}.\\
+En primer lugar, a través del nodo de ejecución, se pueden ejecutar ficheros que están en la máquina local. Este nodo es el que se ha utilizado para integrar en la aplicación el fichero presentado en la sección anterior \ref{sec:ficheropython}. Para obtener individualmente el valor de cada sensor, se ha utilizado otro nodo llamado nodo función, que permite incluir código directamente en Node-Red. Este nodo se ha utilizado para extraer de la salida del nodo ejecución el valor de interés. Con estos dos nodos algunos sensores han estado listos para mostrar los valores en la interfaz de usuario (IU), por lo que solo ha sido necesario añadir el widget más adecuado para cada caso a través del nodo pertinente. Este ha sido el caso de los sensores MQ-135 \ref{fig:mq_of}, BME680 \ref{fig:bme_of} (en el caso de temperatura, presión y humedad) y DS18B20 \ref{fig:ds_of}.\\
 
 En el caso de los otros sensores han sido necesarios otros cambios para obtener el resultado adecuado:
 \begin{itemize}
