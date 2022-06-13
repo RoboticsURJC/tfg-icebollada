@@ -15,7 +15,7 @@ En este capítulo se definen tanto la infraestructura utilizada como los método
 
 \section{Plataforma hardware}
 \label{sec:hw}
-Para satisfacer el objetivo de crear un sistema multisensorial con las características definidas en el capítulo anterior y que además sea \textit{lowcost}, la infraestructura hardware en este trabajo se ha centrado en sistemas embebidos empotrados existentes en el mercado. Dos de los sistemas más importantes son Raspberry (Figura \ref{fig:placas}-a) y Arduino (Figura \ref{fig:placas}-b). La decisión de trabajar con Raspberry en lugar de Arduino ha estado motivada por diferentes motivos. Aunque ambas placas disponen de pines GPIO para la conexión de sensores o actuadores, en Arduino no se permite la conexión de cámaras, mientras que en Raspberry no solo se puede acoplar su cámara (PiCam) sino que permite conectar una webcam a través del puerto USB. Arduino es un microprocesador que cuenta con su IDE, mientras que Raspberry es un microordenador completo que cuenta con su propio sistema operativo Raspbian. De esta forma el usuario final puede visualizar el resultado con la conexión de la Raspberry a una pantalla a través de su puerto HDMI.\\
+Para satisfacer el objetivo de crear un sistema multisensorial con las características definidas en el capítulo anterior y que además sea \textit{lowcost}, la infraestructura hardware en este trabajo se ha centrado en sistemas embebidos empotrados existentes en el mercado. Dos de los sistemas más importantes son Raspberry (Figura \ref{fig:placas}-a) y Arduino (Figura \ref{fig:placas}-b). La decisión de trabajar con Raspberry en lugar de Arduino ha estado motivada por diferentes motivos. Aunque ambas placas disponen de pines GPIO para la conexión de sensores o actuadores, Arduino no permite la conexión de cámaras, mientras que en Raspberry no solo se puede acoplar su cámara (PiCam) sino que permite conectar una webcam a través de uno de los puertos USB que tiene la placa. Arduino es un microprocesador que cuenta con su IDE, mientras que Raspberry es un microordenador completo que cuenta con su propio sistema operativo Raspbian. De esta forma el usuario final puede visualizar el resultado con la conexión de la Raspberry a una pantalla a través de su puerto HDMI.\\
 \begin{figure}[h!]
   \begin{center}
     \subfigure[Raspberry Pi]{\includegraphics[width=75mm]{figs/raspberry_of}}\hspace{2mm}
@@ -26,7 +26,7 @@ Para satisfacer el objetivo de crear un sistema multisensorial con las caracter�
 
 A la placa Raspberry se han conectado una serie de sensores para obtener distintos valores necesarios para la monitorización del sistema que se presentan a continuación.\\
 
-Para la obtención de la temperatura se han utilizado el sensor BME680 (Figura \ref{fig:bme_of}) y el sensor DS18B20 (Figura \ref{fig:ds_of}). Este segundo sensor es resistente al agua, por lo que permite recoger la temperatura en superficies húmedas o mojadas. El rango en el que trabaja el BME680 así como su resolución se encuentra en el cuadro \ref{cuadro:bme_tabla} extraída de la ficha de datos del sensor. Las características del DS18B20 se encuentran en el cuadro \ref{cuadro:ds_tabla}.\\
+Para la obtención de la temperatura se han utilizado el sensor BME680 (Figura \ref{fig:bme_of}) y el sensor DS18B20 (Figura \ref{fig:ds_of}). Este segundo sensor es resistente al agua, por lo que permite recoger la temperatura en superficies húmedas o mojadas. El rango en el que trabaja el BME680 así como su resolución se encuentra en el cuadro \ref{cuadro:bme_tabla} extraído de la ficha de datos del sensor. Las características del DS18B20 se encuentran en el cuadro \ref{cuadro:ds_tabla}.\\
 \begin{figure} [h!]
   \begin{center}
     \includegraphics[width=6cm]{figs/bme_of}
@@ -96,7 +96,7 @@ Para el registro de imágenes se ha utilizado una de las cámaras de Raspberry, 
   \label{fig:picam_of}
 \end{figure}
 
-Otro sensor utilizado ha sido el sensor de nivel de agua (Figura \ref{fig:nivel_of}), que permite detectar la presencia de agua. También es posible obtener una idea de la cantidad de agua presente.
+Otro sensor utilizado ha sido el sensor de nivel de agua (Figura \ref{fig:nivel_of}), que permite detectar la presencia de agua. También es posible obtener una idea de la cantidad de agua presente, aunque no de forma precisa.
 \begin{figure} [h!]
   \begin{center}
     \includegraphics[width=6cm]{figs/nivel_of}
@@ -126,6 +126,8 @@ Para dar soporte a la placa Raspberry se ha usado su sistema operativo oficial R
   \label{fig:raspbian}
 \end{figure}
 
+A continuación se presentan las herramientas utilizadas para el desarrollo y funcionamiento del presente trabajo.
+
 \subsection{Lenguaje Python}
 \label{sec:python}
 Python es un lenguaje de alto nivel de programación, interpretado y orientado a objetos cuya filosofía hace hincapié en la legibilidad de su código y, por ello, su sintaxis es sencilla. Ofrece numerosos módulos y librerías para las distintas aplicaciones. Algunas de estas librerías son: TensorFlow para aplicaciones en ML (Código \ref{cod:pythonML}), Pandas para análisis de datos, Flask para aplicaciones web o SQLAlchemy para comunicación entre bases de datos y programas. El uso de estos módulos y librerías facilita la reusabilidad de código y la programación modulada. No requiere del proceso de compilación, lo que lo convierte en un lenguaje muy rápido en el ciclo de edición, prueba y depuración.\\
@@ -141,7 +143,7 @@ model = object_detector.create(train_data, model_spec=spec, epochs=20, batch_siz
 \label{cod:pythonML}
 \end{code}
 
-Actualmente es el lenguaje de programación más usado en el mundo según la calificación de la empresa TIOBE\footnote{\url{https://www.tiobe.com/tiobe-index/}}, por lo que cuenta con una gran comunidad. Además, también es el más popular en el ámbito del Machine Learning. Algunas de las aplicaciones que usan Python son Google, Netflix, Dropbox o Spotify.\\
+Actualmente es el lenguaje de programación más usado en el mundo según la calificación de la empresa TIOBE \footnote{\url{https://www.tiobe.com/tiobe-index/}}, por lo que cuenta con una gran comunidad. Además, también es el más popular en el ámbito del Machine Learning. Algunas de las aplicaciones que usan Python son Google, Netflix, Dropbox o Spotify.\\
 
 La decisión de usar Python para el desarrollo de este TFG ha sido que es uno de los lenguajes de programación que mejor funciona y está soportado de forma nativa en el SO utilizado Raspbian, además de las numerosas librerías útiles para este proyecto adaptadas a Raspberry que Python posee.\\
 
