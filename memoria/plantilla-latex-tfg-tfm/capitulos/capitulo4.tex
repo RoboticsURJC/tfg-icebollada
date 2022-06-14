@@ -206,6 +206,8 @@ También se ha tenido en cuenta que Node-Red funciona sobre una dirección a la 
 \caption{Acceso a la interfaz de usuario desde distintos dispositivos.} \label{fig:userlogin}
 \end{figure}
 
+Por otro lado, tanto los servidores de Flask como Node-Red se encontraban bajo una URL de HTTP (Hypertext Transfer Protocol). Por tanto, un cambio necesario ha sido añadir seguridad de tal forma que sea HTTPS (Hypertext Transfer Protocol Secure), para impedir que otros usuarios puedan interceptar la información confidencial que se transfiere entre el cliente y los servidores web a través de Internet. Este cambio se ha realizado añadiendo certificados autofirmados creados por el autor.\\
+
 \subsection{Autoarranque}
 Recordando que este sistema está pensado para personas que no están familiarizadas con la programación o los ordenadores, se ha considerado añadir una opción que facilite el arranque del sistema.\\
 
