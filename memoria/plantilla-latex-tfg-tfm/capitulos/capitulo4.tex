@@ -59,22 +59,33 @@ En la figura \ref{fig:esquema} se puede ver un esquema de los sensores utilizado
 \section{Desarrollo software}
 Tras disponer de la parte hardware, el equipo está preparado. Para que este equipo funcione, es necesario crear las instrucciones y reglas a través de programas o aplicaciones, esto es, la parte software.\\
 
+Como se ha comentado previamente, se han mantenido reuniones con el laboratorio así como reuniones semanales con el tutor. De estas reuniones se ha obtenido la información necesaria para realizar el proyecto. Además, ha permitido extraer el diagrama de casos de uso (Figura \ref{fig:casos}).\\
+\begin{figure} [h!]
+  \begin{center}
+    \includegraphics[width=17cm]{figs/casos}
+  \end{center}
+  \caption{Diagrama de casos de uso del proyecto.}
+  \label{fig:casos}
+\end{figure}
+
+En base al diagrama de casos de uso, por cada sensor debe crearse una clase. Por tanto, se ha creado el siguiente diagrama de clases (Figura \ref{fig:umlet}) para ser implementado.\\
+\begin{figure} [h!]
+  \begin{center}
+    \includegraphics[width=14cm]{figs/umlet}
+  \end{center}
+  \caption{Esquema de clases de cada sensor hecho en UMLet.}
+  \label{fig:umlet}
+\end{figure}
+
 En primer lugar ha sido necesaria la instalación de las librerías necesarias para el funcionamiento de todos los sensores. Después de la instalación, han surgido varios problemas al intentar leer de los distintos sensores. Uno de los problemas encontrado en dos sensores ---los que funcionaban con conexión i2c--- ha sido que la Raspberry no los detectaba. Se pueden encontrar los errores que han surgido en la instalación y las respectivas soluciones para hacer funcionar todos los sensores en la wiki \footnote{\url{https://github.com/jmvega/tfg-icebollada/wiki/2.February-progress}} que se ha creado para realizar el proyecto.\\
 
 Durante este proceso ha habido dos sensores que se han intentado utilizar sin éxito debido a que no tienen compatibilidad con Raspberry: CCS811, que mide la calidad del aire y AM2315, que mide la temperatura y humedad. Aun así, esto no ha sido un problema ya que son datos que se han podido obtener con otros sensores disponibles.\\
 
 \subsection{Lectura sensorial con Python}
 \label{sec:ficheropython}
-Se ha considerado que el usuario no tiene conocimiento para comprender los datos en crudo que ofrece un sensor, por tanto, ha sido necesario realizar diferentes cambios para ofrecer una comprensión fácil al usuario. Se ha utilizado el programa Node-Red para ofrecer una interfaz al usuario, de forma que este sea capaz de ver la información del estado del sistema representada a través de widgets. Así ha sido posible crear un interfaz ameno e intuitivo que el usuario puede comprender a través de algo más visual que valores numéricos.\\
+Se ha considerado que el usuario no tiene conocimiento para comprender los datos en crudo que ofrece un sensor, por tanto, ha sido necesario realizar diferentes cambios para ofrecer una comprensión fácil al usuario. Se ha utilizado el programa Node-Red para ofrecer una interfaz al usuario, de forma que este sea capaz de ver la información del estado del sistema representada a través de widgets. Así ha sido posible crear un interfaz ameno e intuitivo basado en el diagrama de casos de uso presentado anteriormente (Figura \ref{fig:casos}), permitiendo que el usuario comprenda la información a través de algo más visual que valores numéricos.\\
 
-Para poder mostrar todos los sensores en tiempo real en Node-Red, ha sido necesario disponer de un fichero de Python que  cada vez que se ejecute lea una sola vez de todos ellos. No debe leer continuamente ya que es la configuración de Node-Red la que se encarga de ello. En este fichero sólo se procesan los sensores que devuelven salidas numéricas, esto es, todos sensores excepto la PiCam \ref{fig:picam_of} y la cámara térmica \ref{fig:termicos}-b. Para crear este fichero de una manera organizada, se ha creado una clase por cada sensor. El diagrama de las clases de cada sensor se puede ver en la Figura \ref{fig:umlet}. \\
-\begin{figure} [h!]
-  \begin{center}
-    \includegraphics[width=16cm]{figs/umlet}
-  \end{center}
-  \caption{Esquema de clases de cada sensor hecho en UMLet.}
-  \label{fig:umlet}
-\end{figure}
+Para poder mostrar todos los sensores en tiempo real en Node-Red, ha sido necesario disponer de un fichero de Python que cada vez que se ejecute lea una sola vez de todos ellos. No debe leer continuamente ya que es la configuración de Node-Red la que se encarga de ello. En este fichero sólo se procesan los sensores que devuelven salidas numéricas, esto es, todos sensores excepto la PiCam \ref{fig:picam_of} y la cámara térmica \ref{fig:termicos}-b. Para crear este fichero de una manera organizada, se ha creado una clase por cada sensor, tal y como en el diagrama de clases (Figura \ref{fig:umlet}).\\
 
 Este fichero de Python utiliza la librería Threads para poder leer de manera concurrente todos los sensores, ahorrando tiempo y ganando eficacia. El código \ref{cod:threads} muestra cómo se crea un hilo ---o thread--- por cada sensor.\\
 \begin{code}[h]
@@ -82,7 +93,7 @@ Este fichero de Python utiliza la librería Threads para poder leer de manera co
 threads = []
 
 #Lista de funciones que devuelven la lectura del sensor respectivo
-for func in [x.ammo, x.bme, x.pix, x.lev, x.water_t]: 
+for func in [x.ammo, x.bme, x.lev, x.water_t]: 
 	threads.append(Thread(target=func))
 	threads[-1].start()
 	
@@ -96,7 +107,7 @@ for thread in threads:
 Además, este programa guarda las lecturas en un fichero CSV por si fuese necesaria la comparación o estudio de datos a lo largo del tiempo. El fichero devuelve una cadena con la lectura de cada sensor \ref{cod:salida}, para poder procesar la salida en Node-Red.\\
 \begin{code}[h]
 \begin{lstlisting}[language=Python]
-Ammonia: 477 Temperature: 28.24  Pressure: 1002.1 Humidity: 52.2 Gas: 4005.9 Water level: 2 Waterproof temp: 28.312 Pixels: [[23.5, 23.0, 23.0, 23.25, 23.0, 23.75, 23.75, 24.0], [24.0, 23.25, 23.0, 19.5, 19.5, 19.75, 19.5, 21.0], [19.0, 19.0, 20.0, 19.75, 20.0, 20.25, 19.0, 19.0], [19.25, 19.75, 18.75, 19.25, 18.25, 19.0, 19.75, 20.0], [17.75, 18.75, 18.75, 19.0, 19.25, 21.5, 22.25, 21.25], [21.5, 21.25, 22.25, 21.75, 21.75, 18.75, 18.25, 18.5], [18.5, 18.75, 18.75, 18.5, 18.5, 18.5, 21.75, 22.75], [21.25, 22.25, 21.75, 21.75, 21.75, 21.75, 21.75, 23.0]]
+Ammonia: 0.91 Temperature: 28.24  Pressure: 1002.1 Humidity: 52.2 Gas: 4005.9 Water level: 2 Waterproof temp: 28.312
 \end{lstlisting}
 \caption[Ejemplo de salida del fichero Python]{Ejemplo de salida del fichero Python}
 \label{cod:salida}
@@ -128,7 +139,7 @@ Con estos ajustes realizados, se ha obtenido parte de la IU. Para hacerla más c
 \subsection{Integración de las cámaras en la UI}
 La creación de la interfaz en la subsección anterior no es completa, ya que faltan dos de los sensores que se utilizan en este trabajo: las cámaras. Para poder visualizar las cámaras desde Node-Red debe ser a través del nodo template (que significa plantilla), que permite visualizar una dirección web. Por tanto ha sido necesario crear un servidor que permita visualizar las imágenes de las dos cámaras y por tanto poder incluirlo en la IU. Para crear este servidor se ha utilizado Flask.\\
 
-Se ha decidido crear una servidor por cada cámara. De esta manera se puede acceder solamente a una visualización o bien a las dos, según el interés del usuario. Para el funcionamiento de la cámara térmica Seek Thermal \ref{fig:termicos}-b se ha utilizado la librería que tiene seek, que permite su visualización a través de OpenCV. Para el funcionamiento de la PiCam \ref{fig:picam_of} se ha utilizado OpenCV tanto para su visualización como para la adición de la fecha y la hora en la visualización (Figura \ref{fig:fechayhora}). El código \ref{cod:fechayhora} muestra como se consigue.\\
+Se ha decidido crear un servidor por cada cámara. De esta manera se puede acceder solamente a una visualización o bien a las dos, según el interés del usuario. Para el funcionamiento de la cámara térmica Seek Thermal \ref{fig:termicos}-b se ha utilizado la librería que tiene seek, que permite su visualización a través de OpenCV. Para el funcionamiento de la PiCam \ref{fig:picam_of} se ha utilizado OpenCV tanto para su visualización como para la adición de la fecha y la hora en la visualización (Figura \ref{fig:fechayhora}). El código \ref{cod:fechayhora} muestra como se consigue.\\
 \begin{figure} [h!]
   \begin{center}
     \includegraphics[width=8cm]{figs/fechayhora}
@@ -164,19 +175,24 @@ if __name__ == '__main__':
 \label{cod:flask}
 \end{code}
 
-Después de incorporar el código del funcionamiento de cada cámara en los respectivos servidores, se ha añadido un botón para iniciar o parar la grabación del vídeo en la cámara normal. Para diferenciar cuándo se está grabando de cuándo no, se ha añadido un mensaje en pantalla indicando que se está grabando. El vídeo se guarda en la Raspberry de forma local y en formato .avi.\\
-
-Una vez se ha obtenido la visualización de las cámaras en la IU junto al resto de sensores, el sistema funciona. El diagrama de casos de uso del proyecto con la interfaz creada aparece representado en la figura \ref{fig:casos}
-\begin{figure} [h!]
+Después de incorporar el código del funcionamiento de cada cámara en los respectivos servidores, se ha añadido un botón para iniciar o parar la grabación del vídeo en la cámara normal. Para diferenciar cuándo se está grabando de cuándo no, se ha añadido un mensaje en pantalla indicando que se está grabando. El vídeo se guarda en la Raspberry de forma local y en formato .avi. En la Figura \ref{fig:proceso} se puede ver el proceso de registro en el servidor para acceder a la visualización de la PiCamera.\\
+\begin{figure}[h!]
   \begin{center}
-    \includegraphics[width=17cm]{figs/casos}
+    \subfigure[Pantalla inicial del servidor]{\includegraphics[width=7cm]{figs/server1}}\hspace{1mm}
+    \subfigure[Pantalla de registro]{\includegraphics[width=7cm]{figs/server2}}\hspace{2mm}
+    \subfigure[Código de doble autenticación]{\includegraphics[width=7cm]{figs/server3}}\hspace{1mm}
+    \subfigure[Escaneo de código]{\includegraphics[width=7cm]{figs/server4}}
+    \subfigure[Pantalla de login]{\includegraphics[width=7cm]{figs/server6}}\hspace{2mm}
+    \subfigure[Visualización de la cámara]{\includegraphics[width=7cm]{figs/server7}}
   \end{center}
-  \caption{Diagrama de casos de uso del proyecto.}
-  \label{fig:casos}
-\end{figure}\\
+\caption{Proceso de registro en el servidor de Flask de la PiCam.} \label{fig:proceso}
+\end{figure}
+
+Una vez se ha obtenido la visualización de las cámaras en la IU junto al resto de sensores, la interfaz está completada siguiendo la estructura presentada en el diagrama de casos de uso (Figura \ref{fig:casos}).
+
 
 \subsection{Seguridad}
-Debido a que se está trabajando en un servidor web, es importante dotar de cierta seguridad al servidor para evitar que sólo las personas autorizadas puedan acceder a las imágenes. Para ello, se ha decidido hacerlo a través del factor de doble autenticación (del inglés two factor authentication, 2FA). 2FA es el proceso de autenticación donde se añade un segundo paso en el proceso de identificación frente a un servicio. En este caso, además de que un usuario introduzca su contraseña, es necesario un código que se genera cada 30 segundos y caduca pasado ese tiempo. La generación de este código se hace a través de google authenticator \footnote{\url{https://chrome.google.com/webstore/detail/authenticator/bhghoamapcdpbohphigoooaddinpkbai?hl=es}}. Esta extensión de google genera los códigos de 30 segundos a partir de el escaneo de un código QR o por la inserción manual de un código inicial.\\
+Debido a que se está trabajando en un servidor web, es importante dotar de cierta seguridad al servidor para evitar que sólo las personas autorizadas puedan acceder a las imágenes. Para ello, se ha decidido hacerlo a través del factor de doble autenticación (del inglés two factor authentication, 2FA). 2FA es el proceso de autenticación donde se añade un segundo paso en el proceso de identificación frente a un servicio. En este caso, además de que un usuario introduzca su contraseña, es necesario un código que se genera cada 30 segundos y caduca pasado ese tiempo. La generación de este código se hace a través de google authenticator \footnote{\url{https://chrome.google.com/webstore/detail/authenticator/bhghoamapcdpbohphigoooaddinpkbai?hl=es}}. Esta extensión de google genera los códigos de 30 segundos a partir de el escaneo de un código QR (Figura \ref{fig:server}-d) o por la inserción manual de un código inicial.\\
 
 Para que estos servidores funcionen con 2FA, ha sido necesario incorporar otras librerías así como otros módulos de Flask como Flask\_login, Flask\_bootstrap, Flask\_sqlalchemy o Flask\_wtf. Durante el desarrollo del servidor con 2FA, han surgido determinados problemas que pueden encontrarse junto a la solución en la wiki del proyecto \footnote{\url{https://github.com/jmvega/tfg-icebollada/wiki/5.May-progress}}.\\
 
@@ -211,4 +227,13 @@ Por otro lado, tanto los servidores de Flask como Node-Red se encontraban bajo u
 \subsection{Autoarranque}
 Recordando que este sistema está pensado para personas que no están familiarizadas con la programación o los ordenadores, se ha considerado añadir una opción que facilite el arranque del sistema.\\
 
-Con el encendido de la Raspberry, la interfaz de usuario se lanza de forma automática ---así como los dos servidores--- y se enciende solicitando el login del usuario para acceder a la IU. Además, se ha incorporado un led verde que indica cuando el sistema está listo para ser usado. El funcionamiento del autoarranque, tanto de Node-Red como de los servidores se encuentra detallado en la wiki \footnote{\url{https://github.com/jmvega/tfg-icebollada/wiki/5.May-progress}}.
+Con el encendido de la Raspberry, la interfaz de usuario se lanza de forma automática ---así como los dos servidores--- y se enciende solicitando el login del usuario para acceder a la IU. Además, se ha incorporado un led verde que indica cuando el sistema está listo para ser usado. El funcionamiento del autoarranque, tanto de Node-Red como de los servidores se encuentra detallado en la wiki \footnote{\url{https://github.com/jmvega/tfg-icebollada/wiki/5.May-progress}}. El proceso de autoarranque es visible en la Figura \ref{fig:autoarranque}.
+\begin{figure}[h!]
+  \begin{center}
+    \subfigure[Encendido de la Raspberry]{\includegraphics[width=7cm]{figs/auto1}}\hspace{1mm}
+    \subfigure[]{\includegraphics[width=7.2cm]{figs/auto2}}\hspace{1mm}
+    \subfigure[]{\includegraphics[width=7cm]{figs/auto3}}\hspace{1mm}
+    \subfigure[Sistema listo para iniciar sesión]{\includegraphics[width=7.1cm]{figs/auto4}}
+  \end{center}
+\caption{Proceso de autoarranque del sistema.} \label{fig:autoarranque}
+\end{figure}
