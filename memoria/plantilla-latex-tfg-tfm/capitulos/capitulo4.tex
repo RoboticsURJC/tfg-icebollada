@@ -14,7 +14,7 @@ Este capítulo consta de la descripción detallada del proceso que se ha llevado
 
 Para obtener más información, se ha contactado con el Laboratorio del Bienestar e Investigación Animal de la Universidad de Alcalá de Henares \footnote{\url{https://www.uah.es/es/investigacion/unidades-de-investigacion/grupos-de-investigacion/Bienestar-en-Investigacion-Animal-Welfare-on-Animal-Research./}} para conocer la situación en la que trabajan. Se han apreciado bastantes cosas mejorables y se ha enfocado el objetivo en la monitorización de los ratones del laboratorio, que requieren una observación constante así como del entorno en el que se encuentran debido a que deben estar bajo unas condiciones determinadas.\\
 
-Asimismo, para facilitar la comprensión de los datos, se ofrece una interfaz gráfica donde los valores numéricos obtenidos por los sensores, así como cualquier interacción necesaria en la IU se traducen en widgets ---pequeñas imágenes que proveen información visual--- comprensibles para cualquier usuario de una manera intuitiva y sencilla.\\
+Asimismo, para facilitar la comprensión de los datos, se ofrece una interfaz gráfica donde los valores numéricos obtenidos por los sensores, así como cualquier interacción necesaria en la IU se traducen en \textit{widgets} ---pequeñas imágenes que proveen información visual--- comprensibles para cualquier usuario de una manera intuitiva y sencilla.\\
 
 Dos son las partes esenciales para el desarrollo: hardware y software. En la primera sección se presenta el desarrollo hardware y en la sección posterior el desarrollo software que se ha realizado para tener un funcionamiento correcto del sistema.
 
@@ -91,7 +91,7 @@ Durante este proceso ha habido dos sensores que se han intentado utilizar sin é
 
 \subsection{Lectura sensorial con Python}
 \label{sec:ficheropython}
-Se ha considerado que el usuario no tiene conocimiento para comprender los datos en crudo que ofrece un sensor, por tanto, ha sido necesario realizar diferentes cambios para ofrecer una comprensión fácil al usuario. Se ha utilizado el programa Node-Red para ofrecer una interfaz al usuario, de forma que este sea capaz de ver la información del estado del sistema representada a través de widgets. Así ha sido posible crear un interfaz ameno e intuitivo basado en el diagrama de casos de uso presentado anteriormente (Figura \ref{fig:casos}), permitiendo que el usuario comprenda la información a través de algo más visual que valores numéricos.\\
+Se ha considerado que el usuario no tiene conocimiento para comprender los datos en crudo que ofrece un sensor, por tanto, ha sido necesario realizar diferentes cambios para ofrecer una comprensión fácil al usuario. Se ha utilizado el programa Node-Red para ofrecer una interfaz al usuario, de forma que este sea capaz de ver la información del estado del sistema representada a través de \textit{widgets}. Así ha sido posible crear un interfaz ameno e intuitivo basado en el diagrama de casos de uso presentado anteriormente (Figura \ref{fig:casos}), permitiendo que el usuario comprenda la información a través de algo más visual que valores numéricos.\\
 
 Para poder mostrar todos los sensores en tiempo real en Node-Red, ha sido necesario disponer de un fichero de Python que cada vez que se ejecute lea una sola vez de todos ellos. No debe leer continuamente ya que es la configuración de Node-Red la que se encarga de ello. En este fichero se procesan los sensores menos el AMG8833 \ref{fig:termicos}-a, la PiCam \ref{fig:picam_of} y la cámara térmica \ref{fig:termicos}-b. Para crear este fichero se ha creado una clase por cada sensor, tal y como se estableció en el diagrama de clases (Figura \ref{fig:umlet}).\\
 
@@ -124,7 +124,7 @@ Ammonia: 0.91 Temperature: 28.24  Pressure: 1002.1 Humidity: 52.2 Gas: 4005.9 Wa
 \subsection{Creación de la interfaz de usuario}
 Una vez creado este fichero, se ha procedido a crear la interfaz en Node-Red. Este programa funciona a través de diferentes tipos de nodos, que deben ser combinados para obtener el resultado deseado.\\
 
-En primer lugar, a través del nodo de ejecución, se pueden ejecutar ficheros que están en la máquina local. Este nodo es el que se ha utilizado para integrar en la aplicación el fichero presentado en la sección anterior \ref{sec:ficheropython}. Para obtener individualmente el valor de cada sensor, se ha utilizado otro nodo ---llamado nodo función--- que permite incluir código directamente en Node-Red. Este nodo se ha utilizado para extraer de la salida del nodo ejecución el valor de interés en cada caso. Este proceso corresponde a las diferentes elipses salientes de \textit{sensors script} del diagrama de casos (Figura \ref{fig:casos}). Con estos dos nodos algunos sensores han estado listos para mostrar los valores en la interfaz de usuario (IU), por lo que solo ha sido necesario añadir el widget más adecuado para cada caso a través del nodo pertinente. Este ha sido el caso de los sensores MQ-135 \ref{fig:mq_of}, BME680 \ref{fig:bme_of} (en el caso de temperatura, presión y humedad) y DS18B20 \ref{fig:ds_of}.\\
+En primer lugar, a través del nodo de ejecución, se pueden ejecutar ficheros que están en la máquina local. Este nodo es el que se ha utilizado para integrar en la aplicación el fichero presentado en la sección anterior \ref{sec:ficheropython}. Para obtener individualmente el valor de cada sensor, se ha utilizado otro nodo ---llamado nodo función--- que permite incluir código directamente en Node-Red. Este nodo se ha utilizado para extraer de la salida del nodo ejecución el valor de interés en cada caso. Este proceso corresponde a las diferentes elipses salientes de \textit{sensors script} del diagrama de casos (Figura \ref{fig:casos}). Con estos dos nodos algunos sensores han estado listos para mostrar los valores en la interfaz de usuario (IU), por lo que solo ha sido necesario añadir el \textit{widget} más adecuado para cada caso a través del nodo pertinente. Este ha sido el caso de los sensores MQ-135 \ref{fig:mq_of}, BME680 \ref{fig:bme_of} (en el caso de temperatura, presión y humedad) y DS18B20 \ref{fig:ds_of}.\\
 
 En el caso de los otros sensores han sido necesarios otros cambios para obtener el resultado adecuado:
 \begin{itemize}
@@ -153,7 +153,7 @@ Con estos ajustes realizados, se ha obtenido parte de la IU. Para hacerla más c
   \label{fig:ui_nocams}
 \end{figure}
 
-\subsection{Integración de las cámaras en la UI}
+\subsection{Integración de las cámaras en la IU}
 La creación de la interfaz en la subsección anterior no es completa, ya que faltan dos de los sensores que se utilizan en este trabajo: las cámaras. Para poder visualizar las cámaras desde Node-Red debe ser a través del nodo template (que significa plantilla), que permite visualizar una dirección web. Por tanto ha sido necesario crear un servidor que permita visualizar las imágenes de las dos cámaras y por tanto poder incluirlo en la IU. Para crear este servidor se ha utilizado Flask.\\
 
 Se ha decidido crear un servidor por cada cámara. De esta manera se puede acceder solamente a una visualización o bien a las dos, según el interés del usuario. Para el funcionamiento de la cámara térmica Seek Thermal \ref{fig:termicos}-b se ha utilizado la librería que tiene seek, que permite su visualización a través de OpenCV. Para el funcionamiento de la PiCam \ref{fig:picam_of} se ha utilizado OpenCV tanto para su visualización como para la adición de la fecha y la hora en la visualización (Figura \ref{fig:fechayhora}). El código \ref{cod:fechayhora} muestra como se consigue.\\
@@ -238,6 +238,8 @@ También se ha tenido en cuenta que Node-Red funciona sobre una dirección a la 
   \end{center}
 \caption{Acceso a la interfaz de usuario desde distintos dispositivos.} \label{fig:userlogin}
 \end{figure}
+
+Tanto las contraseñas de Node-Red como las de los servidores se guardan encriptadas bajo algoritmos de funciones hash en SHA256.\\
 
 Por otro lado, tanto los servidores de Flask como Node-Red se encontraban bajo una URL de HTTP (Hypertext Transfer Protocol). Por tanto, un cambio necesario ha sido añadir seguridad de tal forma que sea HTTPS (Hypertext Transfer Protocol Secure), para impedir que otros usuarios puedan interceptar la información confidencial que se transfiere entre el cliente y los servidores web a través de Internet. Este cambio se ha realizado añadiendo certificados autofirmados creados por el autor.\\
 

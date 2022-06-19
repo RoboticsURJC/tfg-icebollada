@@ -1,32 +1,46 @@
 \chapter{Conclusiones}
 \label{cap:capitulo5}
 
-\begin{flushright}
-\begin{minipage}[]{10cm}
-\emph{Quizás algún fragmento de libro inspirador...}\\
-\end{minipage}\\
+%\begin{flushright}
+%\begin{minipage}[]{10cm}
+%\emph{Quizás algún fragmento de libro inspirador...}\\
+%\end{minipage}\\
 
-Autor, \textit{Título}\\
-\end{flushright}
+%Autor, \textit{Título}\\
+%\end{flushright}
 
 \vspace{1cm}
-
-Escribe aquí un párrafo explicando brevemente lo que vas a contar en este capítulo, que básicamente será una recapitulación de los problemas que has abordado, las soluciones que has prouesto, así como los experimentos llevados a cabo para validarlos. Y con esto, cierras la memoria.
+Por último, en este capítulo se presentan las conclusiones que se han obtenido con el desarrollo del presente trabajo. Se recapitulan los objetivos marcados al inicio del proyecto, el proceso que se ha llevado para cumplirlos, así como los diferentes problemas que han surgido y las soluciones tomadas para abordarlos. Además, se presentan líneas futuras para continuar el trabajo.\\
 
 \section{Conclusiones}
+Con el desarrollo de este trabajo se han logrado los objetivos establecidos en el capítulo \ref{cap:capitulo2}. El objetivo principal era obtener un sistema multisensorial que fuese capaz de monitorizar los ratones de laboratorio, y, que además, fuese de bajo coste. La idea era que los investigadores del Laboratorio de Bienestar e Investigación Animal de la universidad de Alcalá de Henares tuviesen un sistema que les aportase información de las condiciones en la que se encuentran los animales y que también les facilitase el trabajo por medio del control automatizado de los ratones.\\
 
-Enumera los objetivos y cómo los has cumplido.\\
+También se han conseguido los tres objetivos específicos. En primero de ellos era recoger la lectura de los sensores de forma paralela en un mismo fichero. El segundo objetivo consistía en la creación de un servidor web por cada cámara para poder visualizarlas desde distintos dispositivos, y, finalmente, el tercer objetivo era la detección de ratones mediante un algoritmo de reconocimiento de objetos.\\
 
-Enumera también los requisitos implícitos en la consecución de esos objetivos, y cómo se han satisfecho.\\
+Con la elección de Raspberry Pi para el desarrollo de este trabajo se ha conseguido que el sistema conseguido sea económicamente accesible para cualquier usuario. Esta placa de bajo coste ha permitido la conexión de distintos sensores a través de los distintos puertos que posee, como pines GPIO y puertos USB.\\
 
-No olvides dedicar un par de párrafos para hacer un balance global de qué has conseguido, y por qué es un avance respecto a lo que tenías inicialmente. Haz mención expresa de alguna limitación o peculiaridad de tu sistema y por qué es así. Y también, qué has aprendido desarrollando este trabajo.\\
+La lectura de los sensores se ha realizado en un fichero que ha obtiene la lectura concurrente de todos ellos gracias al uso de la librería Threads. Además, este fichero guarda genera un fichero CSV con los datos recogidos en cada momento, por si es necesario disponer de un seguimiento a lo largo del tiempo. Con este fichero, además de cumplir el primer objetivo se ha podido iniciar la creación de la IU. Con el uso de Node-Red, estas lecturas numéricas se han adaptado a \textit{widgets} comprensibles para el usuario.\\
 
-Por último, añade otro par de párrafos de líneas futuras; esto es, cómo se puede continuar tu trabajo para abarcar una solución más amplia, o qué otras ramas de la investigación podrían seguirse partiendo de este trabajo, o cómo se podría mejorar para conseguir una aplicación real de este desarrollo (si es que no se ha llegado a conseguir).
+Con el uso de Flask se ha obtenido el segundo objetivo. Ha permitido crear dos servidores web independientes para la visualización de las imágenes registradas por la PiCam (Figura \ref{fig:picam_of}) y la cámara térmica (Figura \ref{fig:termicos}-b). Estos servidores han sido protegidos con 2FA, requiriendo un login a través de nombre, contraseña y número de autenticación generado a través de Google Authenticator. Se han podido integrar en la IU de Node-Red junto a los \textit{widgets} de las lecturas de los sensores. De esta forma, se ha obtenido la IU completa accesible desde cualquier dispositivo conectado a la misma red que la Raspberry Pi.\\
 
-\section{Corrector ortográfico}
+Para la satisfacción del último objetivo, se ha creado un dataset de ratones con 354 imágenes. Posteriormente se ha entrenado un modelo con el uso de Yolov5, que ha permitido la detección de ratones a través de la PiCam.\\
 
-Una vez tengas todo, no olvides pasar el corrector ortográfico de \LaTeX a todos tus ficheros \textit{.tex}. En \texttt{Windows}, el propio editor \texttt{TeXworks} incluye el corrector. En \texttt{Linux}, usa \texttt{aspell} ejecutando el siguiente comando en tu terminal:
+Este Trabajo de Fin de Grado supone un avance, pues es una mejora a un problema real. Se han cumplido todos los objetivos marcados además de añadir otras características como seguridad o accesibilidad desde distintos dispositivos que aportan comodidad y confianza al usuario que utiliza el sistema. Esto permite a los investigadores reducir su trabajo en este ámbito.\\
 
-\begin{verbatim}
-aspell --lang=es --mode=tex check capitulo1.tex
-\end{verbatim}
+Durante la realización del trabajo se ha obtenido conocimientos sobre distintos aspectos que no se controlaban, como la creación de un servidor web, además de la seguridad necesaria que este requiere. Además, se han aplicado muchos de los conocimientos adquiridos durante el grado, y han surgido problemas que han requerido de esfuerzo y comprensión del tema trabajado para su solución.\\
+
+\section{Líneas futuras}
+En esta sección se comentan algunas vías que pueden permitir la continuidad de este trabajo para ofrecer funcionalidades que no dispone el modelo actual.
+\begin{itemize}
+\item Adaptación de la IU a un servidor accesible desde cualquier dispositivo. Actualmente, la IU es accesible por cualquier dispositivo que esté conectado a la misma red. Una funcionalidad útil sería poder acceder a ella desde cualquier sitio, para poder controlar el sistema en cualquier momento y desde cualquier lugar.
+\item Control de los ratones a través del algoritmo de reconocimiento de objetos. Realizar un control automático del tiempo que pasa cada ratón en los distintos sitios de la cubeta, o bien en qué cubeta pasan más tiempo los ratones permitirían a los investigadores a obtener un conteo automatizado de estas características. A través de la detección de ratones creada y permitiendo identificar a los ratones individualmente, se podría adaptar esta idea al sistema creado.
+\item Creación de Docker para permitir la instalación del sistema a cualquier usuario. Con un Docker que instale todas las librerías y active los requisitos necesarios para el funcionamiento del sistema, cualquier usuario podría instalar y utilizar este sistema.
+\end{itemize}
+
+%\section{Corrector ortográfico}
+
+%Una vez tengas todo, no olvides pasar el corrector ortográfico de \LaTeX a todos tus ficheros \textit{.tex}. En \texttt{Windows}, el propio editor \texttt{TeXworks} incluye el corrector. En \texttt{Linux}, usa \texttt{aspell} ejecutando el siguiente comando en tu terminal:
+
+%\begin{verbatim}
+%aspell --lang=es --mode=tex check capitulo1.tex
+%\end{verbatim}
