@@ -24,7 +24,7 @@ Para cumplir el objetivo general marcado; es necesario establecer los siguientes
 \begin{enumerate}
  \item Recoger la lectura de los sensores en un mismo fichero. Cada sensor necesita de las librerías pertinentes para su correcto funcionamiento, por lo que se creará una clase por cada sensor, de manera que sea más fácil unificar las distintas lecturas. Para ejecutar concurrentemente la lectura de todos los sensores, se utilizará la librería \textit{Thread} que permite la ejecución y el control de distintos hilos lanzados en paralelo.
  \item Crear un servidor web para los dos sensores que recogen imágenes. Para la cámara térmica, la única función del servidor será mostrar la imagen que graba la cámara. Sin embargo, para la cámara normal, además de mostrar las imágenes, se deberá incorporar un botón que permita iniciar y parar la grabación cuando el usuario quiera, guardando el vídeo automáticamente en el sistema. Estos servidores estarán protegidos para aportar seguridad.
- \item Detectar los diferentes ratones mediante un algoritmo de reconocimiento de objetos a través de TensorFlowLite, para así poder determinar el tiempo que pasan los animales haciendo las diferentes actividades.
+ \item Detectar los diferentes ratones mediante un algoritmo de reconocimiento de objetos a través de Yolov5, para así poder determinar el tiempo que pasan los animales haciendo las diferentes actividades.
 \end{enumerate}
 
 \section{Requisitos}

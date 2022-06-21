@@ -149,33 +149,51 @@ La decisión de usar Python para el desarrollo de este TFG ha sido que es uno de
 
 En este trabajo, Python se utiliza para la lectura de los sensores de forma concurrente, para la creación de los dos servidores web que tiene tanto la PiCamera como la cámara térmica con Flask y para el reconocimiento de lo ratones a través de la librería TensorFlow Lite.\\
 
-\subsection{TensorFlow Lite}
-\label{sec:tensor}
-TensorFlow Lite (Figura \ref{fig:tf}-a) es una variación de TensorFlow (Figura \ref{fig:tf}-b) más ligera adaptada a dispositivos como teléfonos móviles, microcontroladores o dispositivos embebidos como Raspberry. Es una plataforma de código abierto multiplataforma que permite entrenar un modelo para su posterior uso. Algunos de estos usos pueden ser la clasificación o el reconocimiento de imágenes, entre otros.\\
-\begin{figure}[h!]
-  \begin{center}
-    \subfigure[Logo de TensorFlow Lite.]{\includegraphics[width=7cm]{figs/tflite}}\hspace{2mm}
-    \subfigure[Logo de TensorFlow]{\includegraphics[width=6cm]{figs/tf}}
-  \end{center}
-\caption{} \label{fig:tf}
-\end{figure}
-
-Las características que hacen que pueda utilizarse en este tipo de dispositivos son las siguientes:
-\begin{itemize}
-\item{Ligereza}, ya que estos dispositivos tienen límite tanto en el almacenamiento como en la capacidad de cómputo.
-\item{Baja latencia}, ya que las inferencias se realizan en el dispositivo y no en un servidor externo. 
-\item{Seguridad}, debido a que el modelo viene implementado en el propio dispositivo.
-\item{Consumo de energía óptimo,} dado a que no es necesario que el dispositivo esté conectado a la red, que consume mucha energía.
-\end{itemize}
-
-TensorFlow Lite se ha usado, en primer lugar, para la creación y entrenamiento de un modelo capaz de detectar ratones en una imagen (Figura \ref{fig:raton}), basándose en un dataset de 60 imágenes. En segundo lugar, para la detección de ratones en cualquier imagen o vídeo, siendo capaz de detectar el número de ratones y el lugar en el que se encuentra cada uno de ellos. Para conseguir esta detección en tiempo real del vídeo grabado por la cámara se requiere el uso de otra librería llamada OpenCV, que es descrita a continuación.\\
+\subsection{YOLOv5}
+\label{sec:yolo}
+YOLO ---siglas del acrónimo en inglés \textit{You Only Look Once}--- es un algoritmo de detección de objetos en tiempo real. Es un sistema de código abierto que hace uso de una red neuronal convolucional ---del inglés, Convolutional Neural Network (CNN)--- para la detección de objetos en imágenes o vídeos. En una explicación simplificada, esta red neuronal divide la imagen en MxM celdas de tamaño fijo. Cada celda debe predecir un solo objeto, mostrándolo posteriormente en la imagen a través de un cuadro delimitador o \textit{bounding box}, tal y como se puede ver en la Figura \ref{fig:regiones}.\\
 \begin{figure} [h!]
   \begin{center}
-    \includegraphics[width=8cm]{figs/raton-detectado}
+    \includegraphics[width=15cm]{figs/regiones}
   \end{center}
-  \caption{Detección de ratones en una imagen usando TensorFlow Lite.}
-  \label{fig:raton}
+  \caption{División en celdas y detección de objetos en una CNN.}
+  \label{fig:regiones}
 \end{figure}
+Las red está formada por 24 capas convolucionales, que se encargan de extraer las características de la imagen, y 2 capas de conexión completa que predicen las coordenadas del objeto. Tiene 5 modelos diferentes que ofrecen diferentes características según el interés del uso. Se pueden ver las cualidades de cada modelo en la Figura \ref{fig:tablayolo}. \\
+\begin{figure} [h!]
+  \begin{center}
+    \includegraphics[width=15cm]{figs/tablayolo}
+  \end{center}
+  \caption[]{Gráfica con las características de los distintos modelos de YOLOv5. \footnotemark} \label{fig:tablayolo}
+\end{figure}\footnotetext{Imagen obtenida de \url{https://github.com/ultralytics/yolov5\#pretrained-checkpoints}.}
+%\subsection{TensorFlow Lite}
+%\label{sec:tensor}
+%TensorFlow Lite (Figura \ref{fig:tf}-a) es una variación de TensorFlow (Figura \ref{fig:tf}-b) más ligera adaptada a dispositivos como teléfonos móviles, microcontroladores o dispositivos embebidos como Raspberry. Es una plataforma de código abierto multiplataforma que permite entrenar un modelo para su posterior uso. Algunos de estos usos pueden ser la clasificación o el reconocimiento de imágenes, entre otros.\\
+%\begin{figure}[h!]
+ % \begin{center}
+%    \subfigure[Logo de TensorFlow Lite.]{\includegraphics[width=7cm]{figs/tflite}}\hspace{2mm}
+%    \subfigure[Logo de TensorFlow]{\includegraphics[width=6cm]{figs/tf}}
+%  \end{center}
+%\caption{Logos.} \label{fig:tf}
+%\end{figure}
+%
+%Las características que hacen que pueda utilizarse en este tipo de dispositivos son las siguientes:
+%\begin{itemize}
+%\item{Ligereza}, ya que estos dispositivos tienen límite tanto en el almacenamiento como en la capacidad de cómputo.
+%\item{Baja latencia}, ya que las inferencias se realizan en el dispositivo y no en un servidor externo. 
+%\item{Seguridad}, debido a que el modelo viene implementado en el propio dispositivo.
+%\item{Consumo de energía óptimo,} dado a que no es necesario que el dispositivo esté conectado a la red, que consume mucha energía.
+%\end{itemize}
+%
+%TensorFlow Lite se ha usado, en primer lugar, para la creación y entrenamiento de un modelo capaz de detectar ratones en una imagen (Figura \ref{fig:raton}), basándose en un dataset de 60 imágenes. En segundo lugar, para la detección de ratones en cualquier imagen o vídeo, siendo capaz de detectar el número de ratones y el lugar en el que se encuentra cada uno de ellos. Para conseguir esta detección en tiempo real del vídeo grabado por la cámara se requiere el uso de otra librería llamada OpenCV, que es descrita a continuación.\\
+%\begin{figure} [h!]
+%  \begin{center}
+%    \includegraphics[width=8cm]{figs/raton-detectado}
+%  \end{center}
+%  \caption{Detección de ratones en una imagen usando TensorFlow Lite.}
+%  \label{fig:raton}
+%\end{figure}
+
 
 \subsection{OpenCV}
 \label{sec:opencv}
