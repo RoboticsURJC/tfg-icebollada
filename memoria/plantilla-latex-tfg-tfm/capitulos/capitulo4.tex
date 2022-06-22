@@ -10,39 +10,54 @@
 %\end{flushright}
 
 \vspace{1cm}
-Este capítulo consta de la descripción detallada del proceso que se ha llevado a cabo para crear el sistema multisensorial para la monitorización de animales de laboratorio. Como se ha introducido previamente, la base idea de este trabajo ha sido pensada para un laboratorio de animales. Debido al desconocimiento de robótica de los trabajadores de este sector, puede haber trabajo que se realice en el laboratorio que podría mejorarse e incluso automatizarse.\\
+En este capítulo se describe detalladamente el proceso que se ha llevado a cabo para crear el sistema multisensorial para la monitorización de animales de laboratorio. Como se ha introducido previamente, la aplicación de este trabajo está enfocada a un laboratorio de investigación animal. Concretamente, se ha contactado con el Laboratorio del Bienestar e Investigación Animal de la Universidad de Alcalá de Henares\footnote{\url{https://www.uah.es/es/investigacion/unidades-de-investigacion/grupos-de-investigacion/Bienestar-en-Investigacion-Animal-Welfare-on-Animal-Research./}} para establecer los requisitos software del sistema. Así, el objetivo del trabajo se ha enfocado en la monitorización completa de los ratones del laboratorio, que requieren de una observación constante, así como del entorno en el que se encuentran, debido a que deben estar bajo unas condiciones determinadas.\\
 
-Para obtener más información, se ha contactado con el Laboratorio del Bienestar e Investigación Animal de la Universidad de Alcalá de Henares \footnote{\url{https://www.uah.es/es/investigacion/unidades-de-investigacion/grupos-de-investigacion/Bienestar-en-Investigacion-Animal-Welfare-on-Animal-Research./}} para conocer la situación en la que trabajan. Se han apreciado bastantes cosas mejorables y se ha enfocado el objetivo en la monitorización de los ratones del laboratorio, que requieren una observación constante así como del entorno en el que se encuentran debido a que deben estar bajo unas condiciones determinadas.\\
-
-Asimismo, para facilitar la comprensión de los datos, se ofrece una interfaz gráfica donde los valores numéricos obtenidos por los sensores, así como cualquier interacción necesaria en la IU se traducen en \textit{widgets} ---pequeñas imágenes que proveen información visual--- comprensibles para cualquier usuario de una manera intuitiva y sencilla.\\
-
-Dos son las partes esenciales para el desarrollo: hardware y software. En la primera sección se presenta el desarrollo hardware y en la sección posterior el desarrollo software que se ha realizado para tener un funcionamiento correcto del sistema.
-
-\section{Desarrollo hardware}
-La placa que se ha utilizado para el proyecto es la Raspberry Pi 4B (Figura \ref{fig:rasp}), el último modelo de Raspberry y muy utilizada para el desarrollo de proyectos debido a su bajo coste. Este modelo es el más rápido y potente, ofreciendo de dos a tres veces el rendimiento del procesador de su modelo predecesor. El sistema operativo utilizado para el desarrollo del proyecto ha sido Raspbian.\\
+Asimismo, para facilitar la comprensión de los datos por parte de los usuarios finales, se ofrece una interfaz gráfica donde los valores numéricos obtenidos por los sensores, así como cualquier interacción necesaria en la IU (Interfaz de Usuario) se traducen en \textit{widgets} ---pequeñas imágenes que proveen información visual--- comprensibles para cualquier usuario de una manera intuitiva y sencilla. El sistema creado se presenta en la Figura \ref{fig:misistema}.\\
 \begin{figure} [h!]
   \begin{center}
-    \includegraphics[width=8cm]{figs/raspberry}
+    \includegraphics[width=10cm]{figs/misistema}
   \end{center}
-  \caption{Raspberry Pi 4B utilizada para el desarrollo del presente TFG.}
-  \label{fig:rasp}
+  \caption{Sistema resultante.}
+  \label{fig:misistema}
 \end{figure}
 
-Está dotada de una serie de pines y puertos que permiten su conexión con distintos sensores o actuadores. Para este trabajo se han utilizado los sensores presentados en el capítulo \ref{sec:hw}. A continuación se explican con más detalle estos sensores:
+Dos son las partes esenciales para el desarrollo del sistema: hardware y el software. En la Sección \ref{sec:deshw} se presenta el desarrollo hardware, y en la Sección \ref{sec:dessw} el desarrollo software que se ha realizado para tener un funcionamiento correcto del sistema.
+
+\section{Desarrollo hardware}
+\label{sec:deshw}
+La placa que se ha utilizado para el proyecto es la Raspberry Pi 4B (Figura \ref{fig:rasp}-a), el último modelo de Raspberry y muy utilizada para el desarrollo de proyectos debido ---entre otras cosas--- a su bajo coste. Este modelo es el más rápido y potente, ofreciendo de dos a tres veces el rendimiento del procesador de su modelo predecesor, la Raspberry Pi 3b+. El sistema operativo utilizado para el desarrollo del proyecto ha sido Raspbian (Figura \ref{fig:rasp}-b).\\
+\begin{figure}[h!]
+  \begin{center}
+    \subfigure[Raspberry Pi 4B utilizada para el desarrollo del presente TFG.]{\includegraphics[width=12cm]{figs/raspberry}}\hspace{1mm}
+    \subfigure[Entorno de trabajo en Raspbian.]{\includegraphics[width=12cm]{figs/trabajo}}
+  \end{center}
+\caption{Imágenes del HW y SW usados para el TFG.} \label{fig:rasp}
+\end{figure}
+
+Se han utilizado los puertos GPIO para la conexión de los distintos sensores presentados en la Sección \ref{sec:hw}. En la figura \ref{fig:esquema} se encuentran las distintas conexiones de los sensores a la Raspberry. 
+\begin{figure} [h!]
+  \begin{center}
+    \includegraphics[width=14cm]{figs/esquema}
+  \end{center}
+  \caption{Esquema de conexiones.}
+  \label{fig:esquema}
+\end{figure}
+
+A continuación se explican con más detalle la conexión de estos sensores:
 \begin{itemize}
-\item{Sensor BME680 (Figura \ref{fig:bme_of}).} Este sensor es capaz de medir hasta cuatro parámetros: el gas, la temperatura, la presión y la humedad.
+\item{Sensor BME680 (Figura \ref{fig:bme_of}).} Este sensor funciona con conexión I2C, que necesita dos pines, SDA y SCL para su funcionamiento. Por tanto, se ha conectado a los pines 3 y 5. También se ha conectado al pin 1 para obtener la alimentación de 3.3V que necesita y al pin 6, para evitar que se rompa el sensor.
 
-\item{Sensor AMG8833 (Figura \ref{fig:termicos}-a).} Este sensor es una cámara térmica que permite recibir la información del entorno y mostrarla a través de un rango de colores. Los colores más cálidos ---como el rojo--- indican la presencia de mayor temperatura, mientras que los colores fríos ---como el azul--- indican una temperatura inferior. Los valores que ofrece este sensor es una matriz de 8x8 valores de temperatura, que deben ser traducidos para poder visualizar la imagen de temperaturas (Figura \ref{fig:temps}).
+\item{Sensor AMG8833 (Figura \ref{fig:termicos}-a).} Este sensor también funciona con conexión I2C. Por tanto su conexión es igual al sensor anterior: Conexión a los pines 3 y 5 para la conexión I2C y a los pines 1 y 6 para la alimentación y tierra, respectivamente. En la Figura \ref{fig:esquema}, la conexión a alimentación viene representada con el cable rojo, la conexión a tierra con el cable azul, la conexión I2C al pin SDA con el cable amarillo y la conexión I2C al pin SCL con el cable verde.
 
-\item{Sensor DS18B20 (Figura \ref{fig:ds_of}).} Este sensor permite medir la temperatura en superficies húmedas, ya que es resistente al agua.
+\item{Sensor DS18B20 (Figura \ref{fig:ds_of}).} Este sensor necesita ser conectado con una resistencia de 4.7K $\Omega$ para mantener los datos estables. Su conexión por tanto es a los pines 1 y 6 para alimentación a 3.3V y tierra, y al pin 7 para la obtención de las medidas.
 
-\item{MQ-135 (Figura \ref{fig:mq_of}).} Este sensor permite medir la calidad de distintos gases, entre ellos el de amoníaco. Es muy importante tener controlada la cantidad de amoníaco en el entorno de los ratones. Este sensor también realiza lecturas analógicas, por lo que es necesario el uso de un conversor analógico a digital.
+\item{MQ-135 (Figura \ref{fig:mq_of}).} Este sensor necesita ser conectado a un conversor analógico a digital debido a que se deben obtener medidas analógicas. Como aparece en la Figura \ref{fig:esquema}, se ha conectado al conversor MCP3008. Además, se ha conectado a los pines 2 para la alimentación de 5V que necesita y 6 para la conexión a tierra.
 
-\item{Sensor nivel de agua (Figura \ref{fig:nivel_of}).} Con este sensor se puede medir la presencia de agua, así como la cantidad de agua que hay. Este sensor tiene lecturas analógicas, por lo que es necesario el uso de un conversor analógico a digital.
+\item{Sensor nivel de agua (Figura \ref{fig:nivel_of}).} Igual que el sensor anterior necesita lecturas analógicas, por lo que se ha conectado al conversor, al pin 1 para la alimentación de 3.3V y al 6 para la conexión a tierra.
 
-\item{Seek thermal (Figura \ref{fig:termicos}-b).} Este sensor es una cámara térmica. Permite obtener imágenes representando las temperaturas con colores de la misma forma que el sensor \ref{fig:termicos}-a, pero con mucha más calidad y precisión.
+\item{Seek thermal (Figura \ref{fig:termicos}-b).} Este sensor se ha conectado a través de una de las entradas USB que dispone Raspberry usando un conversor de USB a micro USB.
 
-\item{PiCamera (Figura \ref{fig:picam_of}).} Este sensor es una de las cámaras oficiales de Raspberry, que permite obtener imágenes del entorno y mostrarlas en pantalla.
+\item{PiCamera (Figura \ref{fig:picam_of}).} Este sensor se ha conectado en el puerto J3 que ofrece Raspberry para la conexión de su cámara. 
 \end{itemize}
 
 \begin{figure} [h!]
@@ -53,21 +68,11 @@ Está dotada de una serie de pines y puertos que permiten su conexión con disti
   \label{fig:temps}
 \end{figure}
 
-Raspberry no tiene lecturas analógicas, por lo que ha sido necesario el uso de un conversor analógico a digital (el MCP3008) para la lectura del sensor MQ-135 \ref{fig:mq_of} y el sensor de nivel de agua \ref{fig:nivel_of}. Además, se han utilizado otros componentes como son resistencias o leds para el correcto funcionamiento de los sensores y proporcionar al usuario mayor comprensión del funcionamiento del sistema.\\
-
-En la figura \ref{fig:esquema} se puede ver un esquema de los sensores utilizados integrados en la Raspberry.
-\begin{figure} [h!]
-  \begin{center}
-    \includegraphics[width=14cm]{figs/esquema}
-  \end{center}
-  \caption{Esquema de conexiones.}
-  \label{fig:esquema}
-\end{figure}\\
-
 \section{Desarrollo software}
-Tras disponer de la parte hardware, el equipo está preparado. Para que este equipo funcione, es necesario crear las instrucciones y reglas a través de programas o aplicaciones, esto es, la parte software.\\
+\label{sec:dessw}
+Tras diseñar la plataforma hardware, el siguiente paso es darle el soporte software. Y es que, para que este sistema funcione, es necesario crear las instrucciones y reglas a través de programas o aplicaciones, esto es, la parte software.\\
 
-Como se ha comentado previamente, se han mantenido reuniones con el laboratorio así como reuniones semanales con el tutor. De estas reuniones se ha obtenido la información necesaria para realizar el proyecto. Además, ha permitido extraer el diagrama de casos de uso (Figura \ref{fig:casos}).\\
+El primer, y más importante paso en cualquier desarrollo software es establecer los requisitos del sistema. Para ello, y como se ha comentado previamente, se han mantenido reuniones con el Laboratorio de Bienestar Animal de la Universidad de Alcalá de Henares, así como reuniones semanales con el tutor. De estas reuniones se ha obtenido la información necesaria para poder hacer el diseño software del sistema, que queda reflejado mediante el diagrama de casos de uso (Figura \ref{fig:casos}) y, tras un análisis de este, el diagrama de clases (Figura \ref{fig:umlet}).\\
 \begin{figure} [h!]
   \begin{center}
     \includegraphics[width=17cm]{figs/casos}
@@ -76,7 +81,6 @@ Como se ha comentado previamente, se han mantenido reuniones con el laboratorio 
   \label{fig:casos}
 \end{figure}
 
-En base al diagrama de casos de uso, se debe crear un fichero que permita obtener todas las lecturas de los distintos sensores. Para proporcionar abstracción y mejorar el código, por cada sensor debe crearse una clase. Esto ha permitido crear el diagrama de clases visible en la Figura \ref{fig:umlet} para ser implementado.\\
 \begin{figure} [h!]
   \begin{center}
     \includegraphics[width=14cm]{figs/umlet}
@@ -85,7 +89,7 @@ En base al diagrama de casos de uso, se debe crear un fichero que permita obtene
   \label{fig:umlet}
 \end{figure}
 
-En primer lugar ha sido necesaria la instalación de las librerías necesarias para el funcionamiento de todos los sensores. Después de la instalación, han surgido varios problemas al intentar leer de los distintos sensores. Uno de los problemas encontrado en dos sensores ---los que funcionaban con conexión i2c--- ha sido que la Raspberry no los detectaba. Se pueden encontrar los errores que han surgido en la instalación y las respectivas soluciones para hacer funcionar todos los sensores en la wiki \footnote{\url{https://github.com/jmvega/tfg-icebollada/wiki/2.February-progress}} que se ha creado para realizar el proyecto.\\
+En primer lugar ha sido necesaria la instalación de las librerías necesarias para el funcionamiento de todos los sensores. Después de la instalación, han surgido varios problemas al intentar leer de los distintos sensores. Uno de los problemas encontrado en dos sensores ---los que funcionaban con conexión i2c--- ha sido que la Raspberry no los detectaba. Se pueden encontrar los errores que han surgido en la instalación y las respectivas soluciones para hacer funcionar todos los sensores en la wiki\footnote{\url{https://github.com/jmvega/tfg-icebollada/wiki/2.February-progress}} que se ha creado para realizar el proyecto.\\
 
 Durante este proceso ha habido dos sensores que se han intentado utilizar sin éxito debido a que no tienen compatibilidad con Raspberry: CCS811, que mide la calidad del aire y AM2315, que mide la temperatura y humedad. Aun así, esto no ha sido un problema ya que son datos que se han podido obtener con otros sensores disponibles.\\
 
@@ -130,7 +134,7 @@ En el caso de los otros sensores han sido necesarios otros cambios para obtener 
 \begin{itemize}
 	\item El sensor BME680 \ref{fig:bme_of} mide la resistencia del gas, pero se ha considerado que no es un parámetro intuitivo y no proporciona conocimiento al usuario. Por ello se ha utilizado otro nodo función que primero realiza la media de 50 lecturas de resistencia de gas y posteriormente establece la calidad del aire en función a la humedad y resistencia del aire comparándolo con la media calculada.
 	
-	\item Durante diferentes pruebas, se ha detectado que el sensor que mide el nivel de agua \ref{fig:nivel_of} no es preciso a la hora de detectar la cantidad de agua presente, solamente es preciso detectando la presencia de esta. Por tanto, se ha optado por dividir en 4 rangos el nivel de agua (Figura \ref{fig:agua}), de tal manera que el usuario tenga una idea sobre la cantidad de agua presente. Aún así, el sensor no es suficientemente preciso durante la realización de diferentes pruebas y esta opción tampoco ha sido válida. Como ajuste que dota de más precisión a este sensor, se ha incorporado un botón en la IU para poder calibrar el sensor cuando el recipiente esté lleno de agua. Todo el desarrollo y las pruebas que se han llevado a cabo con este sensor pueden ser encontradas en la wiki \footnote{\url{https://github.com/jmvega/tfg-icebollada/wiki/3.March-progress}} del proyecto.
+	\item Durante diferentes pruebas, se ha detectado que el sensor que mide el nivel de agua \ref{fig:nivel_of} no es preciso a la hora de detectar la cantidad de agua presente, solamente es preciso detectando la presencia de esta. Por tanto, se ha optado por dividir en 4 rangos el nivel de agua (Figura \ref{fig:agua}), de tal manera que el usuario tenga una idea sobre la cantidad de agua presente. Aún así, el sensor no es suficientemente preciso durante la realización de diferentes pruebas y esta opción tampoco ha sido válida. Como ajuste que dota de más precisión a este sensor, se ha incorporado un botón en la IU para poder calibrar el sensor cuando el recipiente esté lleno de agua. Todo el desarrollo y las pruebas que se han llevado a cabo con este sensor pueden ser encontradas en la wiki\footnote{\url{https://github.com/jmvega/tfg-icebollada/wiki/3.March-progress}} del proyecto.
 	
 	\item El sensor AMG8833 \ref{fig:termicos}-a devuelve en su lectura una matriz de 8x8 valores. Estos valores han sido convertidos a imagen ya que este sensor es una cámara térmica. Para este proceso ha sido necesario enlazar una serie de nodos hasta poder obtener la imagen más nítida, ya que la imagen obtenida originalmente ha sido una imagen de 8x8 píxeles que no alcanzaba a diferenciar objetos. De nuevo, tanto este progreso como las diferentes soluciones obtenidas se pueden encontrar en la wiki. 
 \end{itemize}
@@ -209,9 +213,9 @@ Una vez se ha obtenido la visualización de las cámaras en la IU junto al resto
 
 
 \subsection{Seguridad}
-Debido a que se está trabajando en un servidor web, es importante dotar de cierta seguridad al servidor para evitar que sólo las personas autorizadas puedan acceder a las imágenes. Para ello, se ha decidido hacerlo a través del factor de doble autenticación (del inglés two factor authentication, 2FA). 2FA es el proceso de autenticación donde se añade un segundo paso en el proceso de identificación frente a un servicio. En este caso, además de que un usuario introduzca su contraseña, es necesario un código que se genera cada 30 segundos y caduca pasado ese tiempo. La generación de este código se hace a través de google authenticator \footnote{\url{https://chrome.google.com/webstore/detail/authenticator/bhghoamapcdpbohphigoooaddinpkbai?hl=es}}. Esta extensión de google genera los códigos de 30 segundos a partir de el escaneo de un código QR (Figura \ref{fig:server}-d) o por la inserción manual de un código inicial.\\
+Debido a que se está trabajando en un servidor web, es importante dotar de cierta seguridad al servidor para evitar que sólo las personas autorizadas puedan acceder a las imágenes. Para ello, se ha decidido hacerlo a través del factor de doble autenticación (del inglés two factor authentication, 2FA). 2FA es el proceso de autenticación donde se añade un segundo paso en el proceso de identificación frente a un servicio. En este caso, además de que un usuario introduzca su contraseña, es necesario un código que se genera cada 30 segundos y caduca pasado ese tiempo. La generación de este código se hace a través de google authenticator\footnote{\url{https://chrome.google.com/webstore/detail/authenticator/bhghoamapcdpbohphigoooaddinpkbai?hl=es}}. Esta extensión de google genera los códigos de 30 segundos a partir de el escaneo de un código QR (Figura \ref{fig:server}-d) o por la inserción manual de un código inicial.\\
 
-Para que estos servidores funcionen con 2FA, ha sido necesario incorporar otras librerías así como otros módulos de Flask como Flask\_login, Flask\_bootstrap, Flask\_sqlalchemy o Flask\_wtf. Durante el desarrollo del servidor con 2FA, han surgido determinados problemas que pueden encontrarse junto a la solución en la wiki del proyecto \footnote{\url{https://github.com/jmvega/tfg-icebollada/wiki/5.May-progress}}.\\
+Para que estos servidores funcionen con 2FA, ha sido necesario incorporar otras librerías así como otros módulos de Flask como Flask\_login, Flask\_bootstrap, Flask\_sqlalchemy o Flask\_wtf. Durante el desarrollo del servidor con 2FA, han surgido determinados problemas que pueden encontrarse junto a la solución en la wiki del proyecto\footnote{\url{https://github.com/jmvega/tfg-icebollada/wiki/5.May-progress}}.\\
 
 Una vez los servidores web han funcionado, se han integrado en Node-Red a través del nodo template. Un servidor está en el puerto 5000 y el otro en el 8000 para que así puedan estar ambas cámaras disponibles a la vez. Después de añadirlos, la interfaz de usuario (Figura \ref{fig:UIcompleta}) se ha completado.\\
 \begin{figure} [h!]
@@ -246,7 +250,7 @@ Por otro lado, tanto los servidores de Flask como Node-Red se encontraban bajo u
 \subsection{Autoarranque}
 Recordando que este sistema está pensado para personas que no están familiarizadas con la programación o los ordenadores, se ha considerado añadir una opción que facilite el arranque del sistema.\\
 
-Con el encendido de la Raspberry, la interfaz de usuario se lanza de forma automática ---así como los dos servidores--- y se enciende solicitando el login del usuario para acceder a la IU. Además, se ha incorporado un led verde que indica cuando el sistema está listo para ser usado. El funcionamiento del autoarranque, tanto de Node-Red como de los servidores se encuentra detallado en la wiki \footnote{\url{https://github.com/jmvega/tfg-icebollada/wiki/5.May-progress}}. El proceso de autoarranque es visible en la Figura \ref{fig:autoarranque}.
+Con el encendido de la Raspberry, la interfaz de usuario se lanza de forma automática ---así como los dos servidores--- y se enciende solicitando el login del usuario para acceder a la IU. Además, se ha incorporado un led verde que indica cuando el sistema está listo para ser usado. El funcionamiento del autoarranque, tanto de Node-Red como de los servidores se encuentra detallado en la wiki\footnote{\url{https://github.com/jmvega/tfg-icebollada/wiki/5.May-progress}}. El proceso de autoarranque es visible en la Figura \ref{fig:autoarranque}.
 \begin{figure}[h!]
   \begin{center}
     \subfigure[Encendido de la Raspberry]{\includegraphics[width=7cm]{figs/auto1}}\hspace{1mm}
@@ -258,7 +262,7 @@ Con el encendido de la Raspberry, la interfaz de usuario se lanza de forma autom
 \end{figure}
 
 \subsection{Detección de ratones con uso de Deep Learning}
-Finalmente para el cumplimiento del tercer objetivo era necesaria la detección de ratones. Para ello, ha sido necesaria la creación de un dataset de ratones, debido a que no se ha encontrado ninguno en internet. Está formado 354 imágenes; 275 para el proceso de entrenamiento y 79 para el de validación. El puede encontrarse en la plataforma Kaggle \footnote{\url{https://www.kaggle.com/datasets/isabelcebollada/datami}}.\\
+Finalmente para el cumplimiento del tercer objetivo era necesaria la detección de ratones. Para ello, ha sido necesaria la creación de un dataset de ratones, debido a que no se ha encontrado ninguno en internet. Está formado 354 imágenes; 275 para el proceso de entrenamiento y 79 para el de validación. El puede encontrarse en la plataforma Kaggle\footnote{\url{https://www.kaggle.com/datasets/isabelcebollada/datami}}.\\
 
 Una vez se ha obtenido el dataset, se ha procedido etiquetar estas imágenes mediante la aplicación labelImg, para indicar los cuadros limitadores en los que se encuentran los objetos a detectar, en este caso, los ratones. Los ficheros resultantes son .txt compuestos por 5 parámetros: la clase, las coordenadas X e Y mínimas y X e Y máximas de los cuadros delimitadores.\\
 
