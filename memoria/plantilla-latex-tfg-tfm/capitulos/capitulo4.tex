@@ -262,14 +262,7 @@ Finalmente para el cumplimiento del tercer objetivo era necesaria la detección 
 
 Una vez se ha obtenido el dataset, se ha procedido etiquetar estas imágenes mediante la aplicación labelImg, para indicar los cuadros limitadores en los que se encuentran los objetos a detectar, en este caso, los ratones. Los ficheros resultantes son .txt compuestos por 5 parámetros: la clase, las coordenadas X e Y mínimas y X e Y máximas de los cuadros delimitadores.\\
 
-Con las imágenes y las etiquetas formadas, se ha procedido al entrenamiento del modelo para la detección de ratones. Esta detección se ha realizado con YOLOv5, utilizando el modelo YOLOv5s, que ofrece una menor precisión frente a otros modelos de YOLO pero una mayor rapidez, que es necesaria debido a las características de la placa Raspberry. Con el código \ref{cod:modelo} se entrena el modelo.\\
-\begin{code}[h]
-\begin{lstlisting}[language=Python]
-!python train.py --img 480 --batch 16 --epochs 100 --data /content/yolov5/data/custom.yaml --weights yolov5s.pt --cache
-\end{lstlisting}
-\caption[Código para el entrenamiento de un modelo de detección de ratones.]{Código para el entrenamiento de un modelo de detección de ratones.}
-\label{cod:modelo}
-\end{code}
+Con las imágenes y las etiquetas formadas, se ha procedido al entrenamiento del modelo para la detección de ratones. Esta detección se ha realizado con YOLOv5, utilizando el modelo YOLOv5s, que ofrece una menor precisión frente a otros modelos de YOLO pero una mayor rapidez, que es necesaria debido a las características de la placa Raspberry.\\
 
 El entrenamiento de YOLOv5 se lleva a cabo a través de un algoritmo de DL: una red neuronal convolucional. Utiliza características ya entrenadas proporcionadas por coco128 ---un dataset muy grande ya existiente--- y aplica el nuevo dataset creado. Después del entrenamiento se obtienen métricas del modelo obtenido (Figura \ref{fig:metricas}), y se puede proceder a la prueba del modelo. En la Figura \ref{fig:precision} pueden verse la predicción de ratones en algunas de las imágenes de validación con el modelo entrenado.\\
 \begin{figure}[h!]
@@ -284,4 +277,15 @@ El entrenamiento de YOLOv5 se lleva a cabo a través de un algoritmo de DL: una 
   \end{center}
 \caption{Detección de ratones con el modelo entrenado con YOLOv5.} \label{fig:precision}
 \end{figure}
-Finalmente, con el uso de Python y OpenCV, puede visualizarse la detección de ratones en tiempo real con la PiCamera y la Raspberry.
+Finalmente, con el uso de Python y OpenCV, puede visualizarse la detección de ratones en tiempo real con la PiCamera y la Raspberry. 
+
+A pesar de que se ha usado uno de los modelos más rápidos, en Raspberry el flujo de imágenes no es fluido. Debido a este motivo, la detección no es perfecta; pues hay detecciones incorrectas así como ocasiones en las que no detecta ratones (Figura \ref{fig:detec}).
+\begin{figure}[h!]
+  \begin{center}
+    \subfigure[Detección correcta]{\includegraphics[width=7cm]{figs/correcta}}\hspace{1mm}
+    \subfigure[Detección incorrecta]{\includegraphics[width=7cm]{figs/incorrecta}}\hspace{1mm}
+    \subfigure[No detección incorrecta]{\includegraphics[width=7cm]{figs/nodeteccion}}\hspace{1mm}
+    \subfigure[No detección correcta]{\includegraphics[width=7cm]{figs/nodeteccbien}}
+  \end{center}
+\caption{Detección de ratones con el modelo entrenado.} \label{fig:detec}
+\end{figure}

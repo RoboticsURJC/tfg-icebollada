@@ -130,24 +130,20 @@ A continuación se presentan las herramientas utilizadas para el desarrollo y fu
 
 \subsection{Lenguaje Python}
 \label{sec:python}
-Python es un lenguaje de alto nivel de programación, interpretado y orientado a objetos cuya filosofía hace hincapié en la legibilidad de su código y, por ello, su sintaxis es sencilla. Ofrece numerosos módulos y librerías para las distintas aplicaciones. Algunas de estas librerías son: TensorFlow para aplicaciones en ML (Código \ref{cod:pythonML}), Pandas para análisis de datos, Flask para aplicaciones web o SQLAlchemy para comunicación entre bases de datos y programas. El uso de estos módulos y librerías facilita la reusabilidad de código y la programación modulada. No requiere del proceso de compilación, lo que lo convierte en un lenguaje muy rápido en el ciclo de edición, prueba y depuración.\\
-
+Python es un lenguaje de alto nivel de programación, interpretado y orientado a objetos cuya filosofía hace hincapié en la legibilidad de su código y, por ello, su sintaxis es sencilla. Ofrece numerosos módulos y librerías para las distintas aplicaciones. Algunas de estas librerías son: YOLO para aplicaciones en ML (Código \ref{cod:modelo}), Pandas para análisis de datos, Flask para aplicaciones web o SQLAlchemy para comunicación entre bases de datos y programas. El uso de estos módulos y librerías facilita la reusabilidad de código y la programación modulada. No requiere del proceso de compilación, lo que lo convierte en un lenguaje muy rápido en el ciclo de edición, prueba y depuración.\\
 \begin{code}[h]
 \begin{lstlisting}[language=Python]
-train_data = object_detector.DataLoader.from_pascal_voc('split_train_validate/train', 'split_train_validate/train', ['mouse'])
-validation_data = object_detector.DataLoader.from_pascal_voc('split_train_validate/validate', 'split_train_validate/validate', 
-['mouse'])
-model = object_detector.create(train_data, model_spec=spec, epochs=20, batch_size=8, train_whole_model=True, validation_data=validation_data)
+!python train.py --img 480 --batch 16 --epochs 100 --data /content/yolov5/data/custom.yaml --weights yolov5s.pt --cache
 \end{lstlisting}
-\caption[Código para generar un modelo de detección de ratones en Python]{Código para generar un modelo de detección de ratones en Python}
-\label{cod:pythonML}
+\caption[Código para el entrenamiento de un modelo de detección de ratones.]{Código para el entrenamiento de un modelo de detección de ratones.}
+\label{cod:modelo}
 \end{code}
 
 Actualmente es el lenguaje de programación más usado en el mundo según la calificación de la empresa TIOBE \footnote{\url{https://www.tiobe.com/tiobe-index/}}, por lo que cuenta con una gran comunidad. Además, también es el más popular en el ámbito del Machine Learning. Algunas de las aplicaciones que usan Python son Google, Netflix, Dropbox o Spotify.\\
 
 La decisión de usar Python para el desarrollo de este TFG ha sido que es uno de los lenguajes de programación que mejor funciona y está soportado de forma nativa en el SO utilizado Raspbian, además de las numerosas librerías útiles para este proyecto adaptadas a Raspberry que Python posee.\\
 
-En este trabajo, Python se utiliza para la lectura de los sensores de forma concurrente, para la creación de los dos servidores web que tiene tanto la PiCamera como la cámara térmica con Flask y para el reconocimiento de lo ratones a través de la librería TensorFlow Lite.\\
+En este trabajo, Python se utiliza para la lectura de los sensores de forma concurrente, para la creación de los dos servidores web que tiene tanto la PiCamera como la cámara térmica con Flask y para el reconocimiento de lo ratones a través de la librería de YOLOv5.\\
 
 \subsection{YOLOv5}
 \label{sec:yolo}
