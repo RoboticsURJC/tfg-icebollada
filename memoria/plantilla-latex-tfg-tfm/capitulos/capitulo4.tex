@@ -77,29 +77,29 @@ El primer, y más importante paso en cualquier desarrollo software es establecer
   \begin{center}
     \includegraphics[width=17cm]{figs/casos}
   \end{center}
-  \caption{Diagrama de casos de uso del proyecto.}
+  \caption{Diagrama de casos de uso del sistema.}
   \label{fig:casos}
 \end{figure}
 
 \begin{figure} [h!]
   \begin{center}
-    \includegraphics[width=14cm]{figs/umlet}
+    \includegraphics[width=17cm]{figs/umlet}
   \end{center}
-  \caption{Esquema de clases de cada sensor hecho en UMLet.}
+  \caption{Diagrama de clases del sistema.}
   \label{fig:umlet}
 \end{figure}
 
-En primer lugar ha sido necesaria la instalación de las librerías necesarias para el funcionamiento de todos los sensores. Después de la instalación, han surgido varios problemas al intentar leer de los distintos sensores. Uno de los problemas encontrado en dos sensores ---los que funcionaban con conexión i2c--- ha sido que la Raspberry no los detectaba. Se pueden encontrar los errores que han surgido en la instalación y las respectivas soluciones para hacer funcionar todos los sensores en la wiki\footnote{\url{https://github.com/jmvega/tfg-icebollada/wiki/2.February-progress}} que se ha creado para realizar el proyecto.\\
+En primer lugar, ha sido necesaria la instalación de distintas librerías que dan soporte a los diferentes sensores. Tras la instalación han surgido varios problemas al intentar leer algunos sensores. Uno de los problemas encontrado en dos sensores ---los que funcionaban con conexión i2c--- ha sido que la Raspberry no los detectaba. Se puede encontrar una descripción detallada de los errores que han surgido durante la instalación de las librerías y las respectivas soluciones para hacer funcionar todos los sensores en la wiki\footnote{\url{https://github.com/jmvega/tfg-icebollada/wiki/2.February-progress}} que se ha creado para el proyecto.\\
 
-Durante este proceso ha habido dos sensores que se han intentado utilizar sin éxito debido a que no tienen compatibilidad con Raspberry: CCS811, que mide la calidad del aire y AM2315, que mide la temperatura y humedad. Aun así, esto no ha sido un problema ya que son datos que se han podido obtener con otros sensores disponibles.\\
+Durante este proceso, ha habido dos sensores que se han intentado utilizar sin éxito debido a que no tienen compatibilidad con Raspberry: CCS811, que mide la calidad del aire y AM2315, que mide temperatura y humedad. Aun así, esto no ha sido un problema ya que son datos que se han podido obtener con otros sensores.\\
 
 \subsection{Lectura sensorial con Python}
 \label{sec:ficheropython}
-Se ha considerado que el usuario no tiene conocimiento para comprender los datos en crudo que ofrece un sensor, por tanto, ha sido necesario realizar diferentes cambios para ofrecer una comprensión fácil al usuario. Se ha utilizado el programa Node-Red para ofrecer una interfaz al usuario, de forma que este sea capaz de ver la información del estado del sistema representada a través de \textit{widgets}. Así ha sido posible crear un interfaz ameno e intuitivo basado en el diagrama de casos de uso presentado anteriormente (Figura \ref{fig:casos}), permitiendo que el usuario comprenda la información a través de algo más visual que valores numéricos.\\
+Dado que el clinete final del sistema puede carecer de nociones avanzadas en informática, es necesario realizar diferentes cambios para ofrecer una comprensión fácil al usuario de los datos obtenidos por los sensores. Se ha utilizado el entorno Node-Red para ofrecer una interfaz amigable al usuario, de forma que este sea capaz de ver la información del estado del sistema representada a través de \textit{widgets}. Este interfaz se ha basado en el diagrama de casos de uso expuesto anteriormente en la Figura \ref{fig:casos}.\\
 
-Para poder mostrar todos los sensores en tiempo real en Node-Red, ha sido necesario disponer de un fichero de Python que cada vez que se ejecute lea una sola vez de todos ellos. No debe leer continuamente ya que es la configuración de Node-Red la que se encarga de ello. En este fichero se procesan los sensores menos el AMG8833 \ref{fig:termicos}-a, la PiCam \ref{fig:picam_of} y la cámara térmica \ref{fig:termicos}-b. Para crear este fichero se ha creado una clase por cada sensor, tal y como se estableció en el diagrama de clases (Figura \ref{fig:umlet}).\\
+Para poder mostrar todos los sensores en tiempo real en Node-Red, ha sido necesario disponer de un fichero de Python que cada vez que se ejecute lea una sola vez de todos ellos. No debe leer continuamente ya que es la configuración de Node-Red la que se encarga de ello. En este fichero se procesan todos los sensores menos el AMG8833 (Figura \ref{fig:termicos}-a), la PiCam (Figura \ref{fig:picam_of}) y la cámara térmica (Figura \ref{fig:termicos}-b). Para crear este fichero se ha creado una clase por cada sensor, tal y como se estableció en el diagrama de clases (Figura \ref{fig:umlet}).\\
 
-Este fichero de Python utiliza la librería Threads para poder leer de manera concurrente todos los sensores, ahorrando tiempo y ganando eficacia. El código \ref{cod:threads} muestra cómo se crea un hilo ---o thread--- por cada sensor.\\
+Este fichero de Python utiliza la librería \verb|Threads| para poder leer de manera concurrente todos los sensores, ahorrando tiempo y ganando eficacia. El Código \ref{cod:threads} muestra cómo se crea un hilo ---o thread--- por cada sensor.\\
 \begin{code}[h]
 \begin{lstlisting}[language=Python]
 threads = []
@@ -116,7 +116,7 @@ for thread in threads:
 \label{cod:threads}
 \end{code}
 
-Además, este programa guarda las lecturas en un fichero CSV por si fuese necesaria la comparación o estudio de datos a lo largo del tiempo. El fichero devuelve una cadena con la lectura de cada sensor (Código \ref{cod:salida}), para poder procesar la salida en Node-Red.\\
+Además, este programa guarda las lecturas en un fichero CSV, por si fuese necesaria la comparación o estudio de datos a lo largo del tiempo. El fichero devuelve una cadena con la lectura de cada sensor (Código \ref{cod:salida}), para poder procesar la salida en Node-Red.\\
 \begin{code}[h]
 \begin{lstlisting}[language=Python]
 Ammonia: 0.91 Temperature: 28.24  Pressure: 1002.1 Humidity: 52.2 Gas: 4005.9 Water level: 2 Waterproof temp: 28.312
@@ -126,17 +126,18 @@ Ammonia: 0.91 Temperature: 28.24  Pressure: 1002.1 Humidity: 52.2 Gas: 4005.9 Wa
 \end{code}
 
 \subsection{Creación de la interfaz de usuario}
+\label{sec:IU}
 Una vez creado este fichero, se ha procedido a crear la interfaz en Node-Red. Este programa funciona a través de diferentes tipos de nodos, que deben ser combinados para obtener el resultado deseado.\\
 
-En primer lugar, a través del nodo de ejecución, se pueden ejecutar ficheros que están en la máquina local. Este nodo es el que se ha utilizado para integrar en la aplicación el fichero presentado en la sección anterior \ref{sec:ficheropython}. Para obtener individualmente el valor de cada sensor, se ha utilizado otro nodo ---llamado nodo función--- que permite incluir código directamente en Node-Red. Este nodo se ha utilizado para extraer de la salida del nodo ejecución el valor de interés en cada caso. Este proceso corresponde a las diferentes elipses salientes de \textit{sensors script} del diagrama de casos (Figura \ref{fig:casos}). Con estos dos nodos algunos sensores han estado listos para mostrar los valores en la interfaz de usuario (IU), por lo que solo ha sido necesario añadir el \textit{widget} más adecuado para cada caso a través del nodo pertinente. Este ha sido el caso de los sensores MQ-135 \ref{fig:mq_of}, BME680 \ref{fig:bme_of} (en el caso de temperatura, presión y humedad) y DS18B20 \ref{fig:ds_of}.\\
+En primer lugar, a través del nodo de ejecución, se pueden ejecutar ficheros que están en la máquina local. Este nodo es el que se ha utilizado para integrar en la aplicación el fichero presentado en la Sección \ref{sec:ficheropython}. Para obtener individualmente el valor de cada sensor, se ha utilizado otro nodo ---llamado nodo función--- que permite incluir código directamente en Node-Red. Este nodo se ha utilizado para extraer de la salida del nodo ejecución el valor de interés en cada caso. Este proceso corresponde a las diferentes elipses salientes de \textit{sensors script} del diagrama de casos de uso (Figura \ref{fig:casos}). Con estos dos nodos, algunos sensores han estado listos para mostrar los valores en la interfaz de usuario (IU), por lo que solo ha sido necesario añadir el \textit{widget} más adecuado para cada caso a través del nodo pertinente. Este ha sido el caso de los sensores MQ-135 (Figura \ref{fig:mq_of}), BME680 (Figura \ref{fig:bme_of}) (en el caso de temperatura, presión y humedad) y DS18B20 (Figura \ref{fig:ds_of}).\\
 
-En el caso de los otros sensores han sido necesarios otros cambios para obtener el resultado adecuado:
+En el caso de los otros sensores, han sido necesarios otros cambios para obtener el resultado adecuado:
 \begin{itemize}
-	\item El sensor BME680 \ref{fig:bme_of} mide la resistencia del gas, pero se ha considerado que no es un parámetro intuitivo y no proporciona conocimiento al usuario. Por ello se ha utilizado otro nodo función que primero realiza la media de 50 lecturas de resistencia de gas y posteriormente establece la calidad del aire en función a la humedad y resistencia del aire comparándolo con la media calculada.
+	\item El sensor BME680 (Figura \ref{fig:bme_of}) mide la resistencia del gas, pero se ha considerado que no es un parámetro intuitivo y no proporciona conocimiento al usuario. Por ello se ha utilizado otro nodo función que primero realiza la media de 50 lecturas de resistencia de gas y posteriormente establece la calidad del aire en función de la humedad y resistencia del aire comparándolo con la media calculada.
 	
-	\item Durante diferentes pruebas, se ha detectado que el sensor que mide el nivel de agua \ref{fig:nivel_of} no es preciso a la hora de detectar la cantidad de agua presente, solamente es preciso detectando la presencia de esta. Por tanto, se ha optado por dividir en 4 rangos el nivel de agua (Figura \ref{fig:agua}), de tal manera que el usuario tenga una idea sobre la cantidad de agua presente. Aún así, el sensor no es suficientemente preciso durante la realización de diferentes pruebas y esta opción tampoco ha sido válida. Como ajuste que dota de más precisión a este sensor, se ha incorporado un botón en la IU para poder calibrar el sensor cuando el recipiente esté lleno de agua. Todo el desarrollo y las pruebas que se han llevado a cabo con este sensor pueden ser encontradas en la wiki\footnote{\url{https://github.com/jmvega/tfg-icebollada/wiki/3.March-progress}} del proyecto.
+	\item Durante diferentes pruebas, se ha detectado que el sensor que mide el nivel de agua (Figura \ref{fig:nivel_of}) no es preciso a la hora de detectar la cantidad de agua presente, solamente es preciso detectando la presencia de esta. Por tanto, se ha optado por dividir en 4 rangos el nivel de agua (Figura \ref{fig:agua}), de tal manera que el usuario tenga una idea sobre la cantidad de agua presente. Aún así, el sensor no es suficientemente preciso durante la realización de diferentes pruebas y esta opción tampoco ha sido válida. Como ajuste que dota de más precisión a este sensor, se ha incorporado un botón en la IU para poder calibrar el sensor cuando el recipiente esté lleno de agua. Todo el desarrollo y las pruebas que se han llevado a cabo con este sensor pueden ser encontradas en la wiki\footnote{\url{https://github.com/jmvega/tfg-icebollada/wiki/3.March-progress}} del proyecto.
 	
-	\item El sensor AMG8833 \ref{fig:termicos}-a devuelve en su lectura una matriz de 8x8 valores. Estos valores han sido convertidos a imagen ya que este sensor es una cámara térmica. Para este proceso ha sido necesario enlazar una serie de nodos hasta poder obtener la imagen más nítida, ya que la imagen obtenida originalmente ha sido una imagen de 8x8 píxeles que no alcanzaba a diferenciar objetos. De nuevo, tanto este progreso como las diferentes soluciones obtenidas se pueden encontrar en la wiki. 
+	\item El sensor AMG8833 (Figura \ref{fig:termicos}-a) devuelve en su lectura una matriz de 8x8 valores. Estos valores han sido convertidos a imagen ya que este sensor es una cámara térmica. Para este proceso ha sido necesario enlazar una serie de nodos hasta poder obtener la imagen más nítida, ya que la imagen obtenida originalmente ha sido una imagen de 8x8 píxeles que no alcanzaba a diferenciar objetos. De nuevo, tanto este progreso como las diferentes soluciones obtenidas se pueden encontrar en la wiki. 
 \end{itemize}
 \begin{figure}[h!]
   \begin{center}
@@ -153,14 +154,14 @@ Con estos ajustes realizados, se ha obtenido parte de la IU. Para hacerla más c
   \begin{center}
     \includegraphics[width=16cm]{figs/ui_nocams}
   \end{center}
-  \caption{IU sin los sensores cámaras.}
+  \caption{IU sin los canvas correspondientes a la utilización de las cámaras.}
   \label{fig:ui_nocams}
 \end{figure}
 
 \subsection{Integración de las cámaras en la IU}
-La creación de la interfaz en la subsección anterior no es completa, ya que faltan dos de los sensores que se utilizan en este trabajo: las cámaras. Para poder visualizar las cámaras desde Node-Red debe ser a través del nodo template (que significa plantilla), que permite visualizar una dirección web. Por tanto ha sido necesario crear un servidor que permita visualizar las imágenes de las dos cámaras y por tanto poder incluirlo en la IU. Para crear este servidor se ha utilizado Flask.\\
+La creación de la interfaz, descrita en la Sección \ref{sec:IU}, no es completa, ya que faltan dos de los sensores que se utilizan en este trabajo: las cámaras. Para poder visualizar las cámaras desde Node-Red debe ser a través del nodo \textit{template} (plantilla), que permite visualizar una dirección web. Por tanto, ha sido necesario crear un servidor que permita visualizar las imágenes de las dos cámaras y, con ello, poder incluirlo en la IU. Para crear este servidor se ha utilizado Flask.\\
 
-Se ha decidido crear un servidor por cada cámara. De esta manera se puede acceder solamente a una visualización o bien a las dos, según el interés del usuario. Para el funcionamiento de la cámara térmica Seek Thermal \ref{fig:termicos}-b se ha utilizado la librería que tiene seek, que permite su visualización a través de OpenCV. Para el funcionamiento de la PiCam \ref{fig:picam_of} se ha utilizado OpenCV tanto para su visualización como para la adición de la fecha y la hora en la visualización (Figura \ref{fig:fechayhora}). El código \ref{cod:fechayhora} muestra como se consigue.\\
+Se ha decidido crear un servidor por cada cámara. De esta manera se puede acceder solamente a una visualización o bien a las dos, según el interés del usuario. Para el funcionamiento de la cámara térmica Seek Thermal (Figura \ref{fig:termicos}-b) se ha utilizado la librería que tiene Seek, que permite su visualización a través de OpenCV. Para el funcionamiento de la PiCam (Figura \ref{fig:picam_of}) se ha utilizado OpenCV, tanto para su visualización como para la incrustación de la fecha y la hora en las imágenes (Figura \ref{fig:fechayhora}). El Código \ref{cod:fechayhora} muestra cómo se consigue.\\
 \begin{figure} [h!]
   \begin{center}
     \includegraphics[width=8cm]{figs/fechayhora}
@@ -179,7 +180,7 @@ frame = cv2.putText(frame, str(datetime.datetime.now().replace(microsecond=0)), 
 \label{cod:fechayhora}
 \end{code}
 
-Una vez obtenidas las imágenes de las cámaras desde la Raspberry, se ha incorporado al código el uso de Flask para poder crear el servidor. Es necesario disponer de dos elementos: el código para mostrar la imagen de la cámara y una carpeta donde estás las plantillas. Estas plantillas son ficheros escritos en html que muestran en el servidor la página que interesa en cada momento. La estructura que sigue un programa con Flask es la representada en el código \ref{cod:flask}.\\
+Una vez obtenidas las imágenes de las cámaras desde la Raspberry, se ha incorporado al código el uso de Flask para poder crear el servidor. Es necesario disponer de dos elementos: el código para mostrar la imagen de la cámara, y una carpeta donde están las plantillas. Estas plantillas son ficheros escritos en html que muestran en el servidor la página que interesa en cada momento. La estructura que sigue un programa con Flask es la representada en el Código \ref{cod:flask}.\\
 \begin{code}[h]
 \begin{lstlisting}[language=Python]
 from flask import *
@@ -213,11 +214,11 @@ Una vez se ha obtenido la visualización de las cámaras en la IU junto al resto
 
 
 \subsection{Seguridad}
-Debido a que se está trabajando en un servidor web, es importante dotar de cierta seguridad al servidor para evitar que sólo las personas autorizadas puedan acceder a las imágenes. Para ello, se ha decidido hacerlo a través del factor de doble autenticación (del inglés two factor authentication, 2FA). 2FA es el proceso de autenticación donde se añade un segundo paso en el proceso de identificación frente a un servicio. En este caso, además de que un usuario introduzca su contraseña, es necesario un código que se genera cada 30 segundos y caduca pasado ese tiempo. La generación de este código se hace a través de google authenticator\footnote{\url{https://chrome.google.com/webstore/detail/authenticator/bhghoamapcdpbohphigoooaddinpkbai?hl=es}}. Esta extensión de google genera los códigos de 30 segundos a partir de el escaneo de un código QR (Figura \ref{fig:server}-d) o por la inserción manual de un código inicial.\\
+Debido a que se está trabajando en un servidor web, es importante dotar de cierta seguridad a este para que sólo las personas autorizadas puedan acceder a las imágenes. Para ello, se ha implementado el factor de doble autenticación (del inglés Two Factor Authentication, 2FA). 2FA es el proceso de autenticación donde se añade un segundo paso en el proceso de identificación frente a un servicio (por ejemplo, mediante el envío de un SMS de confirmación). En este caso, además de que un usuario introduzca su contraseña, es necesario un código que se genera cada 30 segundos y caduca pasado ese tiempo. La generación de este código se hace a través de Google Authenticator\footnote{\url{https://chrome.google.com/webstore/detail/authenticator/bhghoamapcdpbohphigoooaddinpkbai?hl=es}}. Esta extensión de Google genera los códigos (de 30 segundos de vida) a partir del escaneo de un código QR (Figura \ref{fig:proceso}-d) o por la inserción manual de un código inicial.\\
 
-Para que estos servidores funcionen con 2FA, ha sido necesario incorporar otras librerías así como otros módulos de Flask como Flask\_login, Flask\_bootstrap, Flask\_sqlalchemy o Flask\_wtf. Durante el desarrollo del servidor con 2FA, han surgido determinados problemas que pueden encontrarse junto a la solución en la wiki del proyecto\footnote{\url{https://github.com/jmvega/tfg-icebollada/wiki/5.May-progress}}.\\
+Para que estos servidores funcionen con 2FA, ha sido necesario incorporar otras librerías, así como otros módulos de Flask: Flask\_login, Flask\_bootstrap, Flask\_sqlalchemy y Flask\_wtf. Durante el desarrollo del servidor con 2FA han surgido determinados problemas, que pueden encontrarse junto a la solución en la wiki del proyecto\footnote{\url{https://github.com/jmvega/tfg-icebollada/wiki/5.May-progress}}.\\
 
-Una vez los servidores web han funcionado, se han integrado en Node-Red a través del nodo template. Un servidor está en el puerto 5000 y el otro en el 8000 para que así puedan estar ambas cámaras disponibles a la vez. Después de añadirlos, la interfaz de usuario (Figura \ref{fig:UIcompleta}) se ha completado.\\
+Una vez los servidores web han funcionado, se han integrado en Node-Red a través del nodo \textit{template}. Un servidor está en el puerto 5000 y, el otro, en el 8000, para que así puedan estar ambas cámaras disponibles a la vez. Una vez añadidos, la interfaz de usuario (Figura \ref{fig:UIcompleta}) queda completa.\\
 \begin{figure} [h!]
   \begin{center}
     \includegraphics[width=16cm]{figs/UIcompleta}
@@ -226,7 +227,7 @@ Una vez los servidores web han funcionado, se han integrado en Node-Red a travé
   \label{fig:UIcompleta}
 \end{figure}
 
-También se ha tenido en cuenta que Node-Red funciona sobre una dirección a la que puede acceder cualquier usuario de la red sobre el puerto 1880. Por tanto, es imprescindible que sean solo usuarios autorizados los que puedan acceder a esta plataforma, sobre todo en la parte del flujo de nodos. Por tanto se ha optado por dividir este acceso en dos partes: Una de ellas la parte de administrador (Figura \ref{fig:adminlogin}), donde se encuentra el flujo de nodos y se crea toda la interfaz de usuario. Únicamente un administrador debe poder acceder a esta parte, ya que es importante que una persona que no tiene conocimientos acerca de su funcionamiento no pueda realizar modificaciones. La otra parte corresponde a la interfaz de usuario (Figura \ref{fig:userlogin}) que, aunque ahí no pueden realizarse modificaciones, solo un usuario registrado conocedor de la contraseña sea capaz de acceder para evitar que personas ajenas puedan acceder a la información disponible.\\
+También se ha tenido en cuenta que Node-Red funciona sobre una dirección a la que puede acceder cualquier usuario de la red sobre el puerto 1880. Por tanto, es imprescindible que sean solo los usuarios autorizados los que puedan acceder a esta plataforma, sobre todo en la parte del flujo de nodos. Así, se ha optado por dividir este acceso en dos partes. Una de ellas, la parte de administrador (Figura \ref{fig:adminlogin}), donde se encuentra el flujo de nodos y se crea toda la interfaz de usuario; únicamente un administrador debe poder acceder a esta parte, ya que es importante que una persona que no tiene conocimientos acerca de su funcionamiento no pueda realizar modificaciones. La otra parte corresponde a la interfaz de usuario (Figura \ref{fig:userlogin}); solo un usuario registrado conocedor de la contraseña puede acceder al sistema. Tanto las contraseñas de Node-Red como las de los servidores se guardan encriptadas bajo algoritmos de funciones hash en SHA256.\\ 
 \begin{figure} [h!]
   \begin{center}
     \includegraphics[width=12cm]{figs/adminlogin}
@@ -243,14 +244,13 @@ También se ha tenido en cuenta que Node-Red funciona sobre una dirección a la 
 \caption{Acceso a la interfaz de usuario desde distintos dispositivos.} \label{fig:userlogin}
 \end{figure}
 
-Tanto las contraseñas de Node-Red como las de los servidores se guardan encriptadas bajo algoritmos de funciones hash en SHA256.\\
 
-Por otro lado, tanto los servidores de Flask como Node-Red se encontraban bajo una URL de HTTP (Hypertext Transfer Protocol). Por tanto, un cambio necesario ha sido añadir seguridad de tal forma que sea HTTPS (Hypertext Transfer Protocol Secure), para impedir que otros usuarios puedan interceptar la información confidencial que se transfiere entre el cliente y los servidores web a través de Internet. Este cambio se ha realizado añadiendo certificados autofirmados creados por el autor.\\
+Por otro lado, tanto los servidores de Flask como Node-Red se lanzan, por defecto, bajo una URL de HTTP (Hypertext Transfer Protocol). Por tanto, un cambio necesario ha sido añadir seguridad, de tal forma que sea HTTPS (Hypertext Transfer Protocol Secure), para impedir que otros usuarios puedan interceptar la información confidencial que se transfiere entre el cliente y los servidores web a través de Internet. Este cambio se ha realizado añadiendo certificados autofirmados creados por el autor.\\
 
 \subsection{Autoarranque}
 Recordando que este sistema está pensado para personas que no están familiarizadas con la programación o los ordenadores, se ha considerado añadir una opción que facilite el arranque del sistema.\\
 
-Con el encendido de la Raspberry, la interfaz de usuario se lanza de forma automática ---así como los dos servidores--- y se enciende solicitando el login del usuario para acceder a la IU. Además, se ha incorporado un led verde que indica cuando el sistema está listo para ser usado. El funcionamiento del autoarranque, tanto de Node-Red como de los servidores se encuentra detallado en la wiki\footnote{\url{https://github.com/jmvega/tfg-icebollada/wiki/5.May-progress}}. El proceso de autoarranque es visible en la Figura \ref{fig:autoarranque}.
+Con el encendido de la Raspberry, la interfaz de usuario se lanza de forma automática ---así como los dos servidores--- y se enciende solicitando el login del usuario para acceder a la IU. Además, se ha incorporado un led verde que se ilumina cuando el sistema está listo para ser usado. El funcionamiento del autoarranque, tanto de Node-Red como de los servidores, se encuentra detallado en la wiki\footnote{\url{https://github.com/jmvega/tfg-icebollada/wiki/5.May-progress}}. El proceso de autoarranque es visible en la Figura \ref{fig:autoarranque}.
 \begin{figure}[h!]
   \begin{center}
     \subfigure[Encendido de la Raspberry]{\includegraphics[width=7cm]{figs/auto1}}\hspace{1mm}
@@ -261,14 +261,23 @@ Con el encendido de la Raspberry, la interfaz de usuario se lanza de forma autom
 \caption{Proceso de autoarranque del sistema.} \label{fig:autoarranque}
 \end{figure}
 
-\subsection{Detección de ratones con uso de Deep Learning}
-Finalmente para el cumplimiento del tercer objetivo era necesaria la detección de ratones. Para ello, ha sido necesaria la creación de un dataset de ratones, debido a que no se ha encontrado ninguno en internet. Está formado 354 imágenes; 275 para el proceso de entrenamiento y 79 para el de validación. El puede encontrarse en la plataforma Kaggle\footnote{\url{https://www.kaggle.com/datasets/isabelcebollada/datami}}.\\
+\subsection{Detección de ratones mediante técnicas Deep Learning}
+Finalmente, y cumpliendo con el tercer objetivo, se han desarrollado algoritmos para la detección de ratones. Para ello, en primer lugar, ha sido necesaria la creación de un dataset de ratones, debido a que no se ha encontrado ninguno cercano a los objetivos en Internet. Está formado por 354 imágenes: 275 para el proceso de entrenamiento y 79 para el de validación. El dataset creado está disponible en la plataforma Kaggle\footnote{\url{https://www.kaggle.com/datasets/isabelcebollada/datami}}.\\
 
-Una vez se ha obtenido el dataset, se ha procedido etiquetar estas imágenes mediante la aplicación labelImg, para indicar los cuadros limitadores en los que se encuentran los objetos a detectar, en este caso, los ratones. Los ficheros resultantes son .txt compuestos por 5 parámetros: la clase, las coordenadas X e Y mínimas y X e Y máximas de los cuadros delimitadores.\\
+Una vez se ha obtenido el dataset, se ha procedido a etiquetar estas imágenes mediante la aplicación \textit{labelImg}, para indicar los cuadros limitadores en los que se encuentran los objetos a detectar, en este caso, los ratones. Los ficheros resultantes son .txt compuestos por 5 parámetros: la clase, las coordenadas X e Y mínimas y X e Y máximas de los cuadros delimitadores.\\
 
-Con las imágenes y las etiquetas formadas, se ha procedido al entrenamiento del modelo para la detección de ratones. Esta detección se ha realizado con YOLOv5, utilizando el modelo YOLOv5s, que ofrece una menor precisión frente a otros modelos de YOLO pero una mayor rapidez, que es necesaria debido a las características de la placa Raspberry.\\
+Con las imágenes y las etiquetas formadas, se ha procedido al entrenamiento del modelo para la detección de ratones. Esta detección se ha realizado con YOLOv5. YOLO ofrece diferentes modelos que se adaptan a distintas características (Figura \ref{fig:tablayolo}). Se han probado cuatro modelos para la detección de ratones: YOLOv5x, YOLOv5m, YOLOv5s y YOLOv5n, siendo YOLOv5x el más lento pero más preciso y YOLOv5n el más rápido pero menos preciso. Debido a que el sistema se utiliza en Raspberry, es importante tener en cuenta que el rendimiento de la CPU es más limitado que en un ordenador normal. Se ha probado el primer modelo en un ordenador normal (Figura \ref{fig:linux1}), donde los resultados han sido muy buenos: La visualización ha sido en tiempo real y la precisión muy buena. Sin embargo, este modelo no ha sido viable en Raspberry debido a la poca velocidad en la que se visualizaban las imágenes. Se ha probado el modelo YOLOv5m, pero el resultado ha sido una velocidad escasa en la placa. También se ha probado con YOLOv5s, donde las imágenes han ido más fluidas, aunque no a tiempo real, pero también la precisión en la detección de ratones ha disminuido. Como última prueba se ha probado con YOLOv5n. La precisión era muy peor que respecto al anterior, y la velocidad era prácticamente igual, por lo que la decisión final ha sido escoger el modelo YOLOv5s. A pesar de que se ha usado uno de los modelos más rápidos, en Raspberry el flujo de imágenes no es fluido. Debido a este motivo, la detección no es perfecta; pues hay detecciones incorrectas así como ocasiones en las que no detecta ratones (Figura \ref{fig:detec}). Todos los experimentos realizados pueden encontrarse en la wiki\footnote{\url{}}\\
+\begin{figure}[h!]
+  \begin{center}
+    \subfigure[Detección correcta]{\includegraphics[width=7cm]{figs/correcta}}\hspace{1mm}
+    \subfigure[Detección incorrecta]{\includegraphics[width=7cm]{figs/incorrecta}}\hspace{1mm}
+    \subfigure[No detección incorrecta]{\includegraphics[width=7cm]{figs/nodeteccion}}\hspace{1mm}
+    \subfigure[No detección correcta]{\includegraphics[width=7cm]{figs/nodeteccbien}}
+  \end{center}
+\caption{Detección de ratones con el modelo entrenado con YOLOv5s.} \label{fig:detec}
+\end{figure}
 
-El entrenamiento de YOLOv5 se lleva a cabo a través de un algoritmo de DL: una red neuronal convolucional. Utiliza características ya entrenadas proporcionadas por coco128 ---un dataset muy grande ya existiente--- y aplica el nuevo dataset creado. Después del entrenamiento se obtienen métricas del modelo obtenido (Figura \ref{fig:metricas}), y se puede proceder a la prueba del modelo. En la Figura \ref{fig:precision} pueden verse la predicción de ratones en algunas de las imágenes de validación con el modelo entrenado.\\
+El entrenamiento de YOLOv5 se lleva a cabo a través de un algoritmo de Deep Learning: una red neuronal convolucional. Este utiliza características ya entrenadas proporcionadas por \textit{coco128} ---un dataset muy grande ya existiente--- y aplica el nuevo dataset creado. Después del entrenamiento se obtienen métricas del modelo obtenido (Figura \ref{fig:metricas}), y se puede proceder a la prueba del modelo. En la Figura \ref{fig:precision} pueden verse la predicción de ratones en algunas de las imágenes de validación con el modelo entrenado.\\
 \begin{figure}[h!]
   \begin{center}
     \includegraphics[width=12cm]{figs/metricas}
@@ -282,14 +291,3 @@ El entrenamiento de YOLOv5 se lleva a cabo a través de un algoritmo de DL: una 
 \caption{Detección de ratones con el modelo entrenado con YOLOv5.} \label{fig:precision}
 \end{figure}
 Finalmente, con el uso de Python y OpenCV, puede visualizarse la detección de ratones en tiempo real con la PiCamera y la Raspberry. 
-
-A pesar de que se ha usado uno de los modelos más rápidos, en Raspberry el flujo de imágenes no es fluido. Debido a este motivo, la detección no es perfecta; pues hay detecciones incorrectas así como ocasiones en las que no detecta ratones (Figura \ref{fig:detec}).
-\begin{figure}[h!]
-  \begin{center}
-    \subfigure[Detección correcta]{\includegraphics[width=7cm]{figs/correcta}}\hspace{1mm}
-    \subfigure[Detección incorrecta]{\includegraphics[width=7cm]{figs/incorrecta}}\hspace{1mm}
-    \subfigure[No detección incorrecta]{\includegraphics[width=7cm]{figs/nodeteccion}}\hspace{1mm}
-    \subfigure[No detección correcta]{\includegraphics[width=7cm]{figs/nodeteccbien}}
-  \end{center}
-\caption{Detección de ratones con el modelo entrenado.} \label{fig:detec}
-\end{figure}
