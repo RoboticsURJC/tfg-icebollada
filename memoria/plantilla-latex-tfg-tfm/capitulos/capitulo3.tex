@@ -16,14 +16,21 @@ En este capítulo se definen tanto la infraestructura utilizada como los método
 \section{Plataforma hardware}
 \label{sec:hw}
 Para satisfacer el objetivo de crear un sistema multisensorial con las características definidas en el capítulo anterior y que además sea \textit{low-cost}, la infraestructura hardware en este trabajo se ha centrado en sistemas embebidos empotrados existentes en el mercado. Dos de los sistemas más importantes son Raspberry (Figura \ref{fig:placas}-a) y Arduino (Figura \ref{fig:placas}-b). La decisión de trabajar con Raspberry en lugar de Arduino ha estado motivada por diferentes cuestiones.\\
+\begin{figure}[h!]
+  \begin{center}
+    \subfigure[Raspberry Pi]{\includegraphics[width=75mm]{figs/raspberry_of}}\hspace{2mm}
+    \subfigure[Arduino]{\includegraphics[width=70mm]{figs/arduino_of}}
+  \end{center}
+\caption{Sistemas empotrados.} \label{fig:placas}
+\end{figure}
 
-Ambas placas disponen de pines GPIO ---del inglés General Purpose Input/Output--- o Entrada/Salida de Propósito General. Estos pines permiten la conexión de sensores o actuadores por medio de diferentes tipos de pines, que se pueden ver representados con distintos colores en la Figura \ref{fig:pinout}. Los tipos de pines que hay son los siguientes:
+Ambas placas disponen de pines GPIO ---del inglés \textit{General Purpose Input/Output}--- o Entrada/Salida de Propósito General. Estos pines permiten la conexión de sensores o actuadores por medio de diferentes tipos de pines, que se pueden ver representados con distintos colores en la Figura \ref{fig:pinout}. Los tipos de pines que hay son los siguientes:
 \begin{itemize}
 \item 3.3V pin: Alimentación de 3.3V en los pines 1 y 17.
 \item 5V pin: Alimentación de 5V en los pines 2 y 4.
 \item Conexión a tierra: Utilizados para cerrar los circuitos eléctricos, para evitar quemar los componentes usados, en los pines 6, 9, 14, 20, 25, 30, 34 y 39.
-\item Modulación del pulso (PCM): Convierten la señal digital a una señal analógica. Son los pines 12, 32, 33 y 35.
-\item Conexión Circuito Integrado Interno ---del inglés Inter-Integrated Circuit--- (I2C) en los pines 3 (SDA) y 5 (SCL) o 27 (SDA) y 28 (SCL).
+\item Modulación del pulso (PWM): Permiten modificar el ciclo de trabajo (en inglés \textit{Duty Cycle}) con una señal periódica configurable. Son los pines 12, 32, 33 y 35.
+\item Conexión Circuito Integrado Interno ---del inglés \textit{Inter-Integrated Circuit}--- (I2C) en los pines 3 (SDA) y 5 (SCL) o 27 (SDA) y 28 (SCL).
 \item Conexión SPI (Interfaz de Comunicación Serie). Se encuentra en los pines 19, 21, 23 y 24.
 \item Conexión UART (Transmisor-Receptor Asíncrono Universal) en los pines 8 y 10.
 \item El resto de pines son pines que permiten la conexión de entrada o salida con el elemento conectado.
@@ -37,14 +44,7 @@ Ambas placas disponen de pines GPIO ---del inglés General Purpose Input/Output-
   \label{fig:pinout}
 \end{figure}
 
-A pesar de que ambas placas tienen pines GPIO, Arduino no permite la conexión de cámaras mientras que con Raspberry no solo se puede acoplar su cámara (PiCam) sino que permite conectar una webcam a través de uno de los puertos USB que tiene. Arduino es un microprocesador que cuenta con su IDE, mientras que Raspberry es un microordenador completo que cuenta con un completo sistema operativo Raspbian, basado en Debian. De esta forma, el usuario final puede visualizar los datos vertidos por el sistema con la conexión de la Raspberry a una pantalla a través de su puerto HDMI.\\
-\begin{figure}[h!]
-  \begin{center}
-    \subfigure[Raspberry Pi]{\includegraphics[width=75mm]{figs/raspberry_of}}\hspace{2mm}
-    \subfigure[Arduino]{\includegraphics[width=70mm]{figs/arduino_of}}
-  \end{center}
-\caption{Sistemas empotrados.} \label{fig:placas}
-\end{figure}
+A pesar de que ambas placas tienen pines GPIO, Arduino no permite la conexión de cámaras, mientras que con Raspberry no solo se puede acoplar su cámara (PiCam) sino que permite conectar una webcam a través de uno de los puertos USB que tiene. Arduino es un microprocesador que cuenta con su IDE, mientras que Raspberry es un microordenador completo que cuenta con un completo sistema operativo Raspbian, basado en Debian. De esta forma, el usuario final puede visualizar los datos vertidos por el sistema con la conexión de la Raspberry a una pantalla a través de su puerto HDMI.\\
 
 A la placa Raspberry se han conectado una serie de sensores para obtener distintos valores necesarios para la monitorización del sistema. Para la obtención de la temperatura se han utilizado el sensor BME680 (Figura \ref{fig:bme_of}) y el sensor DS18B20 (Figura \ref{fig:ds_of}). Este segundo sensor es resistente al agua, por lo que permite recoger la temperatura en superficies húmedas o mojadas. El rango en el que trabaja el BME680 así como su resolución se encuentra en el Cuadro \ref{cuadro:bme_tabla} extraído de la ficha de datos del sensor. Las características del DS18B20 se encuentran en el Cuadro \ref{cuadro:ds_tabla}.\\
 \begin{figure} [h!]
@@ -101,13 +101,13 @@ Para la lectura de la humedad, la presión y la calidad del aire se ha utilizado
 Para el registro de imágenes térmicas, se han utilizado dos sensores. Uno de ellos es el sensor AMG8833 (Figura \ref{fig:termicos}-a) que ofrece una matriz de valores de temperatura. El segundo, es la cámara Seek Thermal (Figura \ref{fig:termicos}-b), que se ha conectado a la Raspberry a través de su puerto USB por medio de un adaptador.\\
 \begin{figure}[h!]
   \begin{center}
-    \subfigure[Sensor AMG8833.]{\includegraphics[width=7cm]{figs/amg_of}}\hspace{2mm}
+    \subfigure[Sensor AMG8833]{\includegraphics[width=7cm]{figs/amg_of}}\hspace{2mm}
     \subfigure[Cámara Seek Thermal]{\includegraphics[width=6cm]{figs/seek_of}}
   \end{center}
 \caption{Sensores térmicos utilizados en el trabajo.} \label{fig:termicos}
 \end{figure}
 
-Para el registro de imágenes se ha utilizado una de las cámaras de Raspberry, la Pi Camera (Figura \ref{fig:picam_of}). Ofrece una resolución de 8 megapíxeles, siendo una cámara de alta definición que ofrece poco ruido y alta sensibilidad.
+Para el registro de imágenes se ha utilizado una de las cámaras de Raspberry, la Pi Camera (Figura \ref{fig:picam_of}). Ofrece una resolución de 8 megapíxeles, siendo una cámara de alta definición que ofrece poco ruido y alta sensibilidad.\\
 \begin{figure} [h!]
   \begin{center}
     \includegraphics[width=6cm]{figs/picam_of}
@@ -116,7 +116,7 @@ Para el registro de imágenes se ha utilizado una de las cámaras de Raspberry, 
   \label{fig:picam_of}
 \end{figure}
 
-Otro sensor utilizado ha sido el sensor de nivel de agua (Figura \ref{fig:nivel_of}), que permite detectar la presencia de agua. También es posible obtener una idea de la cantidad de agua presente, aunque no de forma precisa.
+Otro sensor utilizado ha sido el sensor de nivel de agua (Figura \ref{fig:nivel_of}), que permite detectar la presencia de agua. También es posible obtener una idea de la cantidad de agua presente, aunque no de forma precisa.\\
 \begin{figure} [h!]
   \begin{center}
     \includegraphics[width=6cm]{figs/nivel_of}
@@ -155,19 +155,19 @@ Python es un lenguaje de alto nivel de programación, interpretado y orientado a
 \begin{lstlisting}[language=Python]
 !python train.py --img 480 --batch 16 --epochs 100 --data /content/yolov5/data/custom.yaml --weights yolov5s.pt --cache
 \end{lstlisting}
-\caption[Código para el entrenamiento de un modelo de detección de ratones.]{Código para el entrenamiento de un modelo de detección de ratones.}
+\caption[Código de lanzamiento del entrenamiento de un modelo de detección.]{Código de lanzamiento del entrenamiento de un modelo de detección.}
 \label{cod:modelo}
 \end{code}
 
-Actualmente, es el lenguaje de programación más usado en el mundo, según la calificación de la empresa TIOBE\footnote{\url{https://www.tiobe.com/tiobe-index/}}, por lo que cuenta con una gran comunidad. Además, también es el más popular en el ámbito del Machine Learning. Algunas de las aplicaciones que usan Python son: Google, Netflix, Dropbox o Spotify.\\
+Actualmente, es el lenguaje de programación más usado en el mundo, según la calificación de la empresa TIOBE\footnote{\url{https://www.tiobe.com/tiobe-index/}}, por lo que cuenta con una gran comunidad. Además, también es el más popular en el ámbito del ML. Algunas de las aplicaciones que usan Python son: Google, Netflix, Dropbox o Spotify.\\
 
-La decisión de usar Python para el desarrollo de este TFG ha sido que es uno de los lenguajes de programación que mejor funciona y está soportado de forma nativa en el SO utilizado Raspbian, además de las numerosas librerías útiles para este proyecto adaptadas a Raspberry que Python posee.\\
+La decisión de usar Python para el desarrollo del presente TFG ha sido que es uno de los lenguajes de programación que mejor funciona y está soportado de forma nativa en el SO utilizado Raspbian, además de las numerosas librerías útiles para este proyecto adaptadas a Raspberry que Python posee.\\
 
-En este trabajo, Python se utiliza para la lectura de los sensores de forma concurrente, para la creación de los dos servidores web que tiene tanto la PiCamera como la cámara térmica con Flask, y para el reconocimiento de lo ratones a través de la librería de YOLOv5.\\
+En este trabajo, Python se utiliza para la lectura de los sensores de forma concurrente, para la creación de los dos servidores web que tiene tanto la PiCamera como la cámara térmica con Flask, así como para el reconocimiento de los ratones a través de la librería de YOLOv5, presentada a continuación.\\
 
 \subsection{YOLOv5}
 \label{sec:yolo}
-YOLO ---siglas del acrónimo en inglés \textit{You Only Look Once}--- es un algoritmo de detección de objetos en tiempo real. Es un sistema de código abierto que hace uso de una red neuronal convolucional ---del inglés, Convolutional Neural Network (CNN)--- para la detección de objetos en imágenes o vídeos. En una explicación simplificada, esta red neuronal divide la imagen en MxM celdas de tamaño fijo. Cada celda debe predecir un solo objeto, mostrándolo posteriormente en la imagen a través de un cuadro delimitador o \textit{bounding box}, tal y como se puede ver en la Figura \ref{fig:regiones}.\\
+YOLO ---siglas del acrónimo en inglés \textit{You Only Look Once}--- es un algoritmo de detección de objetos en tiempo real. Es un sistema de código abierto que hace uso de una red neuronal convolucional ---del inglés, \textit{Convolutional Neural Network} (CNN)--- para la detección de objetos en imágenes o vídeos. En una explicación simplificada, esta red neuronal divide la imagen en MxM celdas de tamaño fijo. Cada celda debe predecir un solo objeto, mostrándolo posteriormente en la imagen a través de un cuadro delimitador o \textit{bounding box}, tal y como se puede ver en la Figura \ref{fig:regiones}.\\
 \begin{figure} [h!]
   \begin{center}
     \includegraphics[width=15cm]{figs/regiones}
@@ -175,7 +175,8 @@ YOLO ---siglas del acrónimo en inglés \textit{You Only Look Once}--- es un alg
   \caption{División en celdas y detección de objetos en una CNN.}
   \label{fig:regiones}
 \end{figure}
-Las red está formada por 24 capas convolucionales, que se encargan de extraer las características de la imagen, y 2 capas de conexión completa que predicen las coordenadas del objeto. Tiene 5 modelos diferentes que ofrecen diferentes características según el interés del uso. Se pueden ver las cualidades de cada modelo en la Figura \ref{fig:tablayolo}. \\
+
+La red está formada por 24 capas convolucionales, que se encargan de extraer las características de la imagen, y 2 capas de conexión completa que predicen las coordenadas del objeto. Tiene 5 modelos diferentes que ofrecen diferentes características según el interés del uso. Se pueden ver las cualidades de cada modelo en la Figura \ref{fig:tablayolo}. \\
 \begin{figure} [h!]
   \begin{center}
     \includegraphics[width=15cm]{figs/tablayolo}
@@ -185,7 +186,7 @@ Las red está formada por 24 capas convolucionales, que se encargan de extraer l
 
 \subsection{OpenCV}
 \label{sec:opencv}
-OpenCV (Open Source Computer Vision Library) es una librería de software de visión computacional y machine learning de código abierto. Es ampliamente usada en todo el mundo debido al soporte multiplataforma que ofrece (Windows, Linux, MacOS y Android), además de ofrecer interfaz en diferentes lenguajes como Python, Java, C++ y MATLAB.\\
+OpenCV (\textit{Open Source Computer Vision Library}) es una librería de software de visión computacional y ML de código abierto. Es ampliamente usada en todo el mundo debido al soporte multiplataforma que ofrece (Windows, Linux, MacOS y Android), además de ofrecer interfaz en diferentes lenguajes como Python, Java, C++ y MATLAB.\\
 
 Compuesto por más de 2500 algoritmos, OpenCV está especializado en la visión computacional y en algoritmos de aprendizaje, permitiendo reconocer rostros, identificar o clasificar objetos, extraer modelos 3D, mejorar la calidad de las imágenes o detectar bordes (Figura \ref{fig:ej-opencv}), entre otros.\\
 
@@ -219,19 +220,19 @@ En este proyecto se ha utilizado Flask para la creación de los dos servidores w
 \label{sec:nodered}
 Node-Red es una herramienta de programación creada por IBM y escrita en lenguaje JavaScript que permite conectar dispositivos hardware y servicios en línea. Muestra de manera visual las conexiones de los nodos en un panel, mostrando gráficamente el flujo de la información. Además, es un entorno de ejecución ligero, lo que lo hace ideal para ejecutarse en hardware de bajo coste como la Raspberry.\\
 
-Está compuesto por dos partes principales. Una de ellas es la edición de flujo desde navegador, donde muestra los nodos disponibles en el margen izquierdo así como la disposición y conexión del flujo creado por el usuario. La otra parte es el cuadro de mando, más comunmente \textit{dashboard}, que muestra la interfaz de usuario en base al flujo de los nodos de la parte previamente comentada.\\
+Está compuesto por dos partes principales. Una de ellas es la edición de flujo desde navegador, donde muestra los nodos disponibles en el margen izquierdo así como la disposición y conexión del flujo creado por el usuario. La otra parte es el cuadro de mando ---en inglés \textit{dashboard}---, que muestra la interfaz de usuario en base al flujo de los nodos de la parte previamente comentada.\\
 
 Node-Red tiene una amplia variedad de nodos. Algunos de ellos permiten distintos tipos de conexiones, la interacción directa con los pines de Raspberry, la conexión con twitter o el correo electrónico. También permite la creación de ficheros de distintos tipos o la ejecución de ficheros ya existentes en la computadora.\\
 
 Node-Red también permite el modo \textit{scripting}; esto es, la ejecución directa de código escrito en lenguaje JavaScript. Pueden crearse nuevos nodos para agregar nuevas capacidades gracias a los más de 225.000 módulos que hay en el repositorio de paquetes.\\
 
-Los flujos de datos se pueden importar o exportar con ficheros en formato estándar JSON, permitiendo compartirlos con cualquier persona. La página de Node-Red tiene una librería de flujos que han creado otros usuarios, permitiendo el acceso a ellos para utilizarlos como base en otros proyectos (Figura \ref{fig:flujos}). En la Figura \ref{fig:ui-internet} se puede ver un ejemplo de un trabajo realizado en Node-Red.\\
+Los flujos de datos se pueden importar o exportar con ficheros en formato estándar JSON, permitiendo compartirlos con cualquier persona. La página de Node-Red tiene una librería de flujos que han creado otros usuarios, permitiendo el acceso a ellos para utilizarlos como base en otros proyectos (Figura \ref{fig:flujos}). En la Figura \ref{fig:ui-internet} se puede ver un ejemplo de un sistema de control de un garaje realizado en Node-Red.\\
 \begin{figure}[h!]
   \begin{center}
     \subfigure[Flujo de Hola Mundo en Node-Red]{\includegraphics[width=14cm]{figs/holamundo-flujo}}\hspace{2mm}
     \subfigure[Flujo del proyecto de creación de un sistema de alarma]{\includegraphics[width=14cm]{figs/alarma-flujo}}
   \end{center}
-\caption{Distintos flujos hechos en Node-Red} \label{fig:flujos}
+\caption{Distintos flujos hechos en Node-Red.} \label{fig:flujos}
 \end{figure}
 \begin{figure} [h!]
   \begin{center}
