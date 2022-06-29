@@ -25,19 +25,28 @@ Dos son las partes esenciales para el desarrollo del sistema: hardware y softwar
 
 \section{Desarrollo hardware}
 \label{sec:deshw}
-La placa que se ha utilizado para el proyecto es la Raspberry Pi 4B (Figura \ref{fig:rasp}-a), el último modelo de Raspberry y muy utilizada para el desarrollo de proyectos debido ---entre otras cosas--- a su bajo coste. Este modelo es el más rápido y potente, ofreciendo de dos a tres veces el rendimiento del procesador de su modelo predecesor, la Raspberry Pi 3b+. El sistema operativo utilizado para el desarrollo del proyecto ha sido Raspbian (Figura \ref{fig:rasp}-b), sobre la versión de 64 bits.\\
-\begin{figure}[h!]
+La placa que se ha utilizado para el proyecto es la Raspberry Pi 4B (Figura \ref{fig:raspberry-placa}), el último modelo de Raspberry y muy utilizada para el desarrollo de proyectos debido ---entre otras cosas--- a su bajo coste. Este modelo es el más rápido y potente, ofreciendo de dos a tres veces el rendimiento del procesador de su modelo predecesor, la Raspberry Pi 3b+. El sistema operativo utilizado para el desarrollo del proyecto ha sido Raspbian (Figura \ref{fig:trabajo}), sobre la versión de 64 bits.\\
+\begin{figure} [h!]
   \begin{center}
-    \subfigure[Raspberry Pi 4B utilizada para el desarrollo del presente TFG.]{\includegraphics[width=12cm]{figs/raspberry}}\hspace{1mm}
-    \subfigure[Entorno de trabajo en Raspbian.]{\includegraphics[width=12cm]{figs/trabajo}}
+    \includegraphics[width=8cm]{figs/raspberry}
   \end{center}
-\caption{Imágenes del HW y SW usados para el TFG.} \label{fig:rasp}
+  \caption{Raspberry Pi 4B utilizada para el desarrollo del presente TFG.}
+  \label{fig:raspberry-placa}
 \end{figure}
+
+\begin{figure} [h!]
+  \begin{center}
+    \includegraphics[width=15cm]{figs/trabajo}
+  \end{center}
+  \caption{Entorno de trabajo en Raspbian.}
+  \label{fig:trabajo}
+\end{figure}
+
 
 Se han utilizado los puertos GPIO para la conexión de los distintos sensores presentados en la Sección \ref{sec:hw}. En la Figura \ref{fig:esquema} se encuentran las distintas conexiones de los sensores a la Raspberry.\\
 \begin{figure} [h!]
   \begin{center}
-    \includegraphics[width=14cm]{figs/esquema}
+    \includegraphics[width=16cm]{figs/esquema}
   \end{center}
   \caption{Esquema de conexiones.}
   \label{fig:esquema}
@@ -47,13 +56,13 @@ A continuación se explican con más detalle la conexión de estos sensores:
 \begin{itemize}
 \item{Sensor BME680 (Figura \ref{fig:bme_of}).} Este sensor funciona con conexión I2C, que para su funcionamiento necesita dos pines; SDA y SCL. Por tanto, siguiendo el esquema de la Figura \ref{fig:pinout}, se ha conectado a los pines 3 y 5. También se ha conectado al pin 1 para obtener la alimentación de 3.3V que necesita y al pin 6 (a tierra), para evitar que se rompa el sensor.
 
-\item{Sensor AMG8833 (Figura \ref{fig:termicos}-a).} Este sensor también funciona con conexión I2C. Por tanto su conexión es igual al sensor anterior: Conexión a los pines 3 y 5 para la conexión I2C y a los pines 1 y 6 para la alimentación y tierra, respectivamente. En la Figura \ref{fig:esquema}, la conexión a alimentación viene representada con el cable rojo, la conexión a tierra con el cable azul, la conexión I2C al pin SDA con el cable amarillo y la conexión I2C al pin SCL con el cable verde.
+\item{Sensor AMG8833 (Figura \ref{fig:termicos}-a).} Este sensor también funciona con conexión I2C, por tanto, su conexión es igual al sensor anterior: Conexión a los pines 3 y 5 para la conexión I2C y a los pines 1 y 6 para la alimentación y tierra, respectivamente. En la Figura \ref{fig:esquema}, la conexión a alimentación viene representada con el cable rojo, la conexión a tierra con el cable azul, la conexión I2C al pin SDA con el cable amarillo y la conexión I2C al pin SCL con el cable verde.
 
 \item{Sensor DS18B20 (Figura \ref{fig:ds_of}).} Este sensor necesita ser conectado con una resistencia de 4.7K $\Omega$ para mantener los datos estables. Su conexión por tanto es a los pines 1 y 6 para alimentación a 3.3V y tierra, y al pin 7 para la obtención de las medidas, tal y como aparece en el esquema de la Figura \ref{fig:esquema}. 
 
 \item{MQ-135 (Figura \ref{fig:mq_of}).} Este sensor necesita ser conectado a un conversor analógico a digital debido a que se deben obtener medidas analógicas. Como aparece en la Figura \ref{fig:esquema}, se ha utilizado el conversor MCP3008. Además, se ha conectado a los pines 2 para la alimentación de 5V que necesita y 6 para la conexión a tierra.
 
-\item{Sensor nivel de agua (Figura \ref{fig:nivel_of}).} Igual que el sensor anterior, este también necesita lecturas analógicas, por lo que se ha conectado al conversor, al pin 1 para la alimentación de 3.3V y al 6 para la conexión a tierra.
+\item{Sensor de nivel de agua (Figura \ref{fig:nivel_of}).} Igual que el sensor anterior, este también necesita lecturas analógicas, por lo que se ha conectado al conversor, al pin 1 para la alimentación de 3.3V y al 6 para la conexión a tierra.
 
 \item{Seek thermal (Figura \ref{fig:termicos}-b).} Este sensor se ha conectado a través de una de las entradas USB que dispone Raspberry usando un conversor de USB a micro USB.
 
@@ -62,9 +71,7 @@ A continuación se explican con más detalle la conexión de estos sensores:
 
 \section{Desarrollo software}
 \label{sec:dessw}
-Tras diseñar la plataforma hardware, el siguiente paso es darle el soporte software. Y es que, para que este sistema funcione, es necesario crear las instrucciones y reglas a través de programas o aplicaciones, esto es, la parte software.\\
-
-El primer, y más importante paso en cualquier desarrollo software es establecer los requisitos del sistema. Para ello, y como se ha comentado previamente, se han mantenido reuniones con el Laboratorio de Bienestar e Investigación Animal de la Universidad de Alcalá de Henares, así como reuniones semanales con el tutor. De estas reuniones se ha obtenido la información necesaria para poder hacer el diseño software del sistema, que queda reflejado mediante el diagrama de casos de uso (Figura \ref{fig:casos}) y, tras un análisis de este, el diagrama de clases (Figura \ref{fig:umlet}).\\
+Tras diseñar la plataforma hardware, el siguiente paso es darle el soporte software, y el primer y más importante paso en cualquier desarrollo software es establecer los requisitos del sistema. Para ello, y como se ha comentado previamente, se han mantenido reuniones con el Laboratorio de Bienestar e Investigación Animal de la Universidad de Alcalá de Henares, así como reuniones semanales con el tutor. De estas reuniones se ha obtenido la información necesaria para poder hacer el diseño software del sistema, que queda reflejado mediante el diagrama de casos de uso (Figura \ref{fig:casos}) y, tras un análisis de este, el diagrama de clases (Figura \ref{fig:umlet}).\\
 \begin{figure} [h!]
   \begin{center}
     \includegraphics[width=17cm]{figs/casos}
@@ -121,7 +128,7 @@ Ammonia: 0.91 Temperature: 28.24  Pressure: 1002.1 Humidity: 52.2 Gas: 4005.9 Wa
 \label{sec:IU}
 Una vez creado este fichero, se ha procedido a crear la interfaz en Node-Red. Este programa funciona a través de diferentes tipos de nodos, que deben ser combinados para obtener el resultado deseado.\\
 
-En primer lugar, a través del nodo de ejecución, se pueden ejecutar ficheros que están en la máquina local. Este nodo es el que se ha utilizado para integrar en la aplicación el fichero presentado en la Sección \ref{sec:ficheropython}. Para obtener individualmente el valor de cada sensor, se ha utilizado otro nodo ---llamado nodo función--- que permite incluir código directamente en Node-Red. Este nodo se ha utilizado para extraer de la salida del nodo ejecución el valor de interés en cada caso. Este proceso corresponde a las diferentes elipses salientes de \textit{sensors script} del diagrama de casos de uso (Figura \ref{fig:casos}). Con estos dos nodos, algunos sensores han estado listos para mostrar los valores en la interfaz de usuario (IU), por lo que solo ha sido necesario añadir el \textit{widget} más adecuado para cada caso a través del nodo pertinente. Este ha sido el caso de los sensores MQ-135 (Figura \ref{fig:mq_of}), BME680 (Figura \ref{fig:bme_of}) (en el caso de temperatura, presión y humedad) y DS18B20 (Figura \ref{fig:ds_of}).\\
+En primer lugar, a través del nodo de ejecución, se pueden ejecutar ficheros que están en la máquina local. Este nodo es el que se ha utilizado para integrar en la aplicación el fichero presentado en la Sección \ref{sec:ficheropython}. Para obtener individualmente el valor de cada sensor se ha utilizado otro nodo ---llamado nodo función--- que permite incluir código directamente en Node-Red. Este nodo se ha utilizado para extraer de la salida del nodo ejecución el valor de interés en cada caso. Este proceso corresponde a las diferentes elipses salientes de \textit{sensors script} del diagrama de casos de uso (Figura \ref{fig:casos}). Con estos dos nodos, algunos sensores han estado listos para mostrar los valores en la interfaz de usuario (IU), por lo que solo ha sido necesario añadir el \textit{widget} más adecuado para cada caso a través del nodo pertinente. Este ha sido el caso de los sensores MQ-135 (Figura \ref{fig:mq_of}), BME680 (Figura \ref{fig:bme_of}) (en el caso de temperatura, presión y humedad) y DS18B20 (Figura \ref{fig:ds_of}).\\
 
 En el caso de los otros sensores, han sido necesarios otros cambios para obtener el resultado adecuado:
 \begin{itemize}
@@ -266,7 +273,9 @@ Finalmente, y cumpliendo con el tercer objetivo, se han desarrollado algoritmos 
 
 Una vez se ha obtenido el dataset, se ha procedido a etiquetar estas imágenes mediante la aplicación \textit{labelImg}, para indicar los cuadros limitadores en los que se encuentran los objetos a detectar, en este caso, los ratones. Los ficheros resultantes son .txt compuestos por 5 parámetros: la clase, las coordenadas X e Y mínimas y X e Y máximas de los cuadros delimitadores.\\
 
-Con las imágenes y las etiquetas formadas, se ha procedido al entrenamiento del modelo para la detección de ratones. Esta detección se ha realizado con YOLOv5. YOLO ofrece diferentes modelos que se adaptan a distintas características (Figura \ref{fig:tablayolo}). Se han probado cuatro modelos para la detección de ratones: YOLOv5x, YOLOv5m, YOLOv5s y YOLOv5n, siendo YOLOv5x el más lento pero más preciso y YOLOv5n el más rápido y menos preciso. Debido a que el sistema se utiliza en Raspberry, es importante tener en cuenta que el rendimiento de la CPU es más limitado que en un ordenador normal. Se ha probado el primer modelo (YOLOv5x) en un ordenador normal, donde los resultados han sido muy buenos: La visualización ha sido en tiempo real y la precisión muy buena. Sin embargo, este modelo no ha sido viable en Raspberry debido a la poca velocidad en la que se visualizaban las imágenes. Se ha probado el modelo YOLOv5m, pero el resultado ha sido una velocidad escasa en la placa. También se ha probado con YOLOv5s, donde las imágenes han ido más fluidas, aunque no a tiempo real, pero también la precisión en la detección de ratones ha disminuido. Como última prueba se ha probado con YOLOv5n. La precisión era mucho peor respecto al anterior, y la velocidad era prácticamente igual, por lo que la decisión final ha sido escoger el modelo YOLOv5s. A pesar de que se ha usado uno de los modelos más rápidos, en Raspberry el flujo de imágenes no resulta fluido. Debido a este motivo, la detección no es perfecta; pues hay detecciones incorrectas así como ocasiones en las que no detecta ratones (Figura \ref{fig:detec}). Todos los experimentos realizados pueden encontrarse en la wiki\footnote{\url{https://github.com/jmvega/tfg-icebollada/wiki/6.June-progress}} del proyecto.\\
+Con las imágenes y las etiquetas formadas, se ha procedido al entrenamiento del modelo para la detección de ratones. Esta detección se ha realizado con YOLOv5. YOLO ofrece diferentes modelos que se adaptan a distintas características (Figura \ref{fig:tablayolo}). Se han probado cuatro modelos para la detección de ratones: YOLOv5x, YOLOv5m, YOLOv5s y YOLOv5n, siendo YOLOv5x el más lento pero más preciso y YOLOv5n el más rápido y menos preciso. Debido a que el sistema se utiliza en Raspberry, es importante tener en cuenta que el rendimiento de la CPU es más limitado que en un ordenador normal.\\
+
+Se ha probado el primer modelo (YOLOv5x) en un ordenador normal, donde los resultados han sido muy buenos: La visualización ha sido en tiempo real y la precisión muy buena. Sin embargo, este modelo no ha sido viable en Raspberry debido a la poca velocidad en la que se visualizaban las imágenes. Se ha probado el modelo YOLOv5m, pero el resultado ha sido una velocidad escasa en la placa. También se ha probado con YOLOv5s, donde las imágenes han ido más fluidas, aunque no a tiempo real, pero también la precisión en la detección de ratones ha disminuido. Como última prueba se ha probado con YOLOv5n. La precisión era mucho peor respecto al anterior, y la velocidad era prácticamente igual, por lo que la decisión final ha sido escoger el modelo YOLOv5s. A pesar de que se ha usado uno de los modelos más rápidos, en Raspberry el flujo de imágenes no resulta fluido. Debido a este motivo, la detección no es perfecta; pues hay detecciones incorrectas así como ocasiones en las que no detecta ratones (Figura \ref{fig:detec}). Todos los experimentos realizados pueden encontrarse en la wiki\footnote{\url{https://github.com/jmvega/tfg-icebollada/wiki/6.June-progress}} del proyecto.\\
 \begin{figure}[h!]
   \begin{center}
     \subfigure[Detección correcta]{\includegraphics[width=7cm]{figs/correcta}}\hspace{1mm}
@@ -280,13 +289,13 @@ Con las imágenes y las etiquetas formadas, se ha procedido al entrenamiento del
 El entrenamiento de YOLOv5 se lleva a cabo a través de un algoritmo de Deep Learning: una red neuronal convolucional. Este utiliza características ya entrenadas proporcionadas por \textit{coco128} ---un dataset muy grande ya existiente--- y aplica el nuevo dataset creado. Después del entrenamiento se obtienen métricas del modelo obtenido (Figura \ref{fig:metricas}), y se puede proceder a la prueba del modelo. En la Figura \ref{fig:precision} pueden verse la predicción de ratones en algunas de las imágenes de validación con el modelo entrenado.\\
 \begin{figure}[h!]
   \begin{center}
-    \includegraphics[width=12cm]{figs/metricas}
+    \includegraphics[width=16cm]{figs/metricas}
   \end{center}
 \caption{Métricas del modelo entrenado para la detección de ratones.} \label{fig:metricas}
 \end{figure}
 \begin{figure}[h!]
   \begin{center}
-    \includegraphics[width=12cm]{figs/precision}
+    \includegraphics[width=16cm]{figs/precision}
   \end{center}
 \caption{Detección de ratones con el modelo entrenado con YOLOv5.} \label{fig:precision}
 \end{figure}

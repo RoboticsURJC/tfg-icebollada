@@ -15,13 +15,13 @@ En este capítulo se definen tanto la infraestructura utilizada como los método
 
 \section{Plataforma hardware}
 \label{sec:hw}
-Para satisfacer el objetivo de crear un sistema multisensorial con las características definidas en el capítulo anterior y que además sea \textit{low-cost}, la infraestructura hardware en este trabajo se ha centrado en sistemas embebidos empotrados existentes en el mercado. Dos de los sistemas más importantes son Raspberry (Figura \ref{fig:placas}-a) y Arduino (Figura \ref{fig:placas}-b). La decisión de trabajar con Raspberry en lugar de Arduino ha estado motivada por diferentes cuestiones.\\
+Para satisfacer el objetivo de crear un sistema multisensorial con las características definidas en el capítulo anterior y que además sea \textit{low-cost}, la infraestructura hardware en este trabajo se ha centrado en sistemas embebidos existentes en el mercado. Dos de los sistemas más importantes son Raspberry (Figura \ref{fig:placas}-a) y Arduino (Figura \ref{fig:placas}-b). La decisión de trabajar con Raspberry en lugar de Arduino ha estado motivada por diferentes cuestiones.\\
 \begin{figure}[h!]
   \begin{center}
     \subfigure[Raspberry Pi]{\includegraphics[width=75mm]{figs/raspberry_of}}\hspace{2mm}
     \subfigure[Arduino]{\includegraphics[width=70mm]{figs/arduino_of}}
   \end{center}
-\caption{Sistemas empotrados.} \label{fig:placas}
+\caption{Sistemas embebidos.} \label{fig:placas}
 \end{figure}
 
 Ambas placas disponen de pines GPIO ---del inglés \textit{General Purpose Input/Output}--- o Entrada/Salida de Propósito General. Estos pines permiten la conexión de sensores o actuadores por medio de diferentes tipos de pines, que se pueden ver representados con distintos colores en la Figura \ref{fig:pinout}. Los tipos de pines que hay son los siguientes:
@@ -137,7 +137,7 @@ El último sensor integrado en el trabajo ha sido el MQ-135 (Figura \ref{fig:mq_
 Para conseguir el correcto funcionamiento de los sensores en la placa Raspberry, se ha utilizado la infraestructura software descrita a continuación.\\
 
 \section{Infraestructura software}
-Para dar soporte a la placa Raspberry se ha usado su sistema operativo oficial Raspberry Pi OS, también llamado Raspbian (Figura \ref{fig:raspbian}) bajo la versión de 64 bits. La elección de usar este Sistema Operativo (SO), entre otras, es que está optimizado para funcionar en procesadores ARM, que es el que tiene Raspberry, por lo que es el que mejor rendimiento ofrece para la placa. Además, Raspberry Pi OS está basado en Debian, por lo que tenemos todas las bondades de un sistema Linux.\\
+Para dar soporte a la placa Raspberry se ha usado su sistema operativo oficial Raspberry Pi OS, también llamado Raspbian (Figura \ref{fig:raspbian}) en su versión de 64 bits (lanzada por primera vez en enero de este año 2022). La elección de usar este Sistema Operativo (SO), entre otras, es que está optimizado para funcionar en procesadores ARM, que es el que tiene Raspberry, por lo que es el que mejor rendimiento ofrece para la placa. Además, Raspberry Pi OS está basado en Debian, por lo que tenemos todas las bondades de un sistema Linux.\\
 \begin{figure} [h!]
   \begin{center}
     \includegraphics[width=14cm]{figs/raspbian}
@@ -243,3 +243,22 @@ Los flujos de datos se pueden importar o exportar con ficheros en formato están
 \end{figure}
 
 Para el desarrollo de este TFG, Node-Red ha tenido un papel muy importante. Además de tener una gran comunidad que permite la resolución de la mayoría de dudas, ha permitido la creación de la interfaz de usuario donde se muestran las mediciones de cada sensor, los dos servidores web de las cámaras y los botones e interruptores necesarios que permiten al usuario interactuar con la interfaz de una manera sencilla para obtener toda la información.\\
+
+\subsection{UMLet}
+\label{sec:umlet_app}
+UMLet (Figura \ref{fig:umlet_logo}) es una herramienta UML (del inglés Unified Modeling Language o Lenguaje Unificado Modelado) de código abierto basada en Java y diseñada para crear rápidamente diagramas UML. Posee una interfaz de usuario sencilla (Figura \ref{fig:ui_umlet}) para dibujar esquemas de forma rápida. UMLet se ha utilizado en este trabajo para el diseño previo al desarrollo del diagrama de casos de uso y el diagrama de clases del sistema.\\
+\begin{figure} [h!]
+  \begin{center}
+    \includegraphics[width=4cm]{figs/umlet_logo}
+  \end{center}
+  \caption{Logo de UMLet.}
+  \label{fig:umlet_logo}
+\end{figure}
+
+\begin{figure} [h!]
+  \begin{center}
+    \includegraphics[width=16cm]{figs/ui_umlet}
+  \end{center}
+  \caption{Interfaz de usuario de UMLet.}
+  \label{fig:ui_umlet}
+\end{figure}
