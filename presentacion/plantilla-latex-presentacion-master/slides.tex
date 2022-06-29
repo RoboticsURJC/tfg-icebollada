@@ -66,9 +66,9 @@
   {\endtabularx\par\vspace{\belowdisplayskip}}
   
 % USO DE NOTAS
-\setbeameroption{hide notes} % Para mostrar u ocultar (hide/show)
+\setbeameroption{show notes} % Para mostrar u ocultar (hide/show)
 %\setbeameroption{show only notes} % Mostrar solo las notas
-%\setbeameroption{show notes on second screen=right} % Mostrar notas en otra pantalla
+\setbeameroption{show notes on second screen=right} % Mostrar notas en otra pantalla
 \setbeamertemplate{note page}{ % asi solo muestro el texto de las notas
   \insertnote%
 }
@@ -145,7 +145,7 @@ Trabajo fin de grado
 ¿Qué es la robótica?
 \begin{itemize}
 \item Campo de investigación muy importante que continua en desarrollo.
-\item Objetivo: Realizar trabajos \textcolor{myred}{aburridos}, \textcolor{myred}{sucios} o \textcolor{myred}{pesados} para el humano.
+\item Objetivo: Realizar trabajos \textcolor{myred}{aburridos} o \textcolor{myred}{pesados} para el humano.
 \end{itemize}
 \note[item]{La robótica es un campo de investigación muy importante en la actualidad que continua en desarrollo, cuyo objetivo es realizar trabajos que resultan pesados, aburridos o sucios para el ser humano.}
 \end{frame}
@@ -172,7 +172,7 @@ Trabajo fin de grado
 \frametitle{Inteligencia Artificial}
 \begin{figure}
 \centering
-\includegraphics[width=7cm]{figs/ia-4}
+\includegraphics[width=7cm]{figs/ia-5}
 \end{figure}
 \note[item]{La inteligencia artificial consiste en replicar los mecanismos del cerebro mediante algoritmos. Uno de los algoritmos más usados es el ML, preprogramados por un humano y que tratan de descubrir patrones que les hacen aprender. Los algoritmos más usados en visión artificial pertenecen a un subcampo del ML denominado DL, donde el autómata aprende por si mismo sin intervención humana, simulando el cerebro con unidades equivalentes a las neuronas.}
 \end{frame}
@@ -245,7 +245,7 @@ Trabajo fin de grado
 
 \begin{block}{Requisitos}
 \begin{itemize}
-\item El sistema debe ser capaz de ejecutar en tiempo real sobre Raspberry Pi 4B.
+\item El sistema debe ser capaz de ejecutar en tiempo real sobre Raspberry.
 \item El lenguaje de programación debe ser Python.
 \item La interfaz de usuario se creará en Node-Red.
 \end{itemize}
@@ -294,12 +294,14 @@ Trabajo fin de grado
 
 \begin{itemize}
 \centering
-\item[] Pines GPIO + conexión de cámaras
+\item[] Pines GPIO
+\item[] Conexión de cámaras
 \item[] Cuatro puertos USB
 \item[] Dos puertos micro-USB
 \item[] Microordenador
 \item[] Sistema operativo completo
 \item[] Pines GPIO
+\item[] No conexión de cámaras
 \item[] No tiene puertos USB
 \item[] No tiene puertos micro-USB
 \item[] Microprocesador
@@ -428,9 +430,9 @@ Además, se ha conseguido que sea un sistema low-cost al trabajar con Raspberry 
 
 \begin{block}{Líneas futuras}
 \begin{itemize}
-\item Adaptación de la interfaz de usuario a un servidor accesible desde cualquier lugar.
-\item Análisis del comportamiento de los animales mediante técnicas de Deep Learning.
-\item Creación de un Docker para la instalación por parte de cualquier usuario.
+\item Adaptación de la IU a un servidor accesible desde cualquier lugar.
+\item Análisis del comportamiento de los animales con técnicas de DL.
+\item Creación de un Docker para la instalación por cualquier usuario.
 \end{itemize}
 \note[item]{Finalmente, algunas de las líneas futuras para finalizar este trabajo son:\\
 
