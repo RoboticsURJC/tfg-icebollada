@@ -97,7 +97,7 @@
 \vspace{1cm}
 Trabajo fin de grado
 }
-\date{27 de Julio de 2022}
+\date{5 de julio de 2022}
 %=========
 
 %========= COMIENZO DEL DOCUMENTO
@@ -106,8 +106,8 @@ Trabajo fin de grado
 %========= Portada inicial con notas
 \begin{frame}[plain] % plain: quita header y footer
 \large{\titlepage}
-\note[item]{En esta presentación voy a hablar sobre...}
-\note[item]{En primer lugar...}
+\note[item]{En esta presentación voy a hablar sobre mi trabajo de fin de grado, que consiste en la creación de un sistema}
+\note[item]{CONTROL Y ESTUDIO DEL BIENESTAR DE ANIMALES}
 \end{frame}
 
 %========= Licencia
@@ -124,7 +124,7 @@ Trabajo fin de grado
 %\begin{multicols}{2} % si tengo muchas secciones, lo parte en dos columnas
   \tableofcontents[hideallsubsections] % no muestra subsecciones
 %\end{multicols}
-\note[item]{La presentaci\'on esta dividida en cuatro partes.}
+\note[item]{La presentación esta dividida en cinco partes.}
 \end{frame}
 
 \begingroup
@@ -145,16 +145,22 @@ Trabajo fin de grado
 ¿Qué es la robótica?
 \begin{itemize}
 \item Campo de investigación muy importante que continua en desarrollo.
-\item Objetivo: Realizar trabajos \textcolor{myred}{aburridos} o \textcolor{myred}{pesados} para el humano.
+\item Objetivo: Realizar trabajos \textcolor{myred}{aburridos} o \textcolor{myred}{peligrosos} para el humano.
 \end{itemize}
-\note[item]{La robótica es un campo de investigación muy importante en la actualidad que continua en desarrollo, cuyo objetivo es realizar trabajos que resultan pesados, aburridos o sucios para el ser humano.}
+\note[item]{La robótica es un campo de investigación muy importante en la actualidad que continua en desarrollo.}
+\note[item]{Aburridos}
+\note[item]{Sucios}
+\note[item]{Peligrosos}
+\note[item]{}
+\note[item]{Para entender el concepto de robótica es necesario comprender qué es un robot.}
 \end{frame}
+
 \begin{frame}
 \frametitle{Definición de robot}
 ¿Qué es un robot?
 \begin{figure}
 \centering
-\includegraphics[width=6.32cm]{figs/robot}
+\includegraphics[width=6cm]{figs/robot}
 \end{figure}
 \note[item]{A lo largo de los años el concepto de robótica ha ido variando, así como la definición de robot. Actualmente, se entiende por robot a cualquier dispositivo dotado por sensores, actuadores y un sistema de control.}
 \end{frame}
@@ -165,7 +171,10 @@ Trabajo fin de grado
 \centering
 \includegraphics[width=12cm]{figs/sensores}
 \end{figure}
-\note[item]{Existen distintos tipos de sensores que dotan de distintas cualidades. Entre ellos, uno de los más importantes es el sensor de visión, que requiere un proceso arduo para extraer información útil en tiempo real. Para el procesamiento de la información obtenida del sensor de visión, es necesario aplicar un algoritmo de IA.}
+\note[item]{Existen distintos tipos de sensores que dotan de distintas cualidades.}
+\note[item]{}
+\note[item]{Proceso arduo para extraer información útil en tiempo real.}
+\note[item]{Para el procesamiento de la información obtenida del sensor de visión, es necesario aplicar un algoritmo de IA.}
 \end{frame}
 
 \begin{frame}
@@ -174,7 +183,9 @@ Trabajo fin de grado
 \centering
 \includegraphics[width=7cm]{figs/ia-5}
 \end{figure}
-\note[item]{La inteligencia artificial consiste en replicar los mecanismos del cerebro mediante algoritmos. Uno de los algoritmos más usados es el ML, preprogramados por un humano y que tratan de descubrir patrones que les hacen aprender. Los algoritmos más usados en visión artificial pertenecen a un subcampo del ML denominado DL, donde el autómata aprende por si mismo sin intervención humana, simulando el cerebro con unidades equivalentes a las neuronas.}
+\note[item]{La inteligencia artificial consiste en replicar los mecanismos del cerebro mediante algoritmos.}
+\note[item]{ Uno de los algoritmos más usados es el ML, preprogramados por un humano y que tratan de descubrir patrones que les hacen aprender.}
+\note[item]{Los algoritmos más usados en visión artificial pertenecen a un subcampo del ML denominado DL, donde el autómata aprende por si mismo sin intervención humana, simulando el cerebro con unidades equivalentes a las neuronas.}
 \end{frame}
 
 \begin{frame}
@@ -183,51 +194,16 @@ Trabajo fin de grado
 \centering
 \includegraphics[width=12cm]{figs/multisensorial}
 \end{figure}
-\note[item]{Además de utilizar sensores de visión, si a un robot se le incorporan diferentes tipos de sensores, este obtendrá mucha más información, por lo que podrá ser más preciso y simular a un humano mejor. Este trabajo se enmarca en el contexto de los sistemas multisensoriales, concretamente en los sistemas multisensoriales destinados al bienestar animal y al análisis de comportamiento.}
+\note[item]{Además de utilizar sensores de visión, si a un robot se le incorporan diferentes tipos de sensores, este obtendrá mucha más información, por lo que podrá ser más preciso y simular a un humano mejor.}
+\note[item]{Este trabajo se enmarca en el contexto de los sistemas multisensoriales, concretamente en los sistemas multisensoriales destinados al bienestar animal y al análisis de comportamiento.}
 \end{frame}
 
 %------------------------------------------------------------------------------OBJETIVOS------------------------------------------------------------------------------
-%
-%%========= Diapositiva con ítems resaltados con colores:
-%\begin{frame}
-%\frametitle{Introducción a la Robótica}
-%\begin{itemize}
-%\item La \textcolor{red}{tecnología} está cada vez más presente en la vida cotidiana.
-%\item Los robots de servicio aparecen en el \textcolor{blue}{mercado}.
-%\item La \textcolor{red}{domótica} presenta cada vez más aplicaciones domésticas.
-%\end{itemize}
-%\end{frame}
-%
-%\subsection{Contexto específico}
-%%========= Diapositiva con bloques:
-%\begin{frame}
-%\frametitle{Precedentes de la robótica}
-%\begin{block}{Primera revolución industrial de 1800}
-%Productos fabricados por \textcolor{blue}{máquinas}. La \textcolor{red}{máquina de vapor} fue clave.
-%\end{block}
-%\end{frame}
-%
-%%========= Diapositiva con bullets en diferentes niveles (outline):
-%\section{Principios de transducción}
-%\subsection{Principio de transducción piezoresistivo}
-%\begin{frame}
-%\frametitle{Conceptos}
-%\begin{outline}
-%\1 Piezoresistividad: relación entre resistencia eléctrica y deformación.
-%\2 Material piezoresistivo: (1) material en reposo (átomos en equilibrio).
-%\3 (2) Si sufre deformación, movimiento átomos, modifican su resistividad.
-%\2 Resistencia vs. resistividad de un material.
-%\3 Resistencia: depende del volumen del material a tratar.
-%\3 Resistividad: caract. intrínseca relacionada con colocación de átomos.
-%\end{outline}
-%\end{frame}
-%
-
 \section*{}
 \begin{frame}{}
   \centering \Huge
   \emph{Objetivos}
-\note[item]{Pasemos ahora a comentar los objetivos que nos hemos marcado con este trabajo.}
+\note[item]{Pasemos ahora a comentar los objetivos que se han marcado con este trabajo.}
 \end{frame}
 
 \setbeamercolor{block title}{bg=mypink!40,fg=black}
@@ -252,34 +228,13 @@ Trabajo fin de grado
 \end{block}
 \end{frame}
 
-%\section{Objetivos}
-%%\subsection{Objetivos}
-%\begin{frame}
-%\begin{enumerate}
-%\item Recoger la lectura de los sensores en paralelo en un mismo fichero.
-%\item Crear un servidor web para los sensores de las cámaras.
-%\item Detectar los ratones mediante algoritmos de Deep Learning.
-%\end{enumerate}
-%\note[item]{Los objetivos marcados para realizar el proyecto son los siguientes.}
-%\end{frame}
-%
-%\section{Objetivos}
-%\subsection{Requisitos}
-%\begin{frame}
-%\begin{figure}
-%\centering
-%\includegraphics[width=12cm]{figs/requisitos}
-%\end{figure}
-%\note[item]{Los requisitos para cumplir dichos objetivos son los siguientes: Que el sistema sea capaz de ejecutar en tiempo real sobre Raspberry Pi 4B. Que el lenguaje de programación sea Python, ya que es sencillo y ofrece múltiples librerías útiles para este trabajo, además que está soportado completamente por el SO de Raspberry. Finalmente, la IU se creará con Node-Red, una herramienta muy visual creada para dispositivos embebidos.}
-%\end{frame}
-
-
 %---------------------------------------------------------------------------DISEÑO-----------------------------------------------------------------------------
 \section*{}
 \begin{frame}{}
   \centering \Huge
   \emph{Diseño}
-\note[item]{Una vez descritos los objetivos, veamos la infraestructura y plataformas utilizadas.}
+\note[item]{Una vez descritos los objetivos, se presenta la infraestructura y las plataformas utilizadas.}
+\note[item]{Este capítulo se divide en dos partes: HW y SW.}
 \end{frame}
 
 \section{Plataforma de desarrollo}
@@ -309,7 +264,9 @@ Trabajo fin de grado
 \end{itemize}
 
 \end{multicols}
+\note[item]{Comenzando por la infraestructura HW}
 \note[item]{Existen distintos sistemas embebidos que se podrían haber utilizado para este trabajo. Los dos más conocidos son Raspberry y Arduino. Hay varias características favorables a Raspberry que han hecho que se seleccione esta placa frente a Arduino.}
+\note[item]{ENTORNO DE DESARROLLO INTERACTIVO}
 \end{frame}
 
 \subsection{Infraestructura hardware}
@@ -318,7 +275,9 @@ Trabajo fin de grado
 \centering
 \includegraphics[width=12cm]{figs/sensoresusados}
 \end{figure}
-\note[item]{A través de los múltiples pines, se han conectado los sensores utilizados para el funcionamiento del sistema. El sensor DS18B20, arriba a la izquierda, permite medir la temperatura. Es resistente al agua, así que permite la medición en superficies húmedas o mojadas. Continuando a la derecha se encuentra el sensor BME680 permite medir cuatro parámetros: temperatura, humedad, presión y resistencia del aire. El sensor AMG8833 es un sensor térmico, que obtiene un mapa de 8x8 valores numéricos referentes a las temperaturas. El siguiente sensor, arriba a la derecha es un sensor que permite medir el nivel de agua. Empezando por la izquierda en la fila de abajo se encuentra la PiCam, una de las cámaras oficiales de raspberry que permite la visión del entorno. A su derecha está la Seek Thermal cam, que es una cámara térmica, originalmente creada para el uso en teléfonos móviles pero que permite su conexión a raspberry por el puerto USB con un adaptador. Finalmente, abajo a la derecha está en MQ-135, un sensor que permite detectar la concentración de ciertos gases en el aire, como el amoníaco.}
+\note[item]{A través de los múltiples pines, se han conectado los sensores utilizados para el funcionamiento del sistema.} \note[item]{RESISTENCIA AL AIRE}
+\note[item]{CONCENTRACIÓN DE GASES}
+\note[item]{A continuación se procede a describir la infraestructura SW, donde se explican las plataformas utilizadas.}
 \end{frame}
 
 \subsection{Infraestructura software}
@@ -328,7 +287,8 @@ Trabajo fin de grado
 \centering
 \includegraphics[width=10cm]{figs/apps}
 \end{figure}
-\note[item]{Como ya he presentado se utiliza para el desarrollo de este sistema la placa Raspberry. El sistema operativo que se ha usado en esta placa es Raspbian, basado en Debian, bajo la versión de 64 bits. El lenguaje seleccionado ha sido Python, debido a que está soportado de forma nativa en el SO, que es uno de los lenguajes más usados actualmente y que posee numerosas librerías útiles para el proyecto desarrollado. Una de ellas es OpenCV, que permite la manipulación de los vídeos. Se ha utilizado para realizar algunas modificaciones con la cámara, como añadir un timestamp así como para la detección de ratones. Para dicha detección, previamente ha sido necesario utilizar yolo para crear un modelo de detección de ratones. Por otro lado, para la creación de la IU se ha utilizado Node-Red, como previamente se estableció en los requisitos, y Flask para crear los servidores web.}
+\note[item]{BASADO en Debian}
+\note[item]{SOPORTADO DE FORMA NATIVA EN EL SO}
 \end{frame}
 
 %-----------------------------------------------------------------------DESARROLLO DEL SISTEMA----------------------------------------------------------------------
@@ -336,7 +296,7 @@ Trabajo fin de grado
 \begin{frame}{}
   \centering \Huge
   \emph{Desarrollo del sistema}
-\note[item]{A continuación se presenta el desarrollo que se ha llevado a cabo para la obtención del sistema planteado.}
+\note[item]{A continuación se presenta el desarrollo que se ha llevado a cabo para la obtención del sistema planteado. De nuevo, se divide en desarrollo HW y desarrollo SW.}
 \end{frame}
 
 \section{Desarrollo del sistema}
@@ -348,7 +308,7 @@ Conexión de los sensores a la placa.
 \centering
 \includegraphics[width=10cm]{figs/conexiones}
 \end{figure}
-\note[item]{Se han conectado los sensores a la placa. Los sensores BME680 y AMG8833 requieren conexión con comunicación I2C, por lo que se han conectado a los pines pertinentes. Los sensores de nivel de agua y MQ-135 requieren de lecturas analógicas, por lo que se ha utilizado  un CAD. Las cámaras se ha conectado en los puertos pertinentes y el sensor de temperatura resistente al agua junto con una resistencia necesaria para medidas estables.}
+\note[item]{Comenzando con el desarrollo HW, se han conectado los sensores a la placa.}
 \end{frame}
 
 \subsection{Desarrollo software}
@@ -363,11 +323,8 @@ Conexión de los sensores a la placa.
 \centering
 \includegraphics[width=10cm]{figs/UIcompleta}
 \end{figure}
-\note[item]{El primer paso, después de crear el diagrama de casos de uso así como el diagrama de clases del sistema, ha sido crear la lectura sensorial con Python. Con el uso de la librería Threads se ha conseguido leer de forma concurrente de todos los valores a la vez. Se han realizado algunos cambios en la lectura de los sensores, como en el caso del BME680 para que en lugar de mostrar la resistencia del aire se muestre la calidad de este en proporción a la humedad y resistencia del aire.\\
-
-Una vez se ha obtenido este fichero, se ha procedido a la creación de la interfaz de usuario en Node-Red. Para ello, ha sido necesario combinar distintos tipos de nodos para la transformación de valores numéricos a la representación de ellos en widgets. En algunos casos, como en el del sensor AMG8833 (el sensor térmico) se han requerido más nodos para convertir el mapa en una imagen con una resolución mejor.\\
-
-Con el uso de Flask, se han creado dos servidores: uno para cada cámara. De esta manera, se han podido incorporar a la interfaz de Flask a través del nodo template, que permite mostrar una url. Con Flask también se ha incorporado un botón que permite iniciar o parar la grabación de la PiCam. Además, se han añadido algunas mejoras con el uso de OpenCV a la visualización de las cámaras, como el timestamp.}
+\note[item]{Diagrama de casos de uso y diagrama de clases del sistema}
+\note[item]{RESISTENCIA AL AIRE --- CALIDAD DEL AIRE}
 \end{frame}
 
 \begin{frame}
@@ -377,11 +334,7 @@ Con el uso de Flask, se han creado dos servidores: uno para cada cámara. De est
 \item Login en el flujo de Node-Red así como en la interfaz de usuario
 \item Cambio de HTTP a HTTPS
 \end{itemize}
-\note[item]{Debido a la existencia de servidores, así como el acceso al flujo de nodos de Node-Red y la interfaz de usuario, ha sido necesario dotar al sistema de más seguridad. En primer lugar, a los servidores se han añadido un login necesario basado en el factor de doble autenticación; con usuario, contraseña y un código de 30 segundos de vida.\\
-
-De la misma forma se ha añadido un login necesario al flujo de nodos así como a la interfaz de usuario. Es importante marcar que dichos login son diferentes, pues al primero solo podrá acceder el administrador, quien debe tener conocimiento para modificar cualquier nodo, y al segundo, cualquier usuario autorizado.\\
-
-Finalmente, tanto Node-Red como los servidores se encontraban bajo direcciones de HTTP. Esto se ha modificado a HTTPS bajo unos certificados autofirmados.}
+\note[item]{Todas contraseñas están encriptadas bajo algoritmos de funciones hash en SHA256.}
 \end{frame}
 
 \begin{frame}
@@ -390,7 +343,7 @@ Finalmente, tanto Node-Red como los servidores se encontraban bajo direcciones d
 \centering
 \includegraphics[width=12cm]{figs/autoarranque}
 \end{figure}
-\note[item]{Por último, se ha adaptado el sistema de acuerdo a uso de un usuario ajeno a cualquier conocimiento de robótica. De esta manera, cuando se enciende la placa Raspberry el sistema se lanza automáticamente, de forma que la pantalla que recibe el usuario es la solicitud de datos para acceder a la interfaz.}
+\note[item]{Por último, se ha adaptado el sistema de acuerdo a uso de un usuario ajeno a cualquier conocimiento de robótica.}
 \end{frame}
 
 \begin{frame}
@@ -399,9 +352,7 @@ Finalmente, tanto Node-Red como los servidores se encontraban bajo direcciones d
 \centering
 \includegraphics[width=12cm]{figs/deteccion-2}
 \end{figure}
-\note[item]{Cumpliendo el tercer objetivo comentado, se ha creado un modelo para la detección de ratones. Para ello, ha sido necesario crear un dataset, dado que no se ha encontrado ninguno cercano a los objetivos en Internet. El dataset creado consta de 354 imágenes: 275 para el proceso de entrenamiento y 79 para el de validación. Una vez se ha obtenido el dataset, se han etiquetado todas las imágenes en formato YOLO.\\
-
-Después se ha entrenado el modelo con el dataset y las etiquetas creadas. Para elegir el mejor modelo, se han probado distintos modelos de YOLO, desde el más rápido y menos preciso hasta el más lento y más preciso. Después de observar el comportamiento de los distintos modelos creados tanto en raspberry como en un ordenador normal, se ha decidido optar por el modelo YOLOv5s, uno de los más rápidos (pero también menos preciso) dado que el rendimiento de la CPU de rapsberry es más limitado que un ordenador normal. Aun así, el flujo de las imágenes no es en tiempo real, y la detección no es del todo precisa.}
+\note[item]{354 imágenes: 275 para el proceso de entrenamiento y 79 para el de validación.}
 \end{frame}
 
 %-----------------------------------------------------------------------CONCLUSIONES---------------------------------------------------------------------------------------
@@ -420,12 +371,10 @@ Después se ha entrenado el modelo con el dataset y las etiquetas creadas. Para 
 \item Interfaz de usuario creado en Node-Red .
 \item Detección de ratones mediante algoritmo de Deep Learning.
 \item El sistema funciona en tiempo real en Raspberry: sistema \textit{low-cost}.
-\item Interfaz para el usuario final.
+\item Interfaz intuitiva para el usuario final.
 \item Accesible desde cualquier dispositivo de la misma red.
 \end{itemize}
-\note[item]{La interfaz de usuario se ha creado en Node-Red a partir del fichero de lectura de sensores concurrentes y los servidores de las cámaras. También se ha conseguido la detección de ratones en la raspberry, a pesar de que no es en tiempo real.\\
-
-Además, se ha conseguido que sea un sistema low-cost al trabajar con Raspberry y sensores baratos. La interfaz es una interfaz intuitiva para cualquier perfil de usuario, y es accesible desde cualquier dispositivo conectado a la misma red que la raspberry.}
+\note[item]{Se han cumplido los objetivos presentados en el capítulo 2.}
 \end{block}
 
 \begin{block}{Líneas futuras}
@@ -434,13 +383,7 @@ Además, se ha conseguido que sea un sistema low-cost al trabajar con Raspberry 
 \item Análisis del comportamiento de los animales con técnicas de DL.
 \item Creación de un Docker para la instalación por cualquier usuario.
 \end{itemize}
-\note[item]{Finalmente, algunas de las líneas futuras para finalizar este trabajo son:\\
-
-Adaptar la IU a un servidor accesible desde cualquier lugar y no solo desde la misma red que raspberry.\\
-
-Analizar el comportamiento de los ratones con el modelo de detección de ratones creado, para analizar cuánto tiempo pasan realizando las diferentes actividades así como en las distintas cubetas.\\
-
-Y la creación de un Docker para permitir la instalación a cualquier usuario que no tiene por qué tener conocimiento sobre el tema.}
+\note[item]{Finalmente, algunas de las líneas futuras para finalizar este trabajo son}
 \end{block}
 \end{frame}
 
